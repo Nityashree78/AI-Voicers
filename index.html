@@ -1,85 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI-Voicers | Voice Appointment in Kannada</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Voicers - Voice Hospital Booking</title>
 <style>
-body{font-family:Arial,sans-serif;background:#fff7ed;margin:0;padding:0;text-align:center}
-header{background:#ea580c;color:white;padding:30px 15px}
-header h1{margin:0;font-size:32px}
-header p{font-size:18px}
-.card{background:white;margin:20px;padding:20px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1);max-width:500px;margin-left:auto;margin-right:auto}
-button{background:#ea580c;color:white;border:none;padding:15px 25px;font-size:18px;border-radius:10px;cursor:pointer;width:100%;margin-top:10px}
-button.green{background:#16a34a}
-input,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;font-size:16px;box-sizing:border-box}
-.kannada{font-size:20px;color:#7c2d12}
+body{font-family:Arial;background:#f0f7ff;margin:0;padding:15px}
+h1{color:#0b5ed7;text-align:center}
+.card{background:white;padding:15px;border-radius:12px;margin:10px 0;box-shadow:0 2px 8px #ccc}
+button{background:#0b5ed7;color:white;border:none;padding:10px 15px;border-radius:8px;margin:5px 0;width:100%;font-size:16px}
+button.green{background:#198754} button.red{background:#dc3545} button.grey{background:#6c757d}
+select,input{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
+.slot{display:inline-block;padding:8px 12px;margin:4px;background:#e7f1ff;border-radius:20px;border:1px solid #0b5ed7}
+.slot.sel{background:#0b5ed7;color:white}
+.doc{display:flex;justify-content:space-between;align-items:center}
 </style>
 </head>
 <body>
-<header>
-<h1>🎙️ AI-Voicers</h1>
-<p>Voice Appointment Booking in Kannada</p>
-<p class="kannada">ಕನ್ನಡದಲ್ಲಿ ಧ್ವನಿ ಮೂಲಕ ಅಪಾಯಿಂಟ್ಮೆಂಟ್</p>
-<p>For Raichur Patients | ರಾಯಚೂರು ರೋಗಿಗಳಿಗಾಗಿ</p>
-</header>
+<h1>🏥 AI Voicers</h1>
+<p style="text-align:center">Voice Hospital Booking - Bengaluru</p>
 
 <div class="card">
-<h2>1. Speak in Kannada</h2>
-<p>Click below and say: <br><b>"Nanage doctor appointment beku"</b></p>
-<button onclick="startVoice()">🎤 Tap to Speak - ಮಾತನಾಡಿ</button>
-<p id="voiceText" style="color:#ea580c;font-weight:bold"></p>
+<h2>🎤 Voice Booking</h2>
+<button onclick="startVoice()">🎤 Tap & Speak - "Book Dr Priya tomorrow 10 AM"</button>
+<p id="voiceText">Say your booking...</p>
 </div>
 
 <div class="card">
-<h2>2. Book Appointment</h2>
-<input type="text" id="name" placeholder="Your Name / ನಿಮ್ಮ ಹೆಸರು">
-<input type="tel" id="phone" placeholder="Phone Number / ಫೋನ್ ನಂಬರ್">
-<select id="doctor">
-<option>Dr. Priya - General Physician</option>
-<option>Dr. Manjunath - Child Specialist</option>
-<option>Dr. Anitha - Gynecologist</option>
-</select>
-<select id="hospital">
-<option>Raichur District Hospital</option>
-<option>Navodaya Medical College, Raichur</option>
-<option>RIMS Raichur</option>
-</select>
-<input type="date" id="date">
-<button class="green" onclick="book()">✅ Book Appointment - ಬುಕ್ ಮಾಡಿ</button>
-<p id="result"></p>
+<h2>👨‍⚕️ 1. Doctor List</h2>
+<div id="doctorList"></div>
 </div>
 
 <div class="card">
-<h3>Why AI-Voicers?</h3>
-<p>✅ No English Needed<br>✅ No Typing Needed<br>✅ Just Speak in Kannada<br>✅ For Old People & Villages</p>
-<p>Made by <b>Nityashree78</b> | Raichur, Karnataka</p>
+<h2>🏥 4. Hospital List</h2>
+<div id="hospitalList"></div>
+</div>
+
+<div class="card">
+<h2>📝 Book Appointment</h2>
+<input id="pName" placeholder="Your Name">
+<select id="dSelect"></select>
+<input type="date" id="bDate">
+<h3>2. Select Time Slot</h3>
+<div id="slots"></div>
+<p>Selected: <b id="selSlot">None</b></p>
+<button class="green" onclick="book()">Confirm Booking ✅</button>
+</div>
+
+<div class="card">
+<h2>📋 3. My Appointments</h2>
+<div id="myApps">No appointments yet</div>
 </div>
 
 <script>
-function startVoice(){
-  document.getElementById('voiceText').innerText = "Listening... ದಯವಿಟ್ಟು ಮಾತನಾಡಿ...";
-  if('webkitSpeechRecognition' in window){
-    const r = new webkitSpeechRecognition();
-    r.lang = 'kn-IN';
-    r.onresult = function(e){
-      const text = e.results[0][0].transcript;
-      document.getElementById('voiceText').innerText = "You said: " + text;
-      document.getElementById('name').value = text;
-    }
-    r.start();
-  } else {
-    alert("Voice not supported in this browser. Please use Chrome.");
-  }
-}
+let doctors=[
+{name:"Dr. Priya Sharma - General", hosp:"Apollo Hospital", fee:"₹500"},
+{name:"Dr. Rahul Verma - Heart", hosp:"Fortis Hospital", fee:"₹800"},
+{name:"Dr. Ananya Iyer - Child", hosp:"Manipal Hospital", fee:"₹600"},
+{name:"Dr. Vikram Rao - Skin", hosp:"Columbia Asia", fee:"₹400"}
+];
+let hospitals=["Apollo Hospital - Bannerghatta","Fortis Hospital - Bannerghatta","Manipal Hospital - Old Airport Rd","Columbia Asia - Hebbal"];
+let slots=["09:00 AM","10:00 AM","11:00 AM","12:00 PM","04:00 PM","05:00 PM","06:00 PM"];
+let chosenSlot="";
+
+let dl=document.getElementById('doctorList');
+let ds=document.getElementById('dSelect');
+doctors.forEach((d,i)=>{
+ dl.innerHTML+=`<div class="doc"><div><b>${d.name}</b><br>${d.hosp} | ${d.fee}</div><button style="width:auto" onclick="selectDoc(${i})">Book</button></div><hr>`;
+ ds.innerHTML+=`<option value="${i}">${d.name} - ${d.hosp}</option>`;
+});
+document.getElementById('hospitalList').innerHTML=hospitals.map(h=>`• ${h}<br>`).join('');
+
+let sl=document.getElementById('slots');
+slots.forEach(s=>{
+ sl.innerHTML+=`<span class="slot" onclick="pickSlot(this,'${s}')">${s}</span>`;
+});
+function pickSlot(el,s){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');chosenSlot=s;document.getElementById('selSlot').innerText=s;}
+function selectDoc(i){ds.value=i;window.scrollTo(0,400);}
+
 function book(){
-  const n = document.getElementById('name').value;
-  const d = document.getElementById('doctor').value;
-  const h = document.getElementById('hospital').value;
-  const date = document.getElementById('date').value;
-  if(!n){ alert("Please enter name"); return; }
-  document.getElementById('result').innerHTML = "<b>✅ Appointment Booked!</b><br>"+n+"<br>"+d+"<br>"+h+"<br>Date: "+date+"<br>We will call you soon!";
+ let name=document.getElementById('pName').value||"Guest";
+ let d=doctors[ds.value];
+ let date=document.getElementById('bDate').value||"Tomorrow";
+ if(!chosenSlot){alert("Please select time slot");return;}
+ let apps=JSON.parse(localStorage.getItem('apps')||'[]');
+ apps.push({name:name,doc:d.name,hosp:d.hosp,date:date,slot:chosenSlot});
+ localStorage.setItem('apps',JSON.stringify(apps));
+ alert("Booked! "+d.name+" on "+date+" at "+chosenSlot);
+ showApps();
 }
+function showApps(){
+ let apps=JSON.parse(localStorage.getItem('apps')||'[]');
+ let div=document.getElementById('myApps');
+ if(apps.length==0){div.innerHTML="No appointments yet";return;}
+ div.innerHTML=apps.map((a,i)=>`<div class="card" style="background:#e7f1ff"><b>${a.doc}</b><br>${a.hosp}<br>${a.date} - ${a.slot}<br>Patient: ${a.name}<br><button class="red" onclick="cancelApp(${i})">5. Cancel ❌</button></div>`).join('');
+}
+function cancelApp(i){
+ let apps=JSON.parse(localStorage.getItem('apps')||'[]');
+ if(confirm("Cancel this appointment?")){apps.splice(i,1);localStorage.setItem('apps',JSON.stringify(apps));showApps();}
+}
+function startVoice(){
+ let r=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+ r.lang='en-IN'; r.start();
+ r.onresult=e=>{
+  let t=e.results[0][0].transcript;
+  document.getElementById('voiceText').innerText="You said: "+t;
+  document.getElementById('pName').value="Guest";
+  if(t.toLowerCase().includes("priya")) ds.value=0;
+  if(t.toLowerCase().includes("rahul")) ds.value=1;
+  if(t.toLowerCase().includes("ananya")) ds.value=2;
+  if(t.toLowerCase().includes("vikram")) ds.value=3;
+  if(t.includes("10")) pickSlot(document.querySelectorAll('.slot')[1],"10:00 AM");
+  alert("Voice understood! Now select slot & Confirm");
+ };
+}
+showApps();
 </script>
 </body>
 </html>
