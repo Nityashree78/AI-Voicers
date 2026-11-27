@@ -85,7 +85,7 @@ function book(){
  let apps=JSON.parse(localStorage.getItem('apps')||'[]');
  apps.push({name:name,doc:d.name,hosp:d.hosp,date:date,slot:chosenSlot});
  localStorage.setItem('apps',JSON.stringify(apps));
- alert("Booked! "+d.name+" on "+date+" at "+chosenSlot);
+ alert("Voice understood! Now select slot & Confirm");
  showApps();
 }
 function showApps(){
