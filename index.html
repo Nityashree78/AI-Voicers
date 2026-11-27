@@ -1,119 +1,120 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Voicers - Voice Hospital Booking</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Voicers - Doctor Booking</title>
 <style>
-body{font-family:Arial;background:#f0f7ff;margin:0;padding:15px}
-h1{color:#0b5ed7;text-align:center}
-.card{background:white;padding:15px;border-radius:12px;margin:10px 0;box-shadow:0 2px 8px #ccc}
-button{background:#0b5ed7;color:white;border:none;padding:10px 15px;border-radius:8px;margin:5px 0;width:100%;font-size:16px}
-button.green{background:#198754} button.red{background:#dc3545} button.grey{background:#6c757d}
-select,input{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
-.slot{display:inline-block;padding:8px 12px;margin:4px;background:#e7f1ff;border-radius:20px;border:1px solid #0b5ed7}
-.slot.sel{background:#0b5ed7;color:white}
-.doc{display:flex;justify-content:space-between;align-items:center}
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:#f0f4ff;padding:15px}
+h1{text-align:center;color:#4a00e0}
+.card{background:white;border-radius:15px;padding:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1)}
+.doctor{display:flex;gap:12px;align-items:center}
+.doctor img{width:70px;height:70px;border-radius:50%;object-fit:cover}
+button{background:#6a00ff;color:white;border:none;padding:10px 15px;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-top:8px}
+.slot-btn{background:#eee;color:#333;padding:8px;border-radius:8px;border:1px solid #ddd;cursor:pointer;margin:3px}
+.slot-btn.selected{background:#6a00ff;color:white}
+input,select{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:1px solid #ccc}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;color:white;padding:12px 20px;border-radius:25px;display:none;z-index:999}
+.top-btns{display:flex;gap:10px}
+.top-btns button{width:50%}
 </style>
 </head>
 <body>
-<h1>🏥 AI Voicers</h1>
-<p style="text-align:center">Voice Hospital Booking - Bengaluru</p>
+<h1>🎤 AI Voicers</h1>
+<p style="text-align:center">Book Doctor By Voice</p>
 
 <div class="card">
-<h2>🎤 Voice Booking</h2>
-<button onclick="startVoice()">🎤 Tap & Speak - "Book Dr Priya tomorrow 10 AM"</button>
-<p id="voiceText">Say your booking...</p>
+<div class="top-btns">
+<button onclick="startVoice()">🎤 Speak</button>
+<button onclick="stopVoice()" style="background:#ff3b30">⏹ Stop</button>
+</div>
+<p id="voiceText" style="text-align:center">Tap Speak and say "Book Dr Rahul tomorrow 10 AM"</p>
 </div>
 
 <div class="card">
-<h2>👨‍⚕️ 1. Doctor List</h2>
-<div id="doctorList"></div>
-</div>
-
-<div class="card">
-<h2>🏥 4. Hospital List</h2>
-<div id="hospitalList"></div>
-</div>
-
-<div class="card">
-<h2>📝 Book Appointment</h2>
-<input id="pName" placeholder="Your Name">
-<select id="dSelect"></select>
-<input type="date" id="bDate">
-<h3>2. Select Time Slot</h3>
+<h3>Book Appointment</h3>
+<label>Doctor</label>
+<select id="doctor">
+<option value="Dr. Rahul Verma">Dr. Rahul Verma - Cardiologist</option>
+<option value="Dr. Priya Sharma">Dr. Priya Sharma - Dentist</option>
+<option value="Dr. Arjun Mehta">Dr. Arjun Mehta - General</option>
+<option value="Dr. Sneha Iyer">Dr. Sneha Iyer - Pediatrician</option>
+</select>
+<label>Date</label>
+<input type="date" id="date">
+<label>Select Slot</label><br>
 <div id="slots"></div>
-<p>Selected: <b id="selSlot">None</b></p>
-<button class="green" onclick="book()">Confirm Booking ✅</button>
+<button onclick="book()">Confirm Booking ✅</button>
 </div>
 
 <div class="card">
-<h2>📋 3. My Appointments</h2>
-<div id="myApps">No appointments yet</div>
+<h3>📅 My Appointments</h3>
+<div id="myAppts">No appointments yet</div>
 </div>
+
+<div id="toast"></div>
 
 <script>
-let doctors=[
-{name:"Dr. Priya Sharma - General", hosp:"Apollo Hospital", fee:"₹500"},
-{name:"Dr. Rahul Verma - Heart", hosp:"Fortis Hospital", fee:"₹800"},
-{name:"Dr. Ananya Iyer - Child", hosp:"Manipal Hospital", fee:"₹600"},
-{name:"Dr. Vikram Rao - Skin", hosp:"Columbia Asia", fee:"₹400"}
-];
-let hospitals=["Apollo Hospital - Bannerghatta","Fortis Hospital - Bannerghatta","Manipal Hospital - Old Airport Rd","Columbia Asia - Hebbal"];
-let slots=["09:00 AM","10:00 AM","11:00 AM","12:00 PM","04:00 PM","05:00 PM","06:00 PM"];
 let chosenSlot="";
-
-let dl=document.getElementById('doctorList');
-let ds=document.getElementById('dSelect');
-doctors.forEach((d,i)=>{
- dl.innerHTML+=`<div class="doc"><div><b>${d.name}</b><br>${d.hosp} | ${d.fee}</div><button style="width:auto" onclick="selectDoc(${i})">Book</button></div><hr>`;
- ds.innerHTML+=`<option value="${i}">${d.name} - ${d.hosp}</option>`;
-});
-document.getElementById('hospitalList').innerHTML=hospitals.map(h=>`• ${h}<br>`).join('');
-
-let sl=document.getElementById('slots');
+let slots=["09:00 AM","10:00 AM","11:00 AM","12:00 PM","04:00 PM","05:00 PM"];
+let slotsDiv=document.getElementById("slots");
 slots.forEach(s=>{
- sl.innerHTML+=`<span class="slot" onclick="pickSlot(this,'${s}')">${s}</span>`;
+ let b=document.createElement("button");
+ b.className="slot-btn"; b.innerText=s;
+ b.onclick=()=>{chosenSlot=s; document.querySelectorAll(".slot-btn").forEach(x=>x.classList.remove("selected")); b.classList.add("selected");};
+ slotsDiv.appendChild(b);
 });
-function pickSlot(el,s){document.querySelectorAll('.slot').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');chosenSlot=s;document.getElementById('selSlot').innerText=s;}
-function selectDoc(i){ds.value=i;window.scrollTo(0,400);}
+document.getElementById("date").valueAsDate=new Date();
+
+function showToast(msg){
+ let t=document.getElementById("toast");
+ t.innerText=msg; t.style.display="block";
+ setTimeout(()=>{t.style.display="none"},2500);
+}
 
 function book(){
- let name=document.getElementById('pName').value||"Guest";
- let d=doctors[ds.value];
- let date=document.getElementById('bDate').value||"Tomorrow";
- if(!chosenSlot){alert("Please select time slot");return;}
- let apps=JSON.parse(localStorage.getItem('apps')||'[]');
- apps.push({name:name,doc:d.name,hosp:d.hosp,date:date,slot:chosenSlot});
- localStorage.setItem('apps',JSON.stringify(apps));
- alert("Voice understood! Now select slot & Confirm");
- showApps();
+ let d=document.getElementById("doctor").value;
+ let date=document.getElementById("date").value;
+ if(!chosenSlot){ showToast("Please select a slot"); return; }
+ let list=JSON.parse(localStorage.getItem("appts")||"[]");
+ list.push({doctor:d,date:date,slot:chosenSlot});
+ localStorage.setItem("appts",JSON.stringify(list));
+ showToast("Booked! "+d+" "+date+" "+chosenSlot);
+ render();
 }
-function showApps(){
- let apps=JSON.parse(localStorage.getItem('apps')||'[]');
- let div=document.getElementById('myApps');
- if(apps.length==0){div.innerHTML="No appointments yet";return;}
- div.innerHTML=apps.map((a,i)=>`<div class="card" style="background:#e7f1ff"><b>${a.doc}</b><br>${a.hosp}<br>${a.date} - ${a.slot}<br>Patient: ${a.name}<br><button class="red" onclick="cancelApp(${i})">5. Cancel ❌</button></div>`).join('');
+
+function render(){
+ let list=JSON.parse(localStorage.getItem("appts")||"[]");
+ let div=document.getElementById("myAppts");
+ if(list.length==0){div.innerHTML="No appointments yet"; return;}
+ div.innerHTML=list.map((a,i)=>`<div style="border:1px solid #eee;padding:10px;border-radius:10px;margin-bottom:8px"><b>${a.doctor}</b><br>${a.date} at ${a.slot}<br><button onclick="cancelAppt(${i})" style="background:red;margin-top:5px">Cancel</button></div>`).join("");
 }
-function cancelApp(i){
- let apps=JSON.parse(localStorage.getItem('apps')||'[]');
- if(confirm("Cancel this appointment?")){apps.splice(i,1);localStorage.setItem('apps',JSON.stringify(apps));showApps();}
+function cancelAppt(i){
+ let list=JSON.parse(localStorage.getItem("appts")||"[]");
+ list.splice(i,1); localStorage.setItem("appts",JSON.stringify(list));
+ showToast("Cancelled"); render();
 }
+render();
+
+let rec;
 function startVoice(){
- let r=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
- r.lang='en-IN'; r.start();
- r.onresult=e=>{
-  let t=e.results[0][0].transcript;
-  document.getElementById('voiceText').innerText="You said: "+t;
-  document.getElementById('pName').value="Guest";
-  if(t.toLowerCase().includes("priya")) ds.value=0;
-  if(t.toLowerCase().includes("rahul")) ds.value=1;
-  if(t.toLowerCase().includes("ananya")) ds.value=2;
-  if(t.toLowerCase().includes("vikram")) ds.value=3;
-  if(t.includes("10")) pickSlot(document.querySelectorAll('.slot')[1],"10:00 AM");
-  alert("Voice understood! Now select slot & Confirm");
+ let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){ showToast("Voice not supported in this browser"); return; }
+ rec=new SR(); rec.lang="en-IN";
+ rec.onresult=(e)=>{
+  let txt=e.results[0][0].transcript;
+  document.getElementById("voiceText").innerText="You said: "+txt;
+  showToast("Got it! Now select slot & Confirm");
+  if(txt.toLowerCase().includes("rahul")) document.getElementById("doctor").value="Dr. Rahul Verma";
+  if(txt.toLowerCase().includes("priya")) document.getElementById("doctor").value="Dr. Priya Sharma";
+  if(txt.toLowerCase().includes("arjun")) document.getElementById("doctor").value="Dr. Arjun Mehta";
+  if(txt.toLowerCase().includes("sneha")) document.getElementById("doctor").value="Dr. Sneha Iyer";
  };
+ rec.start();
+ showToast("Listening... Speak now");
 }
-showApps();
+function stopVoice(){ if(rec) rec.stop(); showToast("Voice stopped"); }
 </script>
 </body>
 </html>
