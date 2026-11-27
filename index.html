@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Voicers | Voice Appointment in Kannada</title>
+<style>
+body{font-family:Arial,sans-serif;background:#fff7ed;margin:0;padding:0;text-align:center}
+header{background:#ea580c;color:white;padding:30px 15px}
+header h1{margin:0;font-size:32px}
+header p{font-size:18px}
+.card{background:white;margin:20px;padding:20px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.1);max-width:500px;margin-left:auto;margin-right:auto}
+button{background:#ea580c;color:white;border:none;padding:15px 25px;font-size:18px;border-radius:10px;cursor:pointer;width:100%;margin-top:10px}
+button.green{background:#16a34a}
+input,select{width:100%;padding:12px;margin:8px 0;border:1px solid #ddd;border-radius:8px;font-size:16px;box-sizing:border-box}
+.kannada{font-size:20px;color:#7c2d12}
+</style>
+</head>
+<body>
+<header>
+<h1>🎙️ AI-Voicers</h1>
+<p>Voice Appointment Booking in Kannada</p>
+<p class="kannada">ಕನ್ನಡದಲ್ಲಿ ಧ್ವನಿ ಮೂಲಕ ಅಪಾಯಿಂಟ್ಮೆಂಟ್</p>
+<p>For Raichur Patients | ರಾಯಚೂರು ರೋಗಿಗಳಿಗಾಗಿ</p>
+</header>
+
+<div class="card">
+<h2>1. Speak in Kannada</h2>
+<p>Click below and say: <br><b>"Nanage doctor appointment beku"</b></p>
+<button onclick="startVoice()">🎤 Tap to Speak - ಮಾತನಾಡಿ</button>
+<p id="voiceText" style="color:#ea580c;font-weight:bold"></p>
+</div>
+
+<div class="card">
+<h2>2. Book Appointment</h2>
+<input type="text" id="name" placeholder="Your Name / ನಿಮ್ಮ ಹೆಸರು">
+<input type="tel" id="phone" placeholder="Phone Number / ಫೋನ್ ನಂಬರ್">
+<select id="doctor">
+<option>Dr. Priya - General Physician</option>
+<option>Dr. Manjunath - Child Specialist</option>
+<option>Dr. Anitha - Gynecologist</option>
+</select>
+<select id="hospital">
+<option>Raichur District Hospital</option>
+<option>Navodaya Medical College, Raichur</option>
+<option>RIMS Raichur</option>
+</select>
+<input type="date" id="date">
+<button class="green" onclick="book()">✅ Book Appointment - ಬುಕ್ ಮಾಡಿ</button>
+<p id="result"></p>
+</div>
+
+<div class="card">
+<h3>Why AI-Voicers?</h3>
+<p>✅ No English Needed<br>✅ No Typing Needed<br>✅ Just Speak in Kannada<br>✅ For Old People & Villages</p>
+<p>Made by <b>Nityashree78</b> | Raichur, Karnataka</p>
+</div>
+
+<script>
+function startVoice(){
+  document.getElementById('voiceText').innerText = "Listening... ದಯವಿಟ್ಟು ಮಾತನಾಡಿ...";
+  if('webkitSpeechRecognition' in window){
+    const r = new webkitSpeechRecognition();
+    r.lang = 'kn-IN';
+    r.onresult = function(e){
+      const text = e.results[0][0].transcript;
+      document.getElementById('voiceText').innerText = "You said: " + text;
+      document.getElementById('name').value = text;
+    }
+    r.start();
+  } else {
+    alert("Voice not supported in this browser. Please use Chrome.");
+  }
+}
+function book(){
+  const n = document.getElementById('name').value;
+  const d = document.getElementById('doctor').value;
+  const h = document.getElementById('hospital').value;
+  const date = document.getElementById('date').value;
+  if(!n){ alert("Please enter name"); return; }
+  document.getElementById('result').innerHTML = "<b>✅ Appointment Booked!</b><br>"+n+"<br>"+d+"<br>"+h+"<br>Date: "+date+"<br>We will call you soon!";
+}
+</script>
+</body>
+</html>
