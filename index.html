@@ -34,7 +34,7 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 
 <div class="top">
 <h1>🎙️ Voice Civic Rakshak</h1>
-<p>ರಾಯಚೂರು | Full Auto - No Button Needed After Mic</p>
+<p>ರಾಯಚೂರು | Full Auto Kannada Voice</p>
 </div>
 
 <div class="card">
@@ -51,71 +51,49 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 <textarea id="text" placeholder="ಉದಾ: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ..."></textarea>
 <button class="btn mic" id="micBtn" onclick="startVoice()">🎤 ಹೇಳಿ - Press & Speak</button>
 <div id="status">🎤 ಒತ್ತಿ, ಹೇಳಿ</div>
-<div class="hint">⚡ FULL AUTO: Speak → Auto Select → Auto Submit → Auto Voice Reply</div>
+<div class="hint">⚡ FULL AUTO: Speak → Auto Select → Auto Submit → Auto Voice Reply in Kannada</div>
 </div>
 
 <div class="result" id="result">
-<h3>✅ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</h3>
+<h3>✅ ನಿಮ್ಮ ಕಂಪ್ಲೇಂಟ್ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ!</h3>
 <p id="rText" style="margin-top:8px"></p>
 <span class="badge" id="rId"></span>
-<p style="font-size:13px;margin-top:8px;color:#065F46">ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. 2 ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ.</p>
+<p style="font-size:14px;margin-top:10px;color:#065F46;font-weight:bold" id="finalVoiceText"></p>
 </div>
 
 <div class="card">
 <h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
 <div id="list"><p style="color:#888">ಇನ್ನೂ ದೂರು ಇಲ್ಲ.</p></div>
 </div>
-<p class="small">Full Auto | Karnataka Kannada Voice | Raichur</p>
+<p class="small">Full Auto | Kannada Voice Back | Raichur</p>
 
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=1n0wD2J9"></script>
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
-let audioUnlocked = false;
 let audioCtx = null;
 render();
 
-// ===== AUTO VOICE UNLOCK - This is the secret =====
 function unlockAudio(){
-  // 1. Unlock Web Audio - Chrome needs this once
   try{
     if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if(audioCtx.state === 'suspended') audioCtx.resume();
-    // Play silent sound to unlock
     let o = audioCtx.createOscillator(); let g = audioCtx.createGain();
     g.gain.value = 0.0001; o.connect(g); g.connect(audioCtx.destination);
     o.start(); o.stop(audioCtx.currentTime + 0.05);
   }catch(e){}
-  // 2. Unlock speechSynthesis - speak empty
-  try{
-    speechSynthesis.getVoices();
-    let u = new SpeechSynthesisUtterance(" ");
-    u.volume = 0; speechSynthesis.speak(u);
-  }catch(e){}
-  // 3. Unlock ResponsiveVoice - speak empty
-  try{ if(window.responsiveVoice) responsiveVoice.speak(" ", "Kannada Female", {volume: 0}); }catch(e){}
-  audioUnlocked = true;
+  try{ speechSynthesis.getVoices(); }catch(e){}
 }
 
-// ===== AUTO VOICE - Kannada =====
 function speakAuto(text){
-  document.getElementById('status').innerText = "🔊 Speaking: " + text;
-  // Make sure unlocked
-  if(!audioUnlocked) unlockAudio();
-  // Stop old
+  document.getElementById('status').innerText = "🔊 " + text;
   try{ responsiveVoice.cancel(); }catch(e){}
   try{ speechSynthesis.cancel(); }catch(e){}
-
-  // Use ResponsiveVoice - Auto play allowed because user already pressed Mic
   if(window.responsiveVoice){
-    responsiveVoice.speak(text, "Kannada Female", {
-      rate: 0.9,
-      onstart: ()=>{ document.getElementById('status').innerText = "🔊 Voice playing..."; },
-      onend: ()=>{ document.getElementById('status').innerText = "✅ Voice mugithu"; }
-    });
+    responsiveVoice.speak(text, "Kannada Female", {rate: 0.9});
   } else {
     let u = new SpeechSynthesisUtterance(text);
-    u.lang = 'kn-IN'; u.rate = 0.85; u.volume = 1;
+    u.lang = 'kn-IN'; u.rate = 0.85;
     speechSynthesis.speak(u);
   }
 }
@@ -136,7 +114,6 @@ function manualSelect(kn){
   document.getElementById('text').value = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + kn + " ಸಮಸ್ಯೆ ಇದೆ.";
   speakAuto("ನೀವು " + kn + " ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ.");
 }
-
 function autoDetect(text){
   let t = text.toLowerCase();
   if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return 'ಕಸ';
@@ -147,27 +124,19 @@ function autoDetect(text){
   return 'ಬೇರೆ ಸಮಸ್ಯೆ';
 }
 
-// ===== FULL AUTO FLOW =====
 function startVoice(){
-  // STEP 0: UNLOCK - User pressed Mic, so Chrome now allows Auto Voice
   unlockAudio();
-
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){ alert("Please open in Chrome"); return; }
-
   let btn = document.getElementById('micBtn');
   btn.innerText = "🔴 ಕೇಳುತ್ತಿದ್ದೇನೆ... ಹೇಳಿ";
   btn.classList.add('listening');
-  document.getElementById('status').innerText = "🔊 ಹೇಳಿ, ಯಾವುದೇ ಸಮಸ್ಯೆ ಹೇಳಿ";
 
-  // AUTO VOICE 1: Heli, yen samasye?
+  // AUTO VOICE 1
   speakAuto("ಹೇಳಿ, ಯಾವುದೇ ಸಮಸ್ಯೆ ಹೇಳಿ, ನಾನು ಕೇಳುತ್ತಿದ್ದೇನೆ.");
 
   const rec = new SR();
-  rec.lang = 'kn-IN';
-  rec.interimResults = false;
-  rec.continuous = false;
-
+  rec.lang = 'kn-IN'; rec.interimResults = false;
   rec.onresult = e => {
     let txt = e.results[0][0].transcript;
     document.getElementById('text').value = txt;
@@ -175,33 +144,19 @@ function startVoice(){
     highlight(selectedKn);
     btn.innerText = "🎤 ಹೇಳಿ - Press & Speak";
     btn.classList.remove('listening');
-    document.getElementById('status').innerText = "✅ ಕೇಳಿದೆ: " + txt + " | Submit ಮಾಡುತ್ತಿದ್ದೇನೆ...";
-
-    // AUTO VOICE 2: Ok kelide
-    speakAuto("ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. " + txt + ". ಈಗ ದೂರು ಸಲ್ಲಿಸುತ್ತಿದ್ದೇನೆ.");
-
-    // AUTO SUBMIT after 1.5 sec
+    document.getElementById('status').innerText = "✅ ಕೇಳಿದೆ: " + txt;
+    // AUTO VOICE 2
+    speakAuto("ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. " + txt + ". ಈಗ ಕಂಪ್ಲೇಂಟ್ ಸಲ್ಲಿಸುತ್ತಿದ್ದೇನೆ.");
     setTimeout(()=>{ submitComplaint(true); }, 1500);
   };
-  rec.onerror = ()=>{
-    btn.innerText = "🎤 ಹೇಳಿ - Press & Speak";
-    btn.classList.remove('listening');
-    document.getElementById('status').innerText = "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ";
-  };
-  rec.onend = ()=>{
-    btn.innerText = "🎤 ಹೇಳಿ - Press & Speak";
-    btn.classList.remove('listening');
-  };
-  // Start listening after voice 1 finishes a bit, so it doesn't listen to itself
+  rec.onerror = ()=>{ btn.innerText = "🎤 ಹೇಳಿ - Press & Speak"; btn.classList.remove('listening'); };
+  rec.onend = ()=>{ btn.innerText = "🎤 ಹೇಳಿ - Press & Speak"; btn.classList.remove('listening'); };
   setTimeout(()=>{ rec.start(); }, 1200);
 }
 
 function submitComplaint(auto=false){
   let txt = document.getElementById('text').value.trim();
-  if(!txt){
-    speakAuto("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ.");
-    return;
-  }
+  if(!txt){ speakAuto("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ."); return; }
   selectedKn = autoDetect(txt);
   highlight(selectedKn);
   let id = "RCR" + Math.floor(1000 + Math.random()*9000);
@@ -212,12 +167,15 @@ function submitComplaint(auto=false){
   localStorage.setItem('civic', JSON.stringify(complaints));
   document.getElementById('result').style.display='block';
   document.getElementById('rText').innerText = txt;
-  document.getElementById('rId').innerText = "ದೂರು ಸಂಖ್ಯೆ: " + id + " | " + selectedKn;
+  document.getElementById('rId').innerText = "ಕಂಪ್ಲೇಂಟ್ ನಂಬರ್: " + id + " | " + selectedKn;
+
+  // ===== YOUR LINE - In Kannada, Raichur style =====
+  let finalText = "ನಿಮ್ಮ ಕಂಪ್ಲೇಂಟ್ ರಿಜಿಸ್ಟರ್ ಆಗಿದೆ. ನಿಮ್ಮ ಕಂಪ್ಲೇಂಟ್ ನಂಬರ್ " + idKannada + ". ಸಮಸ್ಯೆ " + selectedKn + ". ಪುರಸಭೆಗೆ ಹೋಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡ್ತಾರೆ. ಧನ್ಯವಾದಗಳು.";
+  document.getElementById('finalVoiceText').innerText = "🔊 " + finalText;
   document.getElementById('result').scrollIntoView({behavior:'smooth'});
   if(navigator.vibrate) navigator.vibrate([200,100,200]);
 
-  // AUTO RESPONSE 3: Your complaint has registered
-  let finalText = "ನಿಮ್ಮ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ " + idKannada + ". ಸಮಸ್ಯೆ " + selectedKn + ". ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ. ಧನ್ಯವಾದಗಳು.";
+  // AUTO RESPONSE - Speaks back in Kannada
   speakAuto(finalText);
   render();
 }
@@ -226,13 +184,10 @@ function render(){
   if(!complaints.length) return;
   l.innerHTML = complaints.map(c=>`<div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#065F46">${c.status}</span><br><small>${c.time}</small></div>`).join('');
 }
-// Pre-load voices on page load
 speechSynthesis.getVoices();
-if(window.responsiveVoice) responsiveVoice.speak(" ", "Kannada Female", {volume:0});
 </script>
 </body>
 </html>
-
     
         
 
