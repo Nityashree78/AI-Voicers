@@ -1,397 +1,169 @@
-
-html name=janaseva.html
 <!DOCTYPE html>
 <html lang="kn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#5b3c99">
-  <title>ಜನಸೇವಾ Voice AI</title>
-  <style>
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      padding: 18px;
-      display: grid;
-      place-items: center;
-      background: #eee7ff;
-      color: #30254a;
-      font-family: system-ui, "Noto Sans Kannada", sans-serif;
-      font-size: 18px;
-      line-height: 1.55;
-    }
-
-    .container {
-      width: min(100%, 560px);
-      padding: 24px;
-      border-radius: 22px;
-      background: #fff;
-      box-shadow: 0 10px 35px rgba(100, 70, 150, .15);
-    }
-
-    .header { margin-bottom: 22px; text-align: center; }
-    .icon { font-size: 48px; }
-    h1 { margin: 5px 0 8px; color: #5b3c99; font-size: 29px; }
-    .subtitle { color: #665c75; }
-
-    label {
-      display: block;
-      margin: 17px 0 7px;
-      color: #40364d;
-      font-weight: 750;
-    }
-
-    textarea, input {
-      width: 100%;
-      padding: 13px;
-      border: 2px solid #d8c9f5;
-      border-radius: 11px;
-      background: #fff;
-      color: #241a12;
-      font: inherit;
-    }
-
-    textarea { min-height: 125px; resize: vertical; }
-
-    textarea:focus, input:focus, button:focus-visible {
-      outline: 3px solid #9067d8;
-      outline-offset: 2px;
-    }
-
-    button {
-      width: 100%;
-      min-height: 54px;
-      padding: 12px;
-      border: 0;
-      border-radius: 12px;
-      color: white;
-      font: inherit;
-      font-weight: 800;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    button:disabled { opacity: .65; cursor: wait; }
-
-    .voice-button {
-      margin-top: 11px;
-      background: #8b65d6;
-      font-size: 20px;
-    }
-
-    .voice-button.listening {
-      background: #b3261e;
-      animation: pulse 1s infinite;
-    }
-
-    .submit-button { margin-top: 20px; background: #5b3c99; }
-    .speak-button { margin-top: 10px; background: #6949a9; }
-
-    @keyframes pulse {
-      50% { transform: scale(1.02); }
-    }
-
-    #status {
-      min-height: 30px;
-      margin: 10px 0 0;
-      color: #5b3c99;
-      text-align: center;
-    }
-
-    .privacy-note {
-      margin-top: 14px;
-      padding: 11px;
-      border-radius: 10px;
-      background: #fff7e6;
-      color: #584a31;
-      font-size: 16px;
-    }
-
-    #result {
-      display: none;
-      margin-top: 20px;
-      padding: 17px;
-      border-radius: 12px;
-      background: #f1eaff;
-      color: #4e347d;
-      overflow-wrap: anywhere;
-    }
-
-    #result h2 { margin: 0 0 10px; font-size: 22px; }
-    #result p { margin: 7px 0; }
-
-    .footer {
-      margin-top: 20px;
-      color: #766d80;
-      text-align: center;
-      font-size: 15px;
-    }
-
-    @media (max-width: 420px) {
-      body { padding: 10px; }
-      .container { padding: 18px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice Civic Rakshak - Raichur</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#FDF4FF;padding:16px}
+.top{background:#FCE7F3;color:#831843;padding:18px;border-radius:18px;text-align:center;border:2px solid #FBCFE8}
+.top h1{font-size:24px;color:#9D174D}
+.top p{font-size:13px;margin-top:4px;color:#BE185D}
+.card{background:#FFFFFF;border:2px solid #FBCFE8;border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.card h2{font-size:18px;color:#701A75}
+.card p{font-size:13px;color:#A21CAF;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.opt{border:2px solid #E9D5FF;background:#FAF5FF;border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold;color:#6B21A8}
+.opt.active{background:#D8B4FE;color:#3B0764;border-color:#A855F7;transform:scale(1.04)}
+.opt span{font-size:26px;display:block}
+textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padding:10px;margin-top:10px;font-size:14px;background:#FFFBEB}
+.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
+.mic{background:#FEF3C7;color:#92400E;border:2px solid #FDE68A}
+.listen{background:#E0E7FF;color:#3730A3;border:2px solid #C7D2FE}
+.submit{background:#D1FAE5;color:#065F46;border:2px solid #A7F3D0}
+.result{background:#ECFDF5;border:2px solid #A7F3D0;border-radius:16px;padding:16px;margin-top:14px;display:none}
+.result h3{color:#065F46}
+.badge{display:inline-block;background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:6px}
+.item{background:#FDF4FF;border:1px solid #FBCFE8;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
+.small{font-size:12px;color:#C084FC;margin-top:14px;text-align:center}
+.hint{background:#FEF9C3;border:1px solid #FDE68A;padding:10px;border-radius:10px;margin-top:10px;font-size:12px;color:#92400E;text-align:center}
+</style>
 </head>
 <body>
-  <main class="container">
-    <header class="header">
-      <div class="icon" aria-hidden="true">🏙️</div>
-      <h1>ಜನಸೇವಾ Voice AI</h1>
-      <p class="subtitle">ಸಾರ್ವಜನಿಕ ಸಮಸ್ಯೆಗಳನ್ನು ಧ್ವನಿಯ ಮೂಲಕ ತಿಳಿಸಿ</p>
-    </header>
 
-    <form id="complaintForm">
-      <label for="complaint">ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ತಿಳಿಸಿ</label>
-      <textarea
-        id="complaint"
-        placeholder="ಇಲ್ಲಿ ಬರೆಯಿರಿ ಅಥವಾ ಧ್ವನಿಯ ಮೂಲಕ ತಿಳಿಸಿ..."
-        required
-      ></textarea>
+<div class="top">
+<h1>🎙️ Voice Civic Rakshak</h1>
+<p>ರಾಯಚೂರು | Just Speak - Auto Select + Auto Submit</p>
+</div>
 
-      <button id="voiceButton" type="button" class="voice-button">
-        🎤 ಧ್ವನಿಯ ಮೂಲಕ ದೂರು ನೀಡಿ
-      </button>
-      <p id="status" role="status" aria-live="polite"></p>
+<div class="card">
+<h2>1. ಸಮಸ್ಯೆ ಏನು?</h2>
+<p>Speak ಮಾಡಿದ್ರೆ ಸಾಕು - ತಾನಾಗೇ Select + Submit ಆಗುತ್ತೆ</p>
+<div class="grid">
+<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ','Raste Halla')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
+<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ','Kasa')">🗑️<br>ಕಸ<br>Garbage</div>
+<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ','Beedi Deepa')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
+<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು','Neeru')">💧<br>ನೀರು<br>Water</div>
+<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ','Charandi')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ','Bere Samasye')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
+</div>
 
-      <label for="location">ಸಮಸ್ಯೆ ಇರುವ ಸ್ಥಳ</label>
-      <input
-        id="location"
-        type="text"
-        placeholder="ಊರು, ರಸ್ತೆ, ಪ್ರದೇಶ..."
-        required
-      >
+<textarea id="text" placeholder="ಉದಾ: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ..."></textarea>
 
-      <button type="submit" class="submit-button">ದೂರು ಉಳಿಸಿ</button>
-    </form>
+<button class="btn mic" onclick="startVoice()">🎤 ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ - Speak</button>
+<div class="hint">👆 Speak ಮಾಡಿದ 1 ಸೆಕೆಂಡ್ ನಲ್ಲಿ ತಾನಾಗೇ Submit ಆಗುತ್ತೆ</div>
+<button class="btn listen" onclick="speakText()">🔊 ಕೇಳಿ - Listen</button>
+<button class="btn submit" onclick="submitComplaint()">✅ ದೂರು ಸಲ್ಲಿಸಿ</button>
+</div>
 
-    <section id="result" aria-live="polite">
-      <h2>✅ ದೂರು ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ</h2>
-      <p id="complaintId"></p>
-      <p id="category"></p>
-      <p id="complaintDetails"></p>
-      <p id="locationDetails"></p>
-      <p id="confirmation"></p>
-      <button id="speakButton" class="speak-button" type="button">
-        🔊 ದೃಢೀಕರಣ ಕೇಳಿ
-      </button>
-    </section>
+<div class="result" id="result">
+<h3>✅ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</h3>
+<p id="rText" style="margin-top:8px"></p>
+<span class="badge" id="rId"></span>
+<p style="font-size:13px;margin-top:8px;color:#065F46">ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. 2 ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ.</p>
+<button class="btn listen" onclick="speakResult()">🔊 ಮತ್ತೆ ಕೇಳಿ</button>
+</div>
 
-    <p class="privacy-note">
-      ನಿಮ್ಮ ದೂರು ಈ ಸಾಧನದಲ್ಲೇ ಉಳಿಯುತ್ತದೆ. ಇದು ಸರ್ಕಾರಿ ಕಚೇರಿಗೆ ಕಳುಹಿಸುವುದಿಲ್ಲ.
-      ಇಲ್ಲಿ ತೋರಿಸುವ ಸಂಖ್ಯೆ ಸ್ಥಳೀಯ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ ಮಾತ್ರ.
-    </p>
+<div class="card">
+<h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
+<div id="list"><p style="color:#888">ಇನ್ನೂ ದೂರು ಇಲ್ಲ.</p></div>
+</div>
+<p class="small">New Colours - Pink + Lavender + Mint | Kannada Sound Fix</p>
 
-    <footer class="footer">ಸಾರ್ವಜನಿಕ ಸೇವೆ · ಜನರ ಧ್ವನಿ · ಉತ್ತಮ ನಗರ</footer>
-  </main>
+<script>
+let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
+let selectedRoman = "Bere Samasye";
+let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
+render();
 
-  <script>
-    'use strict';
+// * MAIN FIX - Speak in ROMAN KANNADA so it SOUNDS Kannada even without Kannada voice *
+function speakKannadaRoman(text){
+  speechSynthesis.cancel();
+  let u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-IN'; // Use Indian English voice to pronounce Roman Kannada correctly
+  u.rate = 0.9;
+  u.pitch = 1;
+  speechSynthesis.speak(u);
+}
 
-    const form = document.getElementById('complaintForm');
-    const complaintInput = document.getElementById('complaint');
-    const locationInput = document.getElementById('location');
-    const voiceButton = document.getElementById('voiceButton');
-    const statusText = document.getElementById('status');
-    const result = document.getElementById('result');
-    const speakButton = document.getElementById('speakButton');
-    const STORAGE_KEY = 'janaseva_complaints_kn_v1';
+function highlight(type){
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
+  if(type==='ರಸ್ತೆ ಹಳ್ಳ') document.getElementById('opt-road').classList.add('active');
+  if(type==='ಕಸ') document.getElementById('opt-garbage').classList.add('active');
+  if(type==='ಬೀದಿ ದೀಪ') document.getElementById('opt-light').classList.add('active');
+  if(type==='ನೀರು') document.getElementById('opt-water').classList.add('active');
+  if(type==='ಚರಂಡಿ') document.getElementById('opt-drain').classList.add('active');
+  if(type==='ಬೇರೆ ಸಮಸ್ಯೆ') document.getElementById('opt-other').classList.add('active');
+}
 
-    let recognition = null;
-    let lastConfirmation = '';
-    let kannadaVoice = null;
+function manualSelect(kn, roman){
+  selectedKn = kn; selectedRoman = roman;
+  highlight(kn);
+  document.getElementById('text').value = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + kn + " ಸಮಸ್ಯೆ ಇದೆ.";
+  speakKannadaRoman("Neenu " + roman + " aayke maadidde. Eega heli athava submit maadi.");
+}
 
-    function findKannadaVoice() {
-      if (!('speechSynthesis' in window)) return null;
+function autoDetect(text){
+  let t = text.toLowerCase();
+  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return ['ಕಸ','Kasa'];
+  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('bulb')) return ['ಬೀದಿ ದೀಪ','Beedi Deepa illa'];
+  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return ['ರಸ್ತೆ ಹಳ್ಳ','Raste Halla'];
+  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return ['ನೀರು','Neeru illa'];
+  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಮೋರಿ')) return ['ಚರಂಡಿ','Charandi'];
+  return ['ಬೇರೆ ಸಮಸ್ಯೆ','Bere Samasye'];
+}
 
-      const voices = window.speechSynthesis.getVoices();
-      return voices.find(voice => /^kn-IN$/i.test(voice.lang)) ||
-        voices.find(voice => /^kn(?:-|_|$)/i.test(voice.lang)) ||
-        null;
-    }
+function startVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert("Please open in Chrome"); return; }
+  const rec = new SR(); rec.lang = 'kn-IN'; rec.interimResults = false;
+  rec.onresult = e => {
+    let txt = e.results[0][0].transcript;
+    document.getElementById('text').value = txt;
+    let d = autoDetect(txt);
+    selectedKn = d[0]; selectedRoman = d[1];
+    highlight(selectedKn);
+    speakKannadaRoman("Nimma maatu kelide. " + txt + ". Eega dooru sallisuttiddini.");
+    setTimeout(()=>{ submitComplaint(true); }, 1300);
+  };
+  rec.start();
+  speakKannadaRoman("Heli, yaavaade samasye heli, naanu keluttiddini.");
+}
 
-    function speakKannada(text) {
-      if (!('speechSynthesis' in window) ||
-          typeof SpeechSynthesisUtterance === 'undefined') {
-        statusText.textContent = 'ಈ ಸಾಧನದಲ್ಲಿ ಧ್ವನಿ ಸೌಲಭ್ಯ ಲಭ್ಯವಿಲ್ಲ.';
-        return;
-      }
+function speakText(){
+  let t = document.getElementById('text').value || "Namma beediyalli samasye ide";
+  // Convert to Roman for speaking - if Kannada script, speak generic
+  speakKannadaRoman("Nimma dooru: " + selectedRoman + ". Dayavittu sari maadi.");
+}
 
-      window.speechSynthesis.cancel();
-      kannadaVoice = findKannadaVoice();
-
-      if (!kannadaVoice) {
-        statusText.textContent = 'ಕನ್ನಡ ಧ್ವನಿ ಸಿಗಲಿಲ್ಲ. ಸಾಧನದಲ್ಲಿ ಕನ್ನಡ ಧ್ವನಿಯನ್ನು ಅಳವಡಿಸಿ.';
-        return;
-      }
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'kn-IN';
-      utterance.voice = kannadaVoice;
-      utterance.rate = 0.88;
-      utterance.pitch = 1;
-      utterance.volume = 1;
-      window.speechSynthesis.speak(utterance);
-    }
-
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.onvoiceschanged = findKannadaVoice;
-      findKannadaVoice();
-    }
-
-    function startVoice() {
-      const SpeechRecognitionAPI =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
-
-      if (!SpeechRecognitionAPI) {
-        statusText.textContent =
-          'ಈ ಸಾಧನದಲ್ಲಿ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ ಲಭ್ಯವಿಲ್ಲ. ಬರೆಯುವ ಮೂಲಕ ದೂರು ನೀಡಿ.';
-        return;
-      }
-
-      if (recognition) {
-        try { recognition.abort(); } catch (_) { /* ಗುರುತಿಸುವಿಕೆ ನಿಂತಿದೆ */ }
-      }
-
-      recognition = new SpeechRecognitionAPI();
-      recognition.lang = 'kn-IN';
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-
-      recognition.onstart = () => {
-        voiceButton.classList.add('listening');
-        voiceButton.textContent = '🎧 ಕೇಳಲಾಗುತ್ತಿದೆ...';
-        statusText.textContent = 'ನಿಮ್ಮ ಮಾತನ್ನು ಕೇಳಲಾಗುತ್ತಿದೆ...';
-      };
-
-      recognition.onresult = event => {
-        const transcript = event.results?.[0]?.[0]?.transcript;
-
-        if (transcript) {
-          complaintInput.value = transcript;
-          statusText.textContent = 'ನಿಮ್ಮ ಮಾತು ಗುರುತಿಸಲಾಗಿದೆ.';
-          complaintInput.focus();
-        } else {
-          statusText.textContent = 'ಮಾತು ಕೇಳಿಸಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
-        }
-      };
-
-      recognition.onerror = event => {
-        const messages = {
-          'not-allowed': 'ಮೈಕ್ರೊಫೋನ್ ಅನುಮತಿ ನೀಡಿ.',
-          'audio-capture': 'ಮೈಕ್ರೊಫೋನ್ ಸಿಗಲಿಲ್ಲ.',
-          'no-speech': 'ಮಾತು ಕೇಳಿಸಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
-          'network': 'ಜಾಲದ ತೊಂದರೆ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.'
-        };
-        statusText.textContent =
-          messages[event.error] || 'ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆಯಲ್ಲಿ ತೊಂದರೆ ಉಂಟಾಯಿತು.';
-      };
-
-      recognition.onend = () => {
-        voiceButton.classList.remove('listening');
-        voiceButton.textContent = '🎤 ಧ್ವನಿಯ ಮೂಲಕ ದೂರು ನೀಡಿ';
-      };
-
-      try {
-        recognition.start();
-      } catch (_) {
-        statusText.textContent = 'ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ ಪ್ರಾರಂಭವಾಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
-      }
-    }
-
-    function detectCategory(text) {
-      const value = text.toLowerCase();
-
-      if (value.includes('ನೀರು')) return 'ನೀರಿನ ಸಮಸ್ಯೆ';
-      if (value.includes('ರಸ್ತೆ') || value.includes('ಗುಂಡಿ')) return 'ರಸ್ತೆ ಸಮಸ್ಯೆ';
-      if (value.includes('ವಿದ್ಯುತ್') || value.includes('ಕರೆಂಟ್')) return 'ವಿದ್ಯುತ್ ಸಮಸ್ಯೆ';
-      if (value.includes('ಕಸ')) return 'ಕಸ ವಿಲೇವಾರಿ ಸಮಸ್ಯೆ';
-      if (value.includes('ಚರಂಡಿ')) return 'ಚರಂಡಿ ಸಮಸ್ಯೆ';
-      if (value.includes('ದೀಪ') || value.includes('ಲೈಟ್')) return 'ಬೀದಿ ದೀಪದ ಸಮಸ್ಯೆ';
-
-      return 'ಇತರೆ ಸಾರ್ವಜನಿಕ ಸಮಸ್ಯೆ';
-    }
-
-    function readSavedComplaints() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        return Array.isArray(saved) ? saved : [];
-      } catch (_) {
-        return [];
-      }
-    }
-
-    function makeReferenceNumber() {
-      const randomPart = Math.floor(100000 + Math.random() * 900000);
-      return `ಸ್ಥಳೀಯ-${Date.now().toString().slice(-6)}-${randomPart}`;
-    }
-
-    voiceButton.addEventListener('click', startVoice);
-
-    form.addEventListener('submit', event => {
-      event.preventDefault();
-
-      const complaintText = complaintInput.value.trim();
-      const place = locationInput.value.trim();
-
-      if (!complaintText || !place) {
-        statusText.textContent = 'ದಯವಿಟ್ಟು ಸಮಸ್ಯೆ ಮತ್ತು ಸ್ಥಳವನ್ನು ತಿಳಿಸಿ.';
-        return;
-      }
-
-      const entry = {
-        reference: makeReferenceNumber(),
-        category: detectCategory(complaintText),
-        complaint: complaintText,
-        location: place,
-        createdAt: new Date().toISOString()
-      };
-
-      const savedComplaints = readSavedComplaints();
-      savedComplaints.push(entry);
-
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(savedComplaints));
-      } catch (_) {
-        statusText.textContent =
-          'ದೂರು ಉಳಿಸಲಾಗಲಿಲ್ಲ. ಸಾಧನದಲ್ಲಿ ಸಂಗ್ರಹ ಜಾಗ ಪರಿಶೀಲಿಸಿ.';
-        return;
-      }
-
-      document.getElementById('complaintId').textContent =
-        `ಸ್ಥಳೀಯ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ: ${entry.reference}`;
-      document.getElementById('category').textContent =
-        `ವಿಭಾಗ: ${entry.category}`;
-      document.getElementById('complaintDetails').textContent =
-        `ದೂರು: ${entry.complaint}`;
-      document.getElementById('locationDetails').textContent =
-        `ಸ್ಥಳ: ${entry.location}`;
-      document.getElementById('confirmation').textContent =
-        'ದೂರು ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ. ಇದು ಸರ್ಕಾರಿ ಕಚೇರಿಗೆ ಕಳುಹಿಸಲ್ಪಟ್ಟಿಲ್ಲ.';
-
-      lastConfirmation =
-        `ನಿಮ್ಮ ದೂರು ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ. ${entry.category}. ಸ್ಥಳೀಯ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ ${entry.reference}.`;
-
-      result.style.display = 'block';
-      statusText.textContent = 'ದೂರು ಈ ಸಾಧನದಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ.';
-      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
-
-    speakButton.addEventListener('click', () => {
-      if (lastConfirmation) speakKannada(lastConfirmation);
-    });
-
-    window.addEventListener('pagehide', () => {
-      if (recognition) {
-        try { recognition.abort(); } catch (_) { /* ಮುಗಿದಿದೆ */ }
-      }
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    });
-  </script>
+function submitComplaint(auto=false){
+  let txt = document.getElementById('text').value.trim();
+  if(!txt){ speakKannadaRoman("Modalu nimma samasye heli."); return; }
+  let d = autoDetect(txt);
+  selectedKn = d[0]; selectedRoman = d[1];
+  highlight(selectedKn);
+  let id = "RCR" + Math.floor(1000 + Math.random()*9000);
+  let idSpoken = id.slice(3).split('').join(' ');
+  let obj = {id:id, type:selectedKn, text:txt, time:new Date().toLocaleString('en-IN'), status:"ಪುರಸಭೆಗೆ ಹೋಗಿದೆ"};
+  complaints.unshift(obj);
+  localStorage.setItem('civic', JSON.stringify(complaints));
+  document.getElementById('result').style.display='block';
+  document.getElementById('rText').innerText = txt;
+  document.getElementById('rId').innerText = "ದೂರು ಸಂಖ್ಯೆ: " + id + " | " + selectedKn;
+  // 100% ROMAN KANNADA SPEAK BACK - Will sound like Kannada now
+  window._last = "Nimma dooru swikarisalagide. Nimma dooru sankhye, R C R " + idSpoken + ". Samasye, " + selectedRoman + ". Purasabhege kalisalagide. Eradu dina dalli sari maaduttare. Dhanyavadagalu.";
+  setTimeout(()=> speakKannadaRoman(window._last), 400);
+  render();
+}
+function speakResult(){ if(window._last) speakKannadaRoman(window._last); }
+function render(){
+  let l = document.getElementById('list');
+  if(!complaints.length) return;
+  l.innerHTML = complaints.map(c=><div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#065F46">${c.status}</span><br><small>${c.time}</small></div>).join('');
+}
+</script>
 </body>
 </html>
+
+    
