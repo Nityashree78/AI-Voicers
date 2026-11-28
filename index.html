@@ -4,73 +4,76 @@
 <title>AI Voicers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;margin:0;background:linear-gradient(#FFF1F2,#F5F3FF,#ECFEFF);text-align:center;padding-bottom:20px}
-.top{background:white;margin:15px;padding:22px;border-radius:28px;box-shadow:0 4px 15px #E9D5FF}
-.top h1{margin:0;font-size:34px;color:#7C3AED}
-.top p{color:#666;margin:5px}
-.lang button{padding:8px 16px;margin:4px;border:none;border-radius:20px;background:#F5F3FF;font-weight:bold}
-.voicebox{background:white;margin:15px;padding:25px;border-radius:28px;box-shadow:0 4px 15px #FBCFE8}
-.mic{width:110px;height:110px;border-radius:50%;border:none;background:#C084FC;font-size:50px;box-shadow:0 6px 20px #C084FC}
-.card{background:white;margin:15px;padding:20px;border-radius:25px;text-align:left;box-shadow:0 4px 15px #E9D5FF}
-.card h3{margin:0 0 8px 0;color:#6D28D9}
-.result{font-size:17px;line-height:1.5}
+body{font-family:Arial;margin:0;background:#000000;text-align:center;padding-bottom:20px;color:white}
+.top{background:#1A1A1A;margin:15px;padding:22px;border-radius:28px;border:1px solid #333}
+.top h1{margin:0;font-size:34px;color:#C084FC}
+.top p{color:#D8B4FE}
+.lang button{padding:8px 16px;margin:4px;border:none;border-radius:20px;background:#2E2E2E;color:white;font-weight:bold}
+.voicebox{background:#1A1A1A;margin:15px;padding:25px;border-radius:28px;border:1px solid #C084FC}
+.mic{width:110px;height:110px;border-radius:50%;border:none;background:#C084FC;font-size:50px;box-shadow:0 0 25px #C084FC}
+.card{background:#1A1A1A;margin:15px;padding:20px;border-radius:25px;text-align:left;border:1px solid #333}
+.card h3{color:#C084FC;margin:0 0 8px 0}
+.result{font-size:18px;line-height:1.6;color:white}
 </style>
 </head>
 <body>
 
 <div class="top">
 <h1>✨ AI Voicers ✨</h1>
-<p>For Old People, Farmers & Mothers in Raichur</p>
-<p>No Clicking, No Typing, No English - Only Speaking</p>
+<p>ರಾಯಚೂರುಗಾಗಿ - ಮಾತನಾಡಿ ಸಾಕು, ಟೈಪ್ ಮಾಡಬೇಡಿ</p>
+<p>No Typing, No English - Only Speaking</p>
 <div class="lang"><button>English</button><button>ಕನ್ನಡ</button><button>हिन्दी</button></div>
 </div>
 
 <div class="voicebox">
-<h2 style="color:#6D28D9;margin-top:0">🎤 Just Speak</h2>
-<p>Say: <b>"Fever ge appointment book maadi"</b></p>
+<h2 style="color:#C084FC">🎤 ಮಾತನಾಡಿ - Just Speak</h2>
+<p>ಹೇಳಿ: <b>"ಜ್ವರಕ್ಕೆ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಬುಕ್ ಮಾಡಿ"</b></p>
 <button class="mic" onclick="startVoice()">🎙️</button>
-<p id="heard" style="font-size:18px">Tap mic and speak...</p>
-<p style="color:#888">No clicking anything else - Voice will generate all below</p>
+<p id="heard" style="font-size:18px">ಮೈಕ್ ಒತ್ತಿ ಮಾತನಾಡಿ...</p>
+<p style="color:#999">No clicking anything else - Voice will generate all</p>
 </div>
 
 <div class="card">
-<h3>✅ Appointment - Auto Generated</h3>
-<p class="result" id="appt">Speak to generate appointment...</p>
+<h3>✅ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ - Appointment</h3>
+<p class="result" id="appt">ಮಾತನಾಡಿದರೆ ಇಲ್ಲಿ ಬರುತ್ತದೆ...</p>
 </div>
 
 <div class="card">
-<h3>💊 Medicine - How To Take</h3>
-<p class="result" id="med">Speak to generate medicine...</p>
+<h3>💊 ಔಷಧಿ - Medicine</h3>
+<p class="result" id="med">ಮಾತನಾಡಿದರೆ ಇಲ್ಲಿ ಬರುತ್ತದೆ...</p>
 </div>
 
 <div class="card">
-<h3>⏰ Reminder - Auto Set</h3>
-<p class="result" id="rem">Speak to generate reminder...</p>
+<h3>⏰ ರಿಮೈಂಡರ್ - Reminder</h3>
+<p class="result" id="rem">ಮಾತನಾಡಿದರೆ ಇಲ್ಲಿ ಬರುತ್ತದೆ...</p>
 </div>
 
 <script>
 function startVoice(){
-document.getElementById('heard').innerText="Listening... Please speak in Kannada";
+document.getElementById('heard').innerText="ಕೇಳುತ್ತಿದ್ದೇನೆ... ದಯವಿಟ್ಟು ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ";
 const rec = new (window.SpeechRecognition||window.webkitSpeechRecognition)();
 rec.lang='kn-IN';
 rec.onresult=(e)=>{
-let text=e.results[0][0].transcript.toLowerCase();
-document.getElementById('heard').innerText="You said: "+text;
+let text=e.results[0][0].transcript;
+document.getElementById('heard').innerText="ನೀವು ಹೇಳಿದ್ದು: "+text;
 
-let disease="Fever";
-let medicine="Paracetamol - Beligge 1 tablet oota aadmele, Sanje 1 tablet oota aadmele. Neeru jasti kudiyiri.";
-if(text.includes("cough")||text.includes("kemmu")||text.includes("cough")){disease="Cough / Cold"; medicine="Azithromycin - Dina 1 tablet oota aagake munche. 3 dina tagoli. Bisi neeru kudiyiri.";}
-if(text.includes("stomach")||text.includes("hott")){disease="Stomach Pain"; medicine="Pantop - Beligge 1 tablet oota aagake munche, khali hottege.";}
-if(text.includes("head")||text.includes("tale")){disease="Headache"; medicine="Paracetamol - Talenovu idre 1 tablet oota aadmele tagoli. Swalpa rest madi.";}
-if(text.includes("sugar")||text.includes("diabetes")){disease="Diabetes Checkup"; medicine="Diabetes Tablet - Beligge 1 tablet oota aagake munche. Sakkare kammi madi.";}
+let disease="ಜ್ವರ";
+let medicine="ಪ್ಯಾರಸಿಟಮಾಲ್ - ಬೆಳಿಗ್ಗೆ 1 ಮಾತ್ರೆ ಊಟದ ನಂತರ, ಸಂಜೆ 1 ಮಾತ್ರೆ ಊಟದ ನಂತರ. ನೀರು ಜಾಸ್ತಿ ಕುಡಿಯಿರಿ.";
+if(text.includes("ಕೆಮ್ಮು")){disease="ಕೆಮ್ಮು / ಶೀತ"; medicine="ಅಜಿಥ್ರೋಮೈಸಿನ್ - ದಿನಕ್ಕೆ 1 ಮಾತ್ರೆ ಊಟಕ್ಕಿಂತ ಮುಂಚೆ. 3 ದಿನ ತೆಗೆದುಕೊಳ್ಳಿ.";}
+if(text.includes("ಹೊಟ್ಟೆ")){disease="ಹೊಟ್ಟೆ ನೋವು"; medicine="ಪ್ಯಾಂಟಾಪ್ - ಬೆಳಿಗ್ಗೆ 1 ಮಾತ್ರೆ ಖಾಲಿ ಹೊಟ್ಟೆಗೆ, ಊಟಕ್ಕಿಂತ ಮುಂಚೆ.";}
+if(text.includes("ತಲೆ")){disease="ತಲೆ ನೋವು"; medicine="ಪ್ಯಾರಸಿಟಮಾಲ್ - ತಲೆ ನೋವಿದ್ದರೆ 1 ಮಾತ್ರೆ ಊಟದ ನಂತರ. ಸ್ವಲ್ಪ ವಿಶ್ರಾಂತಿ ಮಾಡಿ.";}
 
-document.getElementById('appt').innerHTML="✅ <b>Booked!</b><br>"+disease+"<br>Tomorrow, 10 AM<br>Raichur District Hospital<br>Token No: 12";
+document.getElementById('appt').innerHTML="✅ <b>ಬುಕ್ ಆಯ್ತು!</b><br>"+disease+"<br>ನಾಳೆ, ಬೆಳಿಗ್ಗೆ 10 ಗಂಟೆ<br>ರಾಯಚೂರು ಜಿಲ್ಲಾ ಆಸ್ಪತ್ರೆ<br>ಟೋಕನ್ ನಂ: 12";
 document.getElementById('med').innerText="💊 "+medicine;
-document.getElementById('rem').innerHTML="⏰ <b>Reminder Set!</b><br>Beligge 9 AM - 1 Tablet<br>Sanje 9 PM - 1 Tablet<br>We will remind you on time.";
+document.getElementById('rem').innerHTML="⏰ <b>ರಿಮೈಂಡರ್ ಸೆಟ್ ಆಯ್ತು!</b><br>ಬೆಳಿಗ್ಗೆ 9 ಗಂಟೆ - 1 ಮಾತ್ರೆ<br>ಸಂಜೆ 9 ಗಂಟೆ - 1 ಮಾತ್ರೆ";
 
-let speakText="Appointment booked tomorrow 10 AM Raichur hospital. "+medicine+" Reminder set 9 AM and 9 PM";
+let speakText="ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಬುಕ್ ಆಯ್ತು. ನಾಳೆ ಬೆಳಿಗ್ಗೆ ಹತ್ತು ಗಂಟೆಗೆ ರಾಯಚೂರು ಆಸ್ಪತ್ರೆ. "+medicine+" ರಿಮೈಂಡರ್ ಬೆಳಿಗ್ಗೆ ಒಂಬತ್ತು ಗಂಟೆ ಮತ್ತು ಸಂಜೆ ಒಂಬತ್ತು ಗಂಟೆಗೆ ಸೆಟ್ ಮಾಡಿದ್ದೇವೆ.";
 let msg=new SpeechSynthesisUtterance(speakText);
 msg.lang='kn-IN';
+msg.rate=0.9;
+let voices=speechSynthesis.getVoices();
+let kannadaVoice=voices.find(v=>v.lang.includes('kn'));
+if(kannadaVoice) msg.voice=kannadaVoice;
 speechSynthesis.speak(msg);
 };
 rec.start();
