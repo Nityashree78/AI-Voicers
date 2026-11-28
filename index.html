@@ -77,7 +77,7 @@ let selectedRoman = "Bere Samasye";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
 render();
 
-// * MAIN FIX - Speak in ROMAN KANNADA so it SOUNDS Kannada even without Kannada voice *
+// *** MAIN FIX - Speak in ROMAN KANNADA so it SOUNDS Kannada even without Kannada voice ***
 function speakKannadaRoman(text){
   speechSynthesis.cancel();
   let u = new SpeechSynthesisUtterance(text);
@@ -160,10 +160,9 @@ function speakResult(){ if(window._last) speakKannadaRoman(window._last); }
 function render(){
   let l = document.getElementById('list');
   if(!complaints.length) return;
-  l.innerHTML = complaints.map(c=><div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#065F46">${c.status}</span><br><small>${c.time}</small></div>).join('');
+  l.innerHTML = complaints.map(c=>`<div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#065F46">${c.status}</span><br><small>${c.time}</small></div>`).join('');
 }
 </script>
 </body>
 </html>
-
     
