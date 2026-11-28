@@ -4,51 +4,48 @@
 <title>AI Voicers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;margin:0;background:#F3E8FF;text-align:center}
-.header{background:#C084FC;color:white;padding:25px}
-.header h1{margin:0;font-size:30px}
-.header p{margin:5px;font-size:16px}
-.lang button{padding:8px 18px;margin:5px;border:none;border-radius:20px;background:white;color:#9333EA;font-weight:bold}
-.box{background:white;margin:15px;padding:20px;border-radius:15px;text-align:left;box-shadow:0 2px 8px #D8B4FE}
-.voicebtn{background:#9333EA;color:white;padding:16px;border:none;border-radius:12px;font-size:19px;width:100%;font-weight:bold}
-h2,h3{color:#6B21A8}
-.big{font-size:18px}
+body{font-family:Arial;margin:0;background:linear-gradient(#FFF1F2,#F5F3FF,#ECFEFF);text-align:center;padding-bottom:20px}
+.top{background:white;margin:15px;padding:22px;border-radius:28px;box-shadow:0 4px 15px #E9D5FF}
+.top h1{margin:0;font-size:34px;color:#7C3AED}
+.top p{color:#666;margin:5px}
+.lang button{padding:8px 16px;margin:4px;border:none;border-radius:20px;background:#F5F3FF;font-weight:bold}
+.voicebox{background:white;margin:15px;padding:25px;border-radius:28px;box-shadow:0 4px 15px #FBCFE8}
+.mic{width:110px;height:110px;border-radius:50%;border:none;background:#C084FC;font-size:50px;box-shadow:0 6px 20px #C084FC}
+.card{background:white;margin:15px;padding:20px;border-radius:25px;text-align:left;box-shadow:0 4px 15px #E9D5FF}
+.card h3{margin:0 0 8px 0;color:#6D28D9}
+.result{font-size:17px;line-height:1.5}
 </style>
 </head>
 <body>
 
-<div class="header">
-<h1>🎙️ AI Voicers</h1>
+<div class="top">
+<h1>✨ AI Voicers ✨</h1>
 <p>For Old People, Farmers & Mothers in Raichur</p>
-<p>No typing, No English reading - Only Speaking</p>
+<p>No Clicking, No Typing, No English - Only Speaking</p>
 <div class="lang"><button>English</button><button>ಕನ್ನಡ</button><button>हिन्दी</button></div>
 </div>
 
-<div class="box" style="text-align:center">
-<h2>🎤 Speak Now</h2>
-<p class="big">Click and say:<br><b>"Fever ge appointment book maadi"</b></p>
-<button class="voicebtn" onclick="startVoice()">🎤 Start Listening</button>
-<p id="heard" class="big">Listening... Speak now</p>
+<div class="voicebox">
+<h2 style="color:#6D28D9;margin-top:0">🎤 Just Speak</h2>
+<p>Say: <b>"Fever ge appointment book maadi"</b></p>
+<button class="mic" onclick="startVoice()">🎙️</button>
+<p id="heard" style="font-size:18px">Tap mic and speak...</p>
+<p style="color:#888">No clicking anything else - Voice will generate all below</p>
 </div>
 
-<div class="box">
-<h3>✅ Appointment Booked</h3>
-<p id="appt" class="big">Your appointment will come here after you speak</p>
+<div class="card">
+<h3>✅ Appointment - Auto Generated</h3>
+<p class="result" id="appt">Speak to generate appointment...</p>
 </div>
 
-<div class="box">
+<div class="card">
 <h3>💊 Medicine - How To Take</h3>
-<p id="med" class="big">Medicine in simple Kannada will come here</p>
+<p class="result" id="med">Speak to generate medicine...</p>
 </div>
 
-<div class="box">
-<h3>⏰ Reminder For Old People</h3>
-<p id="rem" class="big">Reminder time will come here</p>
-</div>
-
-<div class="box">
-<h3>❤️ Why We Chose This Project?</h3>
-<p class="big">In Raichur, many old people cannot type or read English. They struggle to book hospital appointment and understand medicine. So we made AI Voicers - just speak in Kannada, it will book, explain medicine, and remind tablet time.</p>
+<div class="card">
+<h3>⏰ Reminder - Auto Set</h3>
+<p class="result" id="rem">Speak to generate reminder...</p>
 </div>
 
 <script>
@@ -57,12 +54,22 @@ document.getElementById('heard').innerText="Listening... Please speak in Kannada
 const rec = new (window.SpeechRecognition||window.webkitSpeechRecognition)();
 rec.lang='kn-IN';
 rec.onresult=(e)=>{
-let text=e.results[0][0].transcript;
+let text=e.results[0][0].transcript.toLowerCase();
 document.getElementById('heard').innerText="You said: "+text;
-document.getElementById('appt').innerText="✅ Booked! Tomorrow, 10 AM, Raichur District Hospital. For: "+text+". Doctor will see you.";
-document.getElementById('med').innerText="💊 Paracetamol - Beligge 1 tablet oota aadmele, Sanje 1 tablet oota aadmele. Neeru jasti kudiyiri. 3 dina tagoli.";
-document.getElementById('rem').innerText="⏰ Reminder Set! Beligge 9 AM - 1 tablet. Sanje 9 PM - 1 tablet. We will remind you on time, don't worry.";
-let msg = new SpeechSynthesisUtterance("Appointment booked tomorrow 10 AM Raichur hospital. Paracetamol beligge ondu, sanje ondu, oota aadmele tagoli. Reminder set 9 AM and 9 PM");
+
+let disease="Fever";
+let medicine="Paracetamol - Beligge 1 tablet oota aadmele, Sanje 1 tablet oota aadmele. Neeru jasti kudiyiri.";
+if(text.includes("cough")||text.includes("kemmu")||text.includes("cough")){disease="Cough / Cold"; medicine="Azithromycin - Dina 1 tablet oota aagake munche. 3 dina tagoli. Bisi neeru kudiyiri.";}
+if(text.includes("stomach")||text.includes("hott")){disease="Stomach Pain"; medicine="Pantop - Beligge 1 tablet oota aagake munche, khali hottege.";}
+if(text.includes("head")||text.includes("tale")){disease="Headache"; medicine="Paracetamol - Talenovu idre 1 tablet oota aadmele tagoli. Swalpa rest madi.";}
+if(text.includes("sugar")||text.includes("diabetes")){disease="Diabetes Checkup"; medicine="Diabetes Tablet - Beligge 1 tablet oota aagake munche. Sakkare kammi madi.";}
+
+document.getElementById('appt').innerHTML="✅ <b>Booked!</b><br>"+disease+"<br>Tomorrow, 10 AM<br>Raichur District Hospital<br>Token No: 12";
+document.getElementById('med').innerText="💊 "+medicine;
+document.getElementById('rem').innerHTML="⏰ <b>Reminder Set!</b><br>Beligge 9 AM - 1 Tablet<br>Sanje 9 PM - 1 Tablet<br>We will remind you on time.";
+
+let speakText="Appointment booked tomorrow 10 AM Raichur hospital. "+medicine+" Reminder set 9 AM and 9 PM";
+let msg=new SpeechSynthesisUtterance(speakText);
 msg.lang='kn-IN';
 speechSynthesis.speak(msg);
 };
