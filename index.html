@@ -22,6 +22,7 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 .mic{background:#FEF3C7;color:#92400E;border:2px solid #FDE68A}
 .listen{background:#E0E7FF;color:#3730A3;border:2px solid #C7D2FE}
 .submit{background:#D1FAE5;color:#065F46;border:2px solid #A7F3D0}
+.test{background:#FFE4E6;color:#881337;border:2px solid #FECDD3}
 .result{background:#ECFDF5;border:2px solid #A7F3D0;border-radius:16px;padding:16px;margin-top:14px;display:none}
 .result h3{color:#065F46}
 .badge{display:inline-block;background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:6px}
@@ -51,8 +52,9 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 
 <textarea id="text" placeholder="ಉದಾ: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ..."></textarea>
 
+<button class="btn test" onclick="testVoice()">🔊 TEST VOICE - First Click This</button>
 <button class="btn mic" onclick="startVoice()">🎤 ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ - Speak</button>
-<div class="hint">👆 Speak ಮಾಡಿದ 1 ಸೆಕೆಂಡ್ ನಲ್ಲಿ ತಾನಾಗೇ Submit ಆಗುತ್ತೆ</div>
+<div class="hint">👆 First click TEST VOICE, then click Speak. Voice will come.</div>
 <button class="btn listen" onclick="speakText()">🔊 ಕೇಳಿ - Listen</button>
 <button class="btn submit" onclick="submitComplaint()">✅ ದೂರು ಸಲ್ಲಿಸಿ</button>
 </div>
@@ -69,23 +71,48 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 <h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
 <div id="list"><p style="color:#888">ಇನ್ನೂ ದೂರು ಇಲ್ಲ.</p></div>
 </div>
-<p class="small">New Colours - Pink + Lavender + Mint | Kannada Sound Fix</p>
+<p class="small">New Colours - Pink + Lavender + Mint | Voice Fixed</p>
 
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
 let selectedRoman = "Bere Samasye";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
+let voices = [];
 render();
 
-// *** MAIN FIX - Speak in ROMAN KANNADA so it SOUNDS Kannada even without Kannada voice ***
+// --- VOICE FIX START ---
+function loadVoices(){
+  voices = speechSynthesis.getVoices();
+}
+loadVoices();
+if(speechSynthesis.onvoiceschanged !== undefined){
+  speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+// Unlock audio on first touch - Chrome needs this
+document.addEventListener('click', function unlock(){
+  speechSynthesis.resume();
+  if(voices.length===0) loadVoices();
+}, {once:true});
+
 function speakKannadaRoman(text){
   speechSynthesis.cancel();
+  speechSynthesis.resume();
   let u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-IN'; // Use Indian English voice to pronounce Roman Kannada correctly
+  u.lang = 'en-IN';
+  u.volume = 1;
   u.rate = 0.9;
   u.pitch = 1;
+  // Pick best voice - Indian English first, else any English
+  let v = voices.find(v=>v.lang==='en-IN') || voices.find(v=>v.lang && v.lang.startsWith('en')) || voices[0];
+  if(v) u.voice = v;
   speechSynthesis.speak(u);
 }
+
+function testVoice(){
+  speakKannadaRoman("Namaste Raichur. Voice working ide. Eega neevu speak maadabahudu.");
+}
+// --- VOICE FIX END ---
 
 function highlight(type){
   document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
@@ -124,8 +151,9 @@ function startVoice(){
     let d = autoDetect(txt);
     selectedKn = d[0]; selectedRoman = d[1];
     highlight(selectedKn);
+    try{ rec.stop(); }catch(err){}
     speakKannadaRoman("Nimma maatu kelide. " + txt + ". Eega dooru sallisuttiddini.");
-    setTimeout(()=>{ submitComplaint(true); }, 1300);
+    setTimeout(()=>{ submitComplaint(true); }, 1500);
   };
   rec.start();
   speakKannadaRoman("Heli, yaavaade samasye heli, naanu keluttiddini.");
@@ -133,7 +161,6 @@ function startVoice(){
 
 function speakText(){
   let t = document.getElementById('text').value || "Namma beediyalli samasye ide";
-  // Convert to Roman for speaking - if Kannada script, speak generic
   speakKannadaRoman("Nimma dooru: " + selectedRoman + ". Dayavittu sari maadi.");
 }
 
@@ -151,9 +178,8 @@ function submitComplaint(auto=false){
   document.getElementById('result').style.display='block';
   document.getElementById('rText').innerText = txt;
   document.getElementById('rId').innerText = "ದೂರು ಸಂಖ್ಯೆ: " + id + " | " + selectedKn;
-  // 100% ROMAN KANNADA SPEAK BACK - Will sound like Kannada now
   window._last = "Nimma dooru swikarisalagide. Nimma dooru sankhye, R C R " + idSpoken + ". Samasye, " + selectedRoman + ". Purasabhege kalisalagide. Eradu dina dalli sari maaduttare. Dhanyavadagalu.";
-  setTimeout(()=> speakKannadaRoman(window._last), 400);
+  setTimeout(()=> speakKannadaRoman(window._last), 500);
   render();
 }
 function speakResult(){ if(window._last) speakKannadaRoman(window._last); }
@@ -165,4 +191,3 @@ function render(){
 </script>
 </body>
 </html>
-    
