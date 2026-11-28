@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="kn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Voice Civic Rakshak - Raichur</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#FDF4FF;padding:16px}
@@ -30,141 +32,398 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 .hint{background:#FEF9C3;border:1px solid #FDE68A;padding:10px;border-radius:10px;margin-top:10px;font-size:12px;color:#92400E;text-align:center}
 </style>
 </head>
+
 <body>
 
 <div class="top">
 <h1>🎙️ Voice Civic Rakshak</h1>
-<p>Raichur | Just Speak - Normal Talk</p>
+<p>Raichur | ಮಾತಾಡಿದ್ರೆ ಸಾಕು - ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ</p>
 </div>
 
 <div class="card">
-<h2>1. Yen Samasye?</h2>
-<p>Speak maadidre saaku - Thanagaage Select + Submit aagutte</p>
+
+<h2>1. ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು?</h2>
+<p>ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ. ನಾವೇ ಗುರುತಿಸಿ ದೂರು ಕೊಡ್ತೀವಿ.</p>
+
 <div class="grid">
-<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ','Road problem')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
-<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ','Kasa problem')">🗑️<br>ಕಸ<br>Garbage</div>
-<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ','Light illa')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
-<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು','Neeru illa')">💧<br>ನೀರು<br>Water</div>
-<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ','Drainage problem')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
-<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ','Bere problem')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
+
+<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ','ರಸ್ತೆಯಲ್ಲಿ ಗುಂಡಿ ಬಿದ್ದಿದೆ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
+
+<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ','ರಸ್ತೆಯಲ್ಲಿ ಕಸ ಬಿದ್ದಿದೆ')">🗑️<br>ಕಸ<br>Garbage</div>
+
+<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ','ಬೀದಿ ದೀಪ ಉರಿಯುತ್ತಿಲ್ಲ')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
+
+<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು','ನಮ್ಮ ಮನೆಗೆ ನೀರು ಬರುತ್ತಿಲ್ಲ')">💧<br>ನೀರು<br>Water</div>
+
+<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ','ಚರಂಡಿ ಕಟ್ಟಿಕೊಂಡಿದೆ')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+
+<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ','ಬೇರೆ ಸಮಸ್ಯೆ ಇದೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
+
 </div>
 
-<textarea id="text" placeholder="Ex: Namma beediyalli kasa togondilla..."></textarea>
+<textarea id="text" placeholder="ನಿಮ್ಮ ಸಮಸ್ಯೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ..."></textarea>
 
-<button class="btn mic" onclick="startVoice()">🎤 Heli - Speak</button>
-<div class="hint">👆 Speak maadid 1 sec nalli thanaage Submit aagutte</div>
-<button class="btn listen" onclick="speakText()">🔊 Keli - Listen</button>
-<button class="btn submit" onclick="submitComplaint()">✅ Complaint Submit Maadi</button>
+<button class="btn mic" onclick="startVoice()">🎤 ಇಲ್ಲಿ ಒತ್ತಿ ಮಾತಾಡಿ</button>
+
+<div class="hint">
+ಮಾತಾಡಿ ಮುಗಿಸಿದ ಮೇಲೆ ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ನಾವೇ ಗುರುತಿಸಿ ದೂರು ಕೊಡ್ತೀವಿ.
+</div>
+
+<button class="btn listen" onclick="speakText()">🔊 ನನ್ನ ಸಮಸ್ಯೆ ಕೇಳಿ</button>
+
+<button class="btn submit" onclick="submitComplaint()">✅ ದೂರು ಕೊಡಿ</button>
+
 </div>
 
 <div class="result" id="result">
-<h3>✅ Complaint Ready Aaytu!</h3>
+
+<h3>✅ ನಿಮ್ಮ ದೂರು ಹೋಗಿದೆ!</h3>
+
 <p id="rText" style="margin-top:8px"></p>
+
 <span class="badge" id="rId"></span>
-<p style="font-size:13px;margin-top:8px;color:#065F46">Purasabhege hogide. 2 dina dalli sari maadtaare.</p>
-<button class="btn listen" onclick="speakResult()">🔊 Matte Keli</button>
+
+<p style="font-size:13px;margin-top:8px;color:#065F46">
+ನಿಮ್ಮ ದೂರಿನ ನಂಬರ್ ಕೊಡ್ತೀನಿ. ಸಂಬಂಧಪಟ್ಟ ಅಧಿಕಾರಿಗಳಿಗೆ ಈ ದೂರು ತಲುಪಬೇಕು.
+</p>
+
+<button class="btn listen" onclick="speakResult()">🔊 ಮತ್ತೆ ಕೇಳಿ</button>
+
 </div>
 
 <div class="card">
-<h2>📋 Nanna Complaints</h2>
-<div id="list"><p style="color:#888">Innu complaint illa.</p></div>
+<h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
+<div id="list"><p style="color:#888">ಇನ್ನೂ ಯಾವುದೇ ದೂರು ಇಲ್ಲ.</p></div>
 </div>
-<p class="small">Normal Talk | Raichur Style | Auto Select + Auto Submit</p>
+
+<p class="small">ಸರಳ ಕನ್ನಡ | ಎಲ್ಲರಿಗೂ ಸುಲಭವಾದ ಧ್ವನಿ ಸೇವೆ | Raichur</p>
 
 <script>
+
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
-let selectedTalk = "Bere problem";
-let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
+let selectedTalk = "ಬೇರೆ ಸಮಸ್ಯೆ ಇದೆ";
+
+let complaints = JSON.parse(localStorage.getItem('civic') || '[]');
+
 render();
 
-// NORMAL TALK - Like how Raichur people speak
+
+// SIMPLE EVERYDAY KANNADA VOICE
+
 function speakNormal(text){
-  speechSynthesis.cancel();
-  let u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-IN';
-  u.rate = 0.95;
-  u.pitch = 1;
-  speechSynthesis.speak(u);
+
+    speechSynthesis.cancel();
+
+    let u = new SpeechSynthesisUtterance(text);
+
+    u.lang = 'kn-IN';
+
+    // Slow and clear voice for elderly people
+    u.rate = 0.82;
+    u.pitch = 1;
+    u.volume = 1;
+
+    let voices = speechSynthesis.getVoices();
+
+    let kannadaVoice = voices.find(v =>
+        v.lang.toLowerCase().startsWith('kn')
+    );
+
+    if(kannadaVoice){
+        u.voice = kannadaVoice;
+    }
+
+    speechSynthesis.speak(u);
 }
+
+
+// SELECT PROBLEM
 
 function highlight(type){
-  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
-  if(type==='ರಸ್ತೆ ಹಳ್ಳ') document.getElementById('opt-road').classList.add('active');
-  if(type==='ಕಸ') document.getElementById('opt-garbage').classList.add('active');
-  if(type==='ಬೀದಿ ದೀಪ') document.getElementById('opt-light').classList.add('active');
-  if(type==='ನೀರು') document.getElementById('opt-water').classList.add('active');
-  if(type==='ಚರಂಡಿ') document.getElementById('opt-drain').classList.add('active');
-  if(type==='ಬೇರೆ ಸಮಸ್ಯೆ') document.getElementById('opt-other').classList.add('active');
+
+    document.querySelectorAll('.opt').forEach(o =>
+        o.classList.remove('active')
+    );
+
+    let ids = {
+        'ರಸ್ತೆ ಹಳ್ಳ':'opt-road',
+        'ಕಸ':'opt-garbage',
+        'ಬೀದಿ ದೀಪ':'opt-light',
+        'ನೀರು':'opt-water',
+        'ಚರಂಡಿ':'opt-drain',
+        'ಬೇರೆ ಸಮಸ್ಯೆ':'opt-other'
+    };
+
+    if(ids[type]){
+        document.getElementById(ids[type]).classList.add('active');
+    }
 }
 
-function manualSelect(kn, talk){
-  selectedKn = kn; selectedTalk = talk;
-  highlight(kn);
-  document.getElementById('text').value = "Namma beediyalli " + talk + " ide.";
-  speakNormal("Neenu " + talk + " select maadide. Eega heli, athava submit maadi.");
+
+// MANUAL SELECTION
+
+function manualSelect(kn,talk){
+
+    selectedKn = kn;
+    selectedTalk = talk;
+
+    highlight(kn);
+
+    document.getElementById('text').value = talk;
+
+    speakNormal("ಸರಿ, " + talk + ". ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ ಅಥವಾ ದೂರು ಕೊಡಿ.");
+
 }
+
+
+// AUTOMATIC PROBLEM DETECTION
 
 function autoDetect(text){
-  let t = text.toLowerCase();
-  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return ['ಕಸ','Kasa problem'];
-  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('bulb')) return ['ಬೀದಿ ದೀಪ','Light illa'];
-  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return ['ರಸ್ತೆ ಹಳ್ಳ','Road problem'];
-  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return ['ನೀರು','Neeru illa'];
-  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಮೋರಿ')) return ['ಚರಂಡಿ','Drainage problem'];
-  return ['ಬೇರೆ ಸಮಸ್ಯೆ','Bere problem'];
+
+    let t = text.toLowerCase();
+
+    if(
+        t.includes('ಕಸ') ||
+        t.includes('kasa') ||
+        t.includes('garbage') ||
+        t.includes('ಕಸ ಹಾಕ')
+    ){
+        return ['ಕಸ','ರಸ್ತೆಯಲ್ಲಿ ಕಸ ಬಿದ್ದಿದೆ'];
+    }
+
+    if(
+        t.includes('ಲೈಟ್') ||
+        t.includes('light') ||
+        t.includes('ದೀಪ') ||
+        t.includes('bulb') ||
+        t.includes('ಬೆಳಕು')
+    ){
+        return ['ಬೀದಿ ದೀಪ','ಬೀದಿ ದೀಪ ಉರಿಯುತ್ತಿಲ್ಲ'];
+    }
+
+    if(
+        t.includes('ರಸ್ತೆ') ||
+        t.includes('rasta') ||
+        t.includes('ಹಳ್ಳ') ||
+        t.includes('road') ||
+        t.includes('ಗುಂಡಿ')
+    ){
+        return ['ರಸ್ತೆ ಹಳ್ಳ','ರಸ್ತೆಯಲ್ಲಿ ಗುಂಡಿ ಬಿದ್ದಿದೆ'];
+    }
+
+    if(
+        t.includes('ನೀರು') ||
+        t.includes('neeru') ||
+        t.includes('water') ||
+        t.includes('ಕುಡಿಯುವ ನೀರು')
+    ){
+        return ['ನೀರು','ನಮ್ಮ ಮನೆಗೆ ನೀರು ಬರುತ್ತಿಲ್ಲ'];
+    }
+
+    if(
+        t.includes('ಚರಂಡಿ') ||
+        t.includes('drainage') ||
+        t.includes('ಮೋರಿ') ||
+        t.includes('ಗಟಾರ')
+    ){
+        return ['ಚರಂಡಿ','ಚರಂಡಿ ಕಟ್ಟಿಕೊಂಡಿದೆ'];
+    }
+
+    return ['ಬೇರೆ ಸಮಸ್ಯೆ','ಬೇರೆ ಸಮಸ್ಯೆ ಇದೆ'];
 }
+
+
+// VOICE RECOGNITION
 
 function startVoice(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){ alert("Please open in Chrome"); return; }
-  const rec = new SR(); rec.lang = 'kn-IN'; rec.interimResults = false;
-  rec.onresult = e => {
-    let txt = e.results[0][0].transcript;
-    document.getElementById('text').value = txt;
-    let d = autoDetect(txt);
-    selectedKn = d[0]; selectedTalk = d[1];
-    highlight(selectedKn);
-    speakNormal("Ok, kelide. " + txt + ". Eega complaint submit maadtaiddini.");
-    setTimeout(()=>{ submitComplaint(true); }, 1300);
-  };
-  rec.start();
-  speakNormal("Heli, yen samasye? Naanu keltaiddini.");
+
+    const SR = window.SpeechRecognition ||
+               window.webkitSpeechRecognition;
+
+    if(!SR){
+
+        alert("ದಯವಿಟ್ಟು Google Chrome ನಲ್ಲಿ ತೆರೆಯಿರಿ.");
+        return;
+    }
+
+    const rec = new SR();
+
+    rec.lang = 'kn-IN';
+    rec.interimResults = false;
+    rec.maxAlternatives = 3;
+
+    speakNormal("ಹೇಳಿ, ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು? ನಾನು ಕೇಳ್ತಿದ್ದೀನಿ.");
+
+    rec.onresult = function(e){
+
+        let txt = e.results[0][0].transcript;
+
+        document.getElementById('text').value = txt;
+
+        let d = autoDetect(txt);
+
+        selectedKn = d[0];
+        selectedTalk = d[1];
+
+        highlight(selectedKn);
+
+        speakNormal("ಸರಿ, ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. ಈಗ ನಿಮ್ಮ ದೂರು ಕೊಡ್ತಿದ್ದೀನಿ.");
+
+        setTimeout(function(){
+
+            submitComplaint(true);
+
+        },2500);
+
+    };
+
+    rec.onerror = function(e){
+
+        speakNormal("ನಿಮ್ಮ ಮಾತು ಸರಿಯಾಗಿ ಕೇಳಿಸಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಹೇಳಿ.");
+
+    };
+
+    rec.start();
+
 }
+
+
+// LISTEN TO COMPLAINT
 
 function speakText(){
-  speakNormal("Nimma complaint: " + selectedTalk + ". Dayavittu sari maadi.");
+
+    let txt = document.getElementById('text').value.trim();
+
+    if(!txt){
+        speakNormal("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ.");
+        return;
+    }
+
+    speakNormal("ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೀಗಿದೆ. " + txt);
+
 }
 
+
+// SUBMIT COMPLAINT
+
 function submitComplaint(auto=false){
-  let txt = document.getElementById('text').value.trim();
-  if(!txt){ speakNormal("Modalu nimma samasye heli."); return; }
-  let d = autoDetect(txt);
-  selectedKn = d[0]; selectedTalk = d[1];
-  highlight(selectedKn);
-  let id = "RCR" + Math.floor(1000 + Math.random()*9000);
-  let idSpoken = id.slice(3).split('').join(' ');
-  let obj = {id:id, type:selectedKn, text:txt, time:new Date().toLocaleString('en-IN'), status:"Purasabhege hogide"};
-  complaints.unshift(obj);
-  localStorage.setItem('civic', JSON.stringify(complaints));
-  document.getElementById('result').style.display='block';
-  document.getElementById('rText').innerText = txt;
-  document.getElementById('rId').innerText = "Complaint Number: " + id + " | " + selectedKn;
-  // NORMAL TALK LIKE PEOPLE SPEAK
-  window._last = "Super! Nimma complaint submit aagide. Number, R C R " + idSpoken + ". Problem, " + selectedTalk + ". Purasabhege hogide. Eradu dina dalli sari maadtaare. Thank you.";
-  setTimeout(()=> speakNormal(window._last), 400);
-  render();
+
+    let txt = document.getElementById('text').value.trim();
+
+    if(!txt){
+
+        speakNormal("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ.");
+        return;
+    }
+
+    let d = autoDetect(txt);
+
+    selectedKn = d[0];
+    selectedTalk = d[1];
+
+    highlight(selectedKn);
+
+    let id = "RCR" + Math.floor(1000 + Math.random()*9000);
+
+    let idSpoken = id.slice(3).split('').join(' ');
+
+    let obj = {
+
+        id:id,
+        type:selectedKn,
+        text:txt,
+        time:new Date().toLocaleString('en-IN'),
+        status:"ದೂರು ದಾಖಲಾಗಿದೆ"
+
+    };
+
+    complaints.unshift(obj);
+
+    localStorage.setItem('civic',JSON.stringify(complaints));
+
+    document.getElementById('result').style.display='block';
+
+    document.getElementById('rText').innerText = txt;
+
+    document.getElementById('rId').innerText =
+        "Complaint Number: " + id + " | " + selectedKn;
+
+    window._last =
+        "ನಿಮ್ಮ ದೂರು ದಾಖಲಾಗಿದೆ. ನಿಮ್ಮ ನಂಬರ್ ಆರ್ ಸಿ ಆರ್ " +
+        idSpoken +
+        ". ನಿಮ್ಮ ಸಮಸ್ಯೆ " +
+        selectedTalk +
+        ". ಧನ್ಯವಾದಗಳು.";
+
+    setTimeout(function(){
+
+        speakNormal(window._last);
+
+    },400);
+
+    render();
+
 }
-function speakResult(){ if(window._last) speakNormal(window._last); }
+
+
+// REPEAT RESULT
+
+function speakResult(){
+
+    if(window._last){
+
+        speakNormal(window._last);
+
+    }
+
+}
+
+
+// COMPLAINT HISTORY
+
 function render(){
-  let l = document.getElementById('list');
-  if(!complaints.length) return;
-  l.innerHTML = complaints.map(c=>`<div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#065F46">${c.status}</span><br><small>${c.time}</small></div>`).join('');
+
+    let l = document.getElementById('list');
+
+    if(!complaints.length){
+
+        l.innerHTML = '<p style="color:#888">ಇನ್ನೂ ಯಾವುದೇ ದೂರು ಇಲ್ಲ.</p>';
+
+        return;
+    }
+
+    l.innerHTML = '';
+
+    complaints.forEach(c=>{
+
+        let div = document.createElement('div');
+
+        div.className = 'item';
+
+        let title = document.createElement('b');
+        title.textContent = c.id + ' - ' + c.type;
+
+        let text = document.createElement('div');
+        text.textContent = c.text;
+
+        let status = document.createElement('div');
+        status.style.color = '#065F46';
+        status.textContent = c.status;
+
+        let time = document.createElement('small');
+        time.textContent = c.time;
+
+        div.append(title,text,status,time);
+
+        l.appendChild(div);
+
+    });
+
 }
+
 </script>
+
 </body>
 </html>
 
-
-
-  
 
