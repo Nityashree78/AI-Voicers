@@ -1,429 +1,702 @@
 
 <!DOCTYPE html>
-<html lang="kn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Voice Civic Rakshak - Raichur</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#FDF4FF;padding:16px}
-.top{background:#FCE7F3;padding:18px;border-radius:18px;text-align:center;border:2px solid #FBCFE8}
-.top h1{font-size:24px;color:#9D174D}
-.top p{font-size:13px;margin-top:4px;color:#BE185D}
-.card{background:#fff;border:2px solid #FBCFE8;border-radius:18px;padding:16px;margin-top:14px}
-.card h2{font-size:18px;color:#701A75}
-.card p{font-size:13px;color:#A21CAF;line-height:1.5}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.opt{border:2px solid #E9D5FF;background:#FAF5FF;border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold;color:#6B21A8}
-.opt.active{background:#D8B4FE;color:#3B0764;border-color:#A855F7;transform:scale(1.04)}
-.opt span{font-size:26px;display:block}
-textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padding:10px;margin-top:10px;font-size:14px;background:#FFFBEB}
-.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
-.mic{background:#FEF3C7;color:#92400E;border:2px solid #FDE68A}
-.listen{background:#E0E7FF;color:#3730A3;border:2px solid #C7D2FE}
-.submit{background:#D1FAE5;color:#065F46;border:2px solid #A7F3D0}
-.result{background:#ECFDF5;border:2px solid #A7F3D0;border-radius:16px;padding:16px;margin-top:14px;display:none}
-.result h3{color:#065F46}
-.badge{display:inline-block;background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:6px}
-.item{background:#FDF4FF;border:1px solid #FBCFE8;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
-.small{font-size:12px;color:#C084FC;margin-top:14px;text-align:center}
-.hint{background:#FEF9C3;border:1px solid #FDE68A;padding:10px;border-radius:10px;margin-top:10px;font-size:12px;color:#92400E;text-align:center}
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ffe0ec, #fce4f0);
+    color: #333;
+}
+
+header {
+    background: #d63384;
+    color: white;
+    text-align: center;
+    padding: 22px 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 27px;
+}
+
+header p {
+    margin-bottom: 0;
+}
+
+.container {
+    max-width: 700px;
+    margin: 25px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 5px 18px #00000018;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 17px;
+    margin: 10px 0;
+}
+
+button {
+    border: none;
+    padding: 15px 22px;
+    border-radius: 12px;
+    background: #d63384;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 8px;
+}
+
+button:hover {
+    background: #ad2168;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#micButton {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    font-size: 45px;
+    background: #e83e8c;
+}
+
+#status {
+    font-size: 18px;
+    min-height: 28px;
+    margin: 15px 0;
+    color: #a61e63;
+    font-weight: bold;
+}
+
+#conversation {
+    background: #fff1f7;
+    padding: 18px;
+    border-radius: 12px;
+    min-height: 100px;
+    text-align: left;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+.complaint {
+    text-align: left;
+    background: #fff1f7;
+    border-left: 5px solid #d63384;
+    padding: 14px;
+    margin: 12px 0;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+.small {
+    font-size: 14px;
+    color: #666;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+}
 </style>
 </head>
 
 <body>
 
-<div class="top">
-<h1>🎙️ Voice Civic Rakshak</h1>
-<p>Raichur | ಮಾತಾಡಿದ್ರೆ ಸಾಕು - ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ</p>
-</div>
+<header>
+    <h1>🎙️ Voice Civic Rakshak</h1>
+    <p>Smart Voice-Based Civic Complaint Assistant</p>
+    <p>Raichur, Karnataka</p>
+</header>
 
-<div class="card">
+<div class="container">
 
-<h2>1. ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು?</h2>
-<p>ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ. ನಾವೇ ಗುರುತಿಸಿ ದೂರು ಕೊಡ್ತೀವಿ.</p>
+    <div class="card">
+        <h2>Welcome!</h2>
+        <p id="welcomeText">
+            Speak in Kannada, English or Hindi to register your complaint.
+        </p>
 
-<div class="grid">
+        <select id="language">
+            <option value="kn-IN">ಕನ್ನಡ (Kannada)</option>
+            <option value="en-IN">English</option>
+            <option value="hi-IN">हिन्दी (Hindi)</option>
+        </select>
 
-<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ','ರಸ್ತೆಯಲ್ಲಿ ಗುಂಡಿ ಬಿದ್ದಿದೆ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
+        <br>
 
-<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ','ರಸ್ತೆಯಲ್ಲಿ ಕಸ ಬಿದ್ದಿದೆ')">🗑️<br>ಕಸ<br>Garbage</div>
+        <button onclick="startAssistant()">Start Voice Assistant</button>
 
-<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ','ಬೀದಿ ದೀಪ ಉರಿಯುತ್ತಿಲ್ಲ')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
+        <div id="status">Press Start Voice Assistant</div>
 
-<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು','ನಮ್ಮ ಮನೆಗೆ ನೀರು ಬರುತ್ತಿಲ್ಲ')">💧<br>ನೀರು<br>Water</div>
+        <button id="micButton" onclick="listen()" disabled>🎤</button>
 
-<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ','ಚರಂಡಿ ಕಟ್ಟಿಕೊಂಡಿದೆ')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+        <p class="small">Tap the microphone and speak clearly.</p>
+    </div>
 
-<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ','ಬೇರೆ ಸಮಸ್ಯೆ ಇದೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
+    <div class="card">
+        <h3>Conversation</h3>
+        <div id="conversation">
+            Your conversation will appear here.
+        </div>
+    </div>
 
-</div>
-
-<textarea id="text" placeholder="ನಿಮ್ಮ ಸಮಸ್ಯೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ..."></textarea>
-
-<button class="btn mic" onclick="startVoice()">🎤 ಇಲ್ಲಿ ಒತ್ತಿ ಮಾತಾಡಿ</button>
-
-<div class="hint">
-ಮಾತಾಡಿ ಮುಗಿಸಿದ ಮೇಲೆ ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ನಾವೇ ಗುರುತಿಸಿ ದೂರು ಕೊಡ್ತೀವಿ.
-</div>
-
-<button class="btn listen" onclick="speakText()">🔊 ನನ್ನ ಸಮಸ್ಯೆ ಕೇಳಿ</button>
-
-<button class="btn submit" onclick="submitComplaint()">✅ ದೂರು ಕೊಡಿ</button>
-
-</div>
-
-<div class="result" id="result">
-
-<h3>✅ ನಿಮ್ಮ ದೂರು ಹೋಗಿದೆ!</h3>
-
-<p id="rText" style="margin-top:8px"></p>
-
-<span class="badge" id="rId"></span>
-
-<p style="font-size:13px;margin-top:8px;color:#065F46">
-ನಿಮ್ಮ ದೂರಿನ ನಂಬರ್ ಕೊಡ್ತೀನಿ. ಸಂಬಂಧಪಟ್ಟ ಅಧಿಕಾರಿಗಳಿಗೆ ಈ ದೂರು ತಲುಪಬೇಕು.
-</p>
-
-<button class="btn listen" onclick="speakResult()">🔊 ಮತ್ತೆ ಕೇಳಿ</button>
+    <div class="card">
+        <h2>Registered Complaints</h2>
+        <div id="complaintList">
+            No complaints registered yet.
+        </div>
+    </div>
 
 </div>
 
-<div class="card">
-<h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
-<div id="list"><p style="color:#888">ಇನ್ನೂ ಯಾವುದೇ ದೂರು ಇಲ್ಲ.</p></div>
-</div>
-
-<p class="small">ಸರಳ ಕನ್ನಡ | ಎಲ್ಲರಿಗೂ ಸುಲಭವಾದ ಧ್ವನಿ ಸೇವೆ | Raichur</p>
+<footer>
+    Voice Civic Rakshak | Hackathon Prototype
+</footer>
 
 <script>
 
-let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
-let selectedTalk = "ಬೇರೆ ಸಮಸ್ಯೆ ಇದೆ";
+// ----------------------------------
+// CLEAR OLD DEMO COMPLAINTS ONLY ONCE
+// ----------------------------------
 
-let complaints = JSON.parse(localStorage.getItem('civic') || '[]');
+if (!localStorage.getItem("civic_demo_cleaned")) {
+    localStorage.removeItem("civic");
+    localStorage.setItem("civic_demo_cleaned", "yes");
+}
 
-render();
+// ----------------------------------
+// LOAD SAVED COMPLAINTS
+// ----------------------------------
 
+let complaints = JSON.parse(
+    localStorage.getItem("civic") || "[]"
+);
 
-// SIMPLE EVERYDAY KANNADA VOICE
+let recognition;
+let language = "kn-IN";
+let currentStep = "problem";
+let problem = "";
+let area = "";
+let assistantStarted = false;
 
-function speakNormal(text){
+const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
 
-    speechSynthesis.cancel();
+if (SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+} else {
+    document.getElementById("status").innerText =
+        "Speech recognition is not supported. Please use Google Chrome.";
+}
 
-    let u = new SpeechSynthesisUtterance(text);
+// ----------------------------------
+// LANGUAGE TEXT
+// ----------------------------------
 
-    u.lang = 'kn-IN';
+const messages = {
 
-    // Slow and clear voice for elderly people
-    u.rate = 0.82;
-    u.pitch = 1;
-    u.volume = 1;
+    "kn-IN": {
+        welcome: "ನಮಸ್ಕಾರ! ನಾನು ನಿಮ್ಮ ಧ್ವನಿ ಸಹಾಯಕ. ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ಹೇಳಿ.",
+        askProblem: "ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು? ಕಸ, ನೀರು, ರಸ್ತೆ, ಬೀದಿ ದೀಪ ಅಥವಾ ಚರಂಡಿ ಸಮಸ್ಯೆಯೇ?",
+        askArea: "ಸಮಸ್ಯೆ ಯಾವ ಪ್ರದೇಶದಲ್ಲಿ ಇದೆ? ನಿಮ್ಮ ಏರಿಯಾ ಹೆಸರನ್ನು ಹೇಳಿ.",
+        askConfirm: "ನಿಮ್ಮ ಸಮಸ್ಯೆ: {problem}. ಪ್ರದೇಶ: {area}. ದೂರು ದಾಖಲಿಸಬೇಕಾ? ಹೌದು ಅಥವಾ ಇಲ್ಲ ಎಂದು ಹೇಳಿ.",
+        success: "ನಿಮ್ಮ ದೂರು ಯಶಸ್ವಿಯಾಗಿ ದಾಖಲಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ {id}.",
+        cancelled: "ದೂರು ದಾಖಲಿಸುವುದನ್ನು ನಿಲ್ಲಿಸಲಾಗಿದೆ.",
+        retry: "ದಯವಿಟ್ಟು ಮತ್ತೊಮ್ಮೆ ಹೇಳಿ.",
+        thanks: "ಧನ್ಯವಾದಗಳು. ನಿಮಗೆ ಇನ್ನೇನಾದರೂ ಸಹಾಯ ಬೇಕಾದರೆ ಮತ್ತೆ ಪ್ರಾರಂಭಿಸಿ.",
+        listening: "ನಿಮ್ಮ ಮಾತನ್ನು ಕೇಳುತ್ತಿದ್ದೇನೆ...",
+        noSpeech: "ನಿಮ್ಮ ಧ್ವನಿ ಕೇಳಿಸಲಿಲ್ಲ. ಮೈಕ್ರೋಫೋನ್ ಒತ್ತಿ ಮತ್ತೆ ಮಾತನಾಡಿ.",
+        notUnderstood: "ನಿಮ್ಮ ಸಮಸ್ಯೆಯನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲಾಗಲಿಲ್ಲ. ಮತ್ತೊಮ್ಮೆ ಹೇಳಿ.",
+        saved: "ನಿಮ್ಮ ದೂರು ದಾಖಲಿಸಲಾಗಿದೆ."
+    },
 
-    let voices = speechSynthesis.getVoices();
+    "en-IN": {
+        welcome: "Hello! I am your voice assistant. Please tell me your problem.",
+        askProblem: "What is your problem? Is it garbage, water, road, streetlight or drainage?",
+        askArea: "In which area is the problem? Please tell me your area name.",
+        askConfirm: "Your problem is {problem}. Your area is {area}. Should I register your complaint? Say yes or no.",
+        success: "Your complaint has been registered successfully. Your complaint number is {id}.",
+        cancelled: "Complaint registration cancelled.",
+        retry: "Please say that again.",
+        thanks: "Thank you. Start again if you need more help.",
+        listening: "I am listening...",
+        noSpeech: "I could not hear you. Press the microphone and speak again.",
+        notUnderstood: "I could not understand your problem. Please try again.",
+        saved: "Your complaint has been registered."
+    },
 
-    let kannadaVoice = voices.find(v =>
-        v.lang.toLowerCase().startsWith('kn')
+    "hi-IN": {
+        welcome: "नमस्ते! मैं आपका वॉइस असिस्टेंट हूं। कृपया अपनी समस्या बताएं।",
+        askProblem: "आपकी समस्या क्या है? कचरा, पानी, सड़क, स्ट्रीट लाइट या नाली की समस्या?",
+        askArea: "समस्या किस इलाके में है? कृपया अपने इलाके का नाम बताएं।",
+        askConfirm: "आपकी समस्या {problem} है। आपका इलाका {area} है। क्या मैं शिकायत दर्ज करूं? हाँ या नहीं बोलें।",
+        success: "आपकी शिकायत सफलतापूर्वक दर्ज हो गई है। आपकी शिकायत संख्या {id} है।",
+        cancelled: "शिकायत दर्ज करना रद्द कर दिया गया है।",
+        retry: "कृपया फिर से बोलें।",
+        thanks: "धन्यवाद। मदद के लिए फिर से शुरू करें।",
+        listening: "मैं सुन रहा हूं...",
+        noSpeech: "आपकी आवाज सुनाई नहीं दी। माइक्रोफोन दबाकर फिर से बोलें।",
+        notUnderstood: "मैं आपकी समस्या समझ नहीं पाया। कृपया फिर से बताएं।",
+        saved: "आपकी शिकायत दर्ज हो गई है।"
+    }
+
+};
+
+// ----------------------------------
+// SPEAK TEXT
+// ----------------------------------
+
+function speak(text, callback) {
+
+    if (!("speechSynthesis" in window)) {
+        if (callback) callback();
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = language;
+    speech.rate = 0.85;
+    speech.pitch = 1;
+
+    speech.onend = function() {
+        if (callback) callback();
+    };
+
+    speech.onerror = function() {
+        if (callback) callback();
+    };
+
+    window.speechSynthesis.speak(speech);
+}
+
+// ----------------------------------
+// DISPLAY CONVERSATION
+// ----------------------------------
+
+function showConversation(text) {
+
+    const box = document.getElementById("conversation");
+
+    if (box.innerText === "Your conversation will appear here.") {
+        box.innerText = "";
+    }
+
+    box.innerText += "\n" + text;
+}
+
+// ----------------------------------
+// START ASSISTANT
+// ----------------------------------
+
+function startAssistant() {
+
+    language = document.getElementById("language").value;
+
+    if (!recognition) {
+        alert("Please open this website in Google Chrome.");
+        return;
+    }
+
+    if (recognition) {
+        recognition.lang = language;
+    }
+
+    currentStep = "problem";
+    problem = "";
+    area = "";
+    assistantStarted = true;
+
+    document.getElementById("micButton").disabled = false;
+
+    document.getElementById("conversation").innerText = "";
+
+    document.getElementById("status").innerText =
+        "Voice assistant started";
+
+    const msg = messages[language].welcome;
+
+    showConversation("Assistant: " + msg);
+
+    speak(msg, function() {
+        listen();
+    });
+}
+
+// ----------------------------------
+// LISTEN TO USER
+// ----------------------------------
+
+function listen() {
+
+    if (!recognition || !assistantStarted) return;
+
+    document.getElementById("status").innerText =
+        messages[language].listening;
+
+    recognition.lang = language;
+
+    try {
+        recognition.start();
+    } catch (error) {
+        console.log("Recognition already active.");
+    }
+
+    recognition.onresult = function(event) {
+
+        const userText =
+            event.results[0][0].transcript.toLowerCase().trim();
+
+        showConversation("You: " + userText);
+
+        document.getElementById("status").innerText =
+            "Voice received";
+
+        processAnswer(userText);
+    };
+
+    recognition.onerror = function(event) {
+
+        document.getElementById("status").innerText =
+            messages[language].noSpeech;
+
+    };
+
+    recognition.onend = function() {
+        // Listening is restarted only when needed.
+    };
+}
+
+// ----------------------------------
+// IDENTIFY PROBLEM
+// ----------------------------------
+
+function detectProblem(text) {
+
+    const words = {
+
+        garbage: [
+            "garbage", "trash", "waste", "rubbish",
+            "ಕಸ", "ಕಸದ", "ಕಸ ಹಾಕಿದ್ದಾರೆ",
+            "कचरा", "गंदगी", "कूड़ा"
+        ],
+
+        water: [
+            "water", "drinking water", "no water",
+            "ನೀರು", "ಕುಡಿಯುವ ನೀರು",
+            "पानी", "जल"
+        ],
+
+        road: [
+            "road", "pothole", "broken road",
+            "ರಸ್ತೆ", "ಗುಂಡಿ", "ರಸ್ತೆ ಹಾಳಾಗಿದೆ",
+            "सड़क", "गड्ढा"
+        ],
+
+        streetlight: [
+            "streetlight", "street light", "light",
+            "ಬೀದಿ ದೀಪ", "ದೀಪ", "ಲೈಟ್",
+            "स्ट्रीट लाइट", "बत्ती"
+        ],
+
+        drainage: [
+            "drainage", "drain", "sewage",
+            "ಚರಂಡಿ", "ಒಳಚರಂಡಿ",
+            "नाली", "गटर"
+        ]
+
+    };
+
+    for (let category in words) {
+        if (words[category].some(word => text.includes(word))) {
+            return category;
+        }
+    }
+
+    return "";
+}
+
+// ----------------------------------
+// PROBLEM DISPLAY NAME
+// ----------------------------------
+
+function problemName(type) {
+
+    const names = {
+
+        garbage: {
+            "kn-IN": "ಕಸದ ಸಮಸ್ಯೆ",
+            "en-IN": "Garbage problem",
+            "hi-IN": "कचरे की समस्या"
+        },
+
+        water: {
+            "kn-IN": "ನೀರಿನ ಸಮಸ್ಯೆ",
+            "en-IN": "Water problem",
+            "hi-IN": "पानी की समस्या"
+        },
+
+        road: {
+            "kn-IN": "ರಸ್ತೆಯ ಸಮಸ್ಯೆ",
+            "en-IN": "Road problem",
+            "hi-IN": "सड़क की समस्या"
+        },
+
+        streetlight: {
+            "kn-IN": "ಬೀದಿ ದೀಪದ ಸಮಸ್ಯೆ",
+            "en-IN": "Streetlight problem",
+            "hi-IN": "स्ट्रीट लाइट की समस्या"
+        },
+
+        drainage: {
+            "kn-IN": "ಚರಂಡಿ ಸಮಸ್ಯೆ",
+            "en-IN": "Drainage problem",
+            "hi-IN": "नाली की समस्या"
+        }
+
+    };
+
+    return names[type][language] || type;
+}
+
+// ----------------------------------
+// PROCESS ANSWER
+// ----------------------------------
+
+function processAnswer(text) {
+
+    const msg = messages[language];
+
+    if (currentStep === "problem") {
+
+        const detected = detectProblem(text);
+
+        if (!detected) {
+
+            speak(msg.notUnderstood, function() {
+                listen();
+            });
+
+            return;
+        }
+
+        problem = detected;
+        currentStep = "area";
+
+        showConversation("Assistant: " + msg.askArea);
+
+        speak(msg.askArea, function() {
+            listen();
+        });
+
+        return;
+    }
+
+    if (currentStep === "area") {
+
+        area = text;
+
+        currentStep = "confirm";
+
+        let confirmation = msg.askConfirm
+            .replace("{problem}", problemName(problem))
+            .replace("{area}", area);
+
+        showConversation("Assistant: " + confirmation);
+
+        speak(confirmation, function() {
+            listen();
+        });
+
+        return;
+    }
+
+    if (currentStep === "confirm") {
+
+        if (isYes(text)) {
+
+            registerComplaint();
+
+        } else if (isNo(text)) {
+
+            currentStep = "problem";
+
+            problem = "";
+            area = "";
+
+            showConversation("Assistant: " + msg.cancelled);
+
+            speak(msg.cancelled, function() {
+                listen();
+            });
+
+        } else {
+
+            speak(msg.retry, function() {
+                listen();
+            });
+
+        }
+
+    }
+
+}
+
+// ----------------------------------
+// YES / NO DETECTION
+// ----------------------------------
+
+function isYes(text) {
+
+    const yesWords = [
+        "yes", "yeah", "ok", "okay", "correct",
+        "ಹೌದು", "ಸರಿ", "ಮಾಡಿ", "ಆಯಿತು",
+        "हाँ", "हां", "जी", "ठीक है"
+    ];
+
+    return yesWords.some(word => text.includes(word));
+}
+
+function isNo(text) {
+
+    const noWords = [
+        "no", "cancel", "don't", "stop",
+        "ಬೇಡ", "ಇಲ್ಲ", "ರದ್ದು",
+        "नहीं", "मत", "रद्द"
+    ];
+
+    return noWords.some(word => text.includes(word));
+}
+
+// ----------------------------------
+// REGISTER COMPLAINT
+// ----------------------------------
+
+function registerComplaint() {
+
+    const id = "RCR" +
+        Math.floor(1000 + Math.random() * 9000);
+
+    const complaint = {
+        id: id,
+        problem: problemName(problem),
+        area: area,
+        date: new Date().toLocaleString(),
+        status: "Registered"
+    };
+
+    complaints.unshift(complaint);
+
+    localStorage.setItem(
+        "civic",
+        JSON.stringify(complaints)
     );
 
-    if(kannadaVoice){
-        u.voice = kannadaVoice;
-    }
+    renderComplaints();
 
-    speechSynthesis.speak(u);
-}
+    currentStep = "finished";
 
+    const success = messages[language].success
+        .replace("{id}", id);
 
-// SELECT PROBLEM
+    showConversation("Assistant: " + success);
 
-function highlight(type){
+    speak(success, function() {
 
-    document.querySelectorAll('.opt').forEach(o =>
-        o.classList.remove('active')
-    );
+        assistantStarted = false;
 
-    let ids = {
-        'ರಸ್ತೆ ಹಳ್ಳ':'opt-road',
-        'ಕಸ':'opt-garbage',
-        'ಬೀದಿ ದೀಪ':'opt-light',
-        'ನೀರು':'opt-water',
-        'ಚರಂಡಿ':'opt-drain',
-        'ಬೇರೆ ಸಮಸ್ಯೆ':'opt-other'
-    };
+        document.getElementById("status").innerText =
+            "Complaint registered successfully";
 
-    if(ids[type]){
-        document.getElementById(ids[type]).classList.add('active');
-    }
-}
-
-
-// MANUAL SELECTION
-
-function manualSelect(kn,talk){
-
-    selectedKn = kn;
-    selectedTalk = talk;
-
-    highlight(kn);
-
-    document.getElementById('text').value = talk;
-
-    speakNormal("ಸರಿ, " + talk + ". ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ ಅಥವಾ ದೂರು ಕೊಡಿ.");
-
-}
-
-
-// AUTOMATIC PROBLEM DETECTION
-
-function autoDetect(text){
-
-    let t = text.toLowerCase();
-
-    if(
-        t.includes('ಕಸ') ||
-        t.includes('kasa') ||
-        t.includes('garbage') ||
-        t.includes('ಕಸ ಹಾಕ')
-    ){
-        return ['ಕಸ','ರಸ್ತೆಯಲ್ಲಿ ಕಸ ಬಿದ್ದಿದೆ'];
-    }
-
-    if(
-        t.includes('ಲೈಟ್') ||
-        t.includes('light') ||
-        t.includes('ದೀಪ') ||
-        t.includes('bulb') ||
-        t.includes('ಬೆಳಕು')
-    ){
-        return ['ಬೀದಿ ದೀಪ','ಬೀದಿ ದೀಪ ಉರಿಯುತ್ತಿಲ್ಲ'];
-    }
-
-    if(
-        t.includes('ರಸ್ತೆ') ||
-        t.includes('rasta') ||
-        t.includes('ಹಳ್ಳ') ||
-        t.includes('road') ||
-        t.includes('ಗುಂಡಿ')
-    ){
-        return ['ರಸ್ತೆ ಹಳ್ಳ','ರಸ್ತೆಯಲ್ಲಿ ಗುಂಡಿ ಬಿದ್ದಿದೆ'];
-    }
-
-    if(
-        t.includes('ನೀರು') ||
-        t.includes('neeru') ||
-        t.includes('water') ||
-        t.includes('ಕುಡಿಯುವ ನೀರು')
-    ){
-        return ['ನೀರು','ನಮ್ಮ ಮನೆಗೆ ನೀರು ಬರುತ್ತಿಲ್ಲ'];
-    }
-
-    if(
-        t.includes('ಚರಂಡಿ') ||
-        t.includes('drainage') ||
-        t.includes('ಮೋರಿ') ||
-        t.includes('ಗಟಾರ')
-    ){
-        return ['ಚರಂಡಿ','ಚರಂಡಿ ಕಟ್ಟಿಕೊಂಡಿದೆ'];
-    }
-
-    return ['ಬೇರೆ ಸಮಸ್ಯೆ','ಬೇರೆ ಸಮಸ್ಯೆ ಇದೆ'];
-}
-
-
-// VOICE RECOGNITION
-
-function startVoice(){
-
-    const SR = window.SpeechRecognition ||
-               window.webkitSpeechRecognition;
-
-    if(!SR){
-
-        alert("ದಯವಿಟ್ಟು Google Chrome ನಲ್ಲಿ ತೆರೆಯಿರಿ.");
-        return;
-    }
-
-    const rec = new SR();
-
-    rec.lang = 'kn-IN';
-    rec.interimResults = false;
-    rec.maxAlternatives = 3;
-
-    speakNormal("ಹೇಳಿ, ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು? ನಾನು ಕೇಳ್ತಿದ್ದೀನಿ.");
-
-    rec.onresult = function(e){
-
-        let txt = e.results[0][0].transcript;
-
-        document.getElementById('text').value = txt;
-
-        let d = autoDetect(txt);
-
-        selectedKn = d[0];
-        selectedTalk = d[1];
-
-        highlight(selectedKn);
-
-        speakNormal("ಸರಿ, ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. ಈಗ ನಿಮ್ಮ ದೂರು ಕೊಡ್ತಿದ್ದೀನಿ.");
-
-        setTimeout(function(){
-
-            submitComplaint(true);
-
-        },2500);
-
-    };
-
-    rec.onerror = function(e){
-
-        speakNormal("ನಿಮ್ಮ ಮಾತು ಸರಿಯಾಗಿ ಕೇಳಿಸಲಿಲ್ಲ. ಇನ್ನೊಮ್ಮೆ ಹೇಳಿ.");
-
-    };
-
-    rec.start();
-
-}
-
-
-// LISTEN TO COMPLAINT
-
-function speakText(){
-
-    let txt = document.getElementById('text').value.trim();
-
-    if(!txt){
-        speakNormal("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ.");
-        return;
-    }
-
-    speakNormal("ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೀಗಿದೆ. " + txt);
-
-}
-
-
-// SUBMIT COMPLAINT
-
-function submitComplaint(auto=false){
-
-    let txt = document.getElementById('text').value.trim();
-
-    if(!txt){
-
-        speakNormal("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ.");
-        return;
-    }
-
-    let d = autoDetect(txt);
-
-    selectedKn = d[0];
-    selectedTalk = d[1];
-
-    highlight(selectedKn);
-
-    let id = "RCR" + Math.floor(1000 + Math.random()*9000);
-
-    let idSpoken = id.slice(3).split('').join(' ');
-
-    let obj = {
-
-        id:id,
-        type:selectedKn,
-        text:txt,
-        time:new Date().toLocaleString('en-IN'),
-        status:"ದೂರು ದಾಖಲಾಗಿದೆ"
-
-    };
-
-    complaints.unshift(obj);
-
-    localStorage.setItem('civic',JSON.stringify(complaints));
-
-    document.getElementById('result').style.display='block';
-
-    document.getElementById('rText').innerText = txt;
-
-    document.getElementById('rId').innerText =
-        "Complaint Number: " + id + " | " + selectedKn;
-
-    window._last =
-        "ನಿಮ್ಮ ದೂರು ದಾಖಲಾಗಿದೆ. ನಿಮ್ಮ ನಂಬರ್ ಆರ್ ಸಿ ಆರ್ " +
-        idSpoken +
-        ". ನಿಮ್ಮ ಸಮಸ್ಯೆ " +
-        selectedTalk +
-        ". ಧನ್ಯವಾದಗಳು.";
-
-    setTimeout(function(){
-
-        speakNormal(window._last);
-
-    },400);
-
-    render();
-
-}
-
-
-// REPEAT RESULT
-
-function speakResult(){
-
-    if(window._last){
-
-        speakNormal(window._last);
-
-    }
-
-}
-
-
-// COMPLAINT HISTORY
-
-function render(){
-
-    let l = document.getElementById('list');
-
-    if(!complaints.length){
-
-        l.innerHTML = '<p style="color:#888">ಇನ್ನೂ ಯಾವುದೇ ದೂರು ಇಲ್ಲ.</p>';
-
-        return;
-    }
-
-    l.innerHTML = '';
-
-    complaints.forEach(c=>{
-
-        let div = document.createElement('div');
-
-        div.className = 'item';
-
-        let title = document.createElement('b');
-        title.textContent = c.id + ' - ' + c.type;
-
-        let text = document.createElement('div');
-        text.textContent = c.text;
-
-        let status = document.createElement('div');
-        status.style.color = '#065F46';
-        status.textContent = c.status;
-
-        let time = document.createElement('small');
-        time.textContent = c.time;
-
-        div.append(title,text,status,time);
-
-        l.appendChild(div);
+        document.getElementById("micButton").disabled = true;
 
     });
 
 }
 
+// ----------------------------------
+// DISPLAY COMPLAINT HISTORY
+// ----------------------------------
+
+function renderComplaints() {
+
+    const list = document.getElementById("complaintList");
+
+    if (complaints.length === 0) {
+
+        list.innerHTML = "No complaints registered yet.";
+
+        return;
+    }
+
+    list.innerHTML = "";
+
+    complaints.forEach(function(c) {
+
+        const div = document.createElement("div");
+
+        div.className = "complaint";
+
+        const heading = document.createElement("strong");
+        heading.textContent = "Complaint ID: " + c.id;
+
+        const details = document.createElement("p");
+        details.textContent =
+            "Problem: " + c.problem +
+            "\nArea: " + c.area +
+            "\nDate: " + c.date +
+            "\nStatus: " + c.status;
+
+        div.appendChild(heading);
+        div.appendChild(details);
+
+        list.appendChild(div);
+
+    });
+
+}
+
+// ----------------------------------
+// INITIAL DISPLAY
+// ----------------------------------
+
+renderComplaints();
+
 </script>
 
 </body>
 </html>
+
 
 
