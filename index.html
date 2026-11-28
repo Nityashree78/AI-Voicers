@@ -3,219 +3,184 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Voicers - Raichur</title>
+<title>AI Voicers - Raichur | No Reading Needed</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, sans-serif}
-  body{background:#FFF8E1;min-height:100vh;padding:16px;padding-bottom:30px}
-  .top{text-align:center;margin-bottom:12px}
-  .top h1{font-size:32px;color:#1a1a1a}
-  .top p{font-size:16px;color:#555;margin-top:4px}
-  .status{
-    background:#fff;border:3px solid #222;border-radius:20px;
-    padding:18px;text-align:center;min-height:110px;
-    display:flex;flex-direction:column;justify-content:center;gap:6px;
-    font-size:20px;font-weight:700;line-height:1.3
+  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
+  body{
+    min-height:100vh;padding:14px;padding-bottom:30px;color:#222;
+    /* UNIQUE RAICHUR SUNSET BACKGROUND */
+    background:
+      linear-gradient(180deg, rgba(255,183,77,0.15) 0%, rgba(255,138,101,0.25) 45%, rgba(255,224,178,0.9) 100%),
+      url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80') center/cover fixed;
+    background-blend-mode:overlay;
   }
-  .status small{font-size:14px;color:#666;font-weight:500}
-  .mic-wrap{text-align:center;margin:18px 0 10px}
-  #micBtn{
-    width:140px;height:140px;border-radius:50%;border:6px solid #222;
-    background:#FF5252;color:#fff;font-size:55px;cursor:pointer;
-    box-shadow:0 8px 0 #222;transition:0.1s
-  }
-  #micBtn.listening{background:#00C853;animation:pulse 1s infinite}
-  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
-  .mic-label{font-size:19px;font-weight:800;margin-top:10px}
-  .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
-  .card{
-    border:4px solid #222;border-radius:22px;padding:18px;
-    display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left
-  }
-  .card .icon{font-size:60px;line-height:1;min-width:80px;text-align:center}
-  .card h2{font-size:24px;line-height:1.2}
-  .card p{font-size:16px;color:#333;margin-top:4px;line-height:1.3}
-  .green{background:#C8E6C9}
-  .blue{background:#BBDEFB}
-  .yellow{background:#FFE082}
-  .result{
-    display:none;background:#fff;border:4px solid #222;border-radius:22px;
-    padding:20px;margin-top:16px;text-align:center
-  }
-  .result .big{font-size:72px;line-height:1}
-  .result h3{font-size:26px;margin:10px 0 6px}
-  .result p{font-size:18px;line-height:1.4}
-  .speakBtn{
-    margin-top:14px;background:#222;color:#fff;border:none;
-    padding:14px 22px;border-radius:14px;font-size:19px;font-weight:800;cursor:pointer;width:100%
-  }
+  /* Glass card effect */
+  .glass{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border:3px solid #222;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.15)}
+  .top{text-align:center;padding:14px 10px}
+  .logo{font-size:42px}
+  .top h1{font-size:34px;line-height:1;letter-spacing:-1px}
+  .top h1 span{color:#E65100}
+  .top p{font-size:15px;margin-top:6px;color:#444;font-weight:600}
+  .badge{display:inline-block;background:#222;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;margin-top:10px}
+  .badge b{color:#FFD54F}
+
+  /* AJJI MODE TOGGLE - YOUR UNIQUE FEATURE */
+  .ajji-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;margin:10px 0}
+  .ajji-bar h3{font-size:19px}
+  .ajji-bar p{font-size:13px;color:#666}
+  .switch{position:relative;width:68px;height:36px;background:#ccc;border-radius:30px;border:3px solid #222;cursor:pointer;flex-shrink:0}
+  .switch::after{content:'';position:absolute;left:4px;top:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:0.2s}
+  .switch.on{background:#00C853}
+  .switch.on::after{left:34px}
+
+  .status{padding:18px;text-align:center;min-height:105px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+  .status .big-text{font-size:21px;font-weight:800;line-height:1.25}
+  .status small{font-size:13px;color:#666}
+  .mic-wrap{text-align:center;margin:16px 0 6px}
+  #micBtn{width:150px;height:150px;border-radius:50%;border:6px solid #222;background:linear-gradient(135deg,#FF5252,#FF1744);color:#fff;font-size:62px;cursor:pointer;box-shadow:0 10px 0 #222, 0 15px 30px rgba(0,0,0,0.3)}
+  #micBtn.listening{background:linear-gradient(135deg,#00E676,#00C853);animation:pulse 0.9s infinite}
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+  .mic-label{font-size:20px;font-weight:900;margin-top:12px;background:#222;color:#fff;display:inline-block;padding:8px 18px;border-radius:20px}
   .lang-row{display:flex;gap:10px;justify-content:center;margin-top:12px}
-  .lang-row button{padding:10px 16px;border-radius:20px;border:3px solid #222;background:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  .lang-row button{padding:10px 18px;border-radius:20px;border:3px solid #222;background:#fff;font-size:15px;font-weight:800;cursor:pointer}
   .lang-row button.active{background:#222;color:#fff}
-  .footer{text-align:center;margin-top:18px;font-size:13px;color:#777}
+
+  .grid{display:grid;gap:14px;margin-top:16px}
+  .card{padding:18px;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;transition:0.15s}
+  .card:active{transform:scale(0.97)}
+  .card .icon{font-size:64px;line-height:1;min-width:82px;text-align:center;background:#fff;border:3px solid #222;border-radius:18px;padding:10px}
+  .card h2{font-size:24px;line-height:1.1}
+  .card p{font-size:15px;color:#333;margin-top:4px;line-height:1.3}
+  .green{background:linear-gradient(135deg,#C8E6C9,#A5D6A7)}
+  .blue{background:linear-gradient(135deg,#BBDEFB,#90CAF9)}
+  .yellow{background:linear-gradient(135deg,#FFE082,#FFCC80)}
+
+  .result{display:none;padding:20px;margin-top:16px;text-align:center}
+  .result .big{font-size:76px;line-height:1}
+  .result h3{font-size:27px;margin:10px 0 6px}
+  .result p{font-size:18px;line-height:1.4}
+  .speakBtn{margin-top:14px;background:#222;color:#fff;border:none;padding:15px 22px;border-radius:14px;font-size:19px;font-weight:900;cursor:pointer;width:100%}
+  .family{margin-top:14px;padding:16px;text-align:left}
+  .family h4{font-size:18px}
+  .family .row{display:flex;justify-content:space-between;margin-top:10px;font-size:16px;font-weight:700}
+  .tick{color:#00C853}
+  .footer{text-align:center;margin-top:16px;font-size:12px;color:#555;background:rgba(255,255,255,0.8);padding:10px;border-radius:12px}
+
+  /* AJJI MODE: Hide all text, only pictures + voice */
+  body.ajji-mode .hide-in-ajji{display:none !important}
+  body.ajji-mode .card h2, body.ajji-mode .card p{display:none}
+  body.ajji-mode .card{justify-content:center;padding:24px}
+  body.ajji-mode .card .icon{font-size:90px;min-width:120px;padding:18px}
+  body.ajji-mode .top p, body.ajji-mode .badge, body.ajji-mode .footer{display:none}
+  body.ajji-mode .status small{display:none}
 </style>
 </head>
 <body>
 
-<div class="top">
-  <h1>🎙️ AI Voicers</h1>
-  <p>Raichur • No typing • No reading • Only speaking</p>
+<div class="top glass">
+  <div class="logo">🎙️🌾</div>
+  <h1>AI <span>Voicers</span></h1>
+  <p class="hide-in-ajji">Raichur • No Typing • No Reading • Only Speaking</p>
+  <div class="badge">✨ Built for people who <b>cannot read</b> at all</div>
 </div>
 
-<div class="status" id="statusBox">
-  <div id="statusText">👋 Namaskara! MIC otti, maathadi</div>
+<!-- UNIQUE FEATURE: AJJI MODE -->
+<div class="ajji-bar glass">
+  <div>
+    <h3>👵 Ajji Mode <span class="hide-in-ajji">(No Reading)</span></h3>
+    <p class="hide-in-ajji">Turn ON - All text disappears. Only pictures + voice.</p>
+  </div>
+  <div class="switch" id="ajjiSwitch" onclick="toggleAjji()"></div>
+</div>
+
+<div class="status glass" id="statusBox">
+  <div class="big-text" id="statusText">👋 Namaskara! MIC otti, maathadi</div>
   <small id="heardText">Tap MIC and speak in Kannada / English</small>
 </div>
 
 <div class="mic-wrap">
   <button id="micBtn">🎤</button>
-  <div class="mic-label">MIC OTTI - MAATHADI</div>
-  <div class="lang-row">
-    <button id="btnKn" class="active" onclick="setLang('kn-IN')">ಕನ್ನಡ</button>
+  <br><div class="mic-label">🎤 MIC OTTI • MAATHADI</div>
+  <div class="lang-row hide-in-ajji">
+    <button id="btnKn" class="active" onclick="setLang('kn-IN')">ಕನ್ನಡ Kannada</button>
     <button id="btnEn" onclick="setLang('en-IN')">English</button>
   </div>
 </div>
 
 <div class="grid">
-  <div class="card green" onclick="bookAppointment()">
+  <div class="card green glass" onclick="bookAppointment()">
     <div class="icon">👩‍⚕️</div>
-    <div><h2>Doctor Appointment</h2><p>Tap photo or say: "Jwara ide, appointment"</p></div>
+    <div class="hide-in-ajji"><h2>Doctor Appointment</h2><p>Say: "Jwara ide, appointment"</p></div>
   </div>
-  <div class="card blue" onclick="explainMedicine()">
+  <div class="card blue glass" onclick="explainMedicine()">
     <div class="icon">💊</div>
-    <div><h2>Medicine</h2><p>Tap photo or say: "Tablet hege?"</p></div>
+    <div class="hide-in-ajji"><h2>Medicine</h2><p>Say: "Tablet hege tagobeku?"</p></div>
   </div>
-  <div class="card yellow" onclick="setReminder()">
+  <div class="card yellow glass" onclick="setReminder()">
     <div class="icon">🔔</div>
-    <div><h2>Tablet Reminder</h2><p>Tap photo or say: "Remind maadi"</p></div>
+    <div class="hide-in-ajji"><h2>Tablet Reminder</h2><p>Say: "Remind maadi"</p></div>
   </div>
 </div>
 
-<div class="result" id="resultBox">
+<div class="result glass" id="resultBox">
   <div class="big" id="resultIcon">✅</div>
   <h3 id="resultTitle">Done</h3>
   <p id="resultDesc"></p>
   <button class="speakBtn" onclick="speakAgain()">🔊 MATE KELI - LISTEN AGAIN</button>
+
+  <!-- UNIQUE: FAMILY CHECK -->
+  <div class="family glass" id="familyBox" style="display:none">
+    <h4>👨‍👩‍👧 Family Check (for Daughter)</h4>
+    <div class="row"><span>🟢 Morning Tablet</span><span class="tick">✓ Taken</span></div>
+    <div class="row"><span>🟡 Night Tablet</span><span>⏳ Pending - 8 PM</span></div>
+    <div class="row"><span>📅 Appointment</span><span>Tomorrow 10:30 AM</span></div>
+  </div>
 </div>
 
-<div class="footer">Built for India Runs on Voice • Scaler x Wispr Flow • Team AI Voicers</div>
+<div class="footer">India Runs on Voice • Scaler x Wispr Flow • Team AI Voicers - Raichur, Karnataka</div>
 
 <script>
-let currentLang = 'kn-IN';
-let lastSpoken = '';
-
-function setLang(lang){
-  currentLang = lang;
-  document.getElementById('btnKn').classList.toggle('active', lang==='kn-IN');
-  document.getElementById('btnEn').classList.toggle('active', lang==='en-IN');
-  speak(lang==='kn-IN' ? 'Kannada aayke maadiddeeni' : 'English selected', lang);
+let currentLang='kn-IN', lastSpoken='', ajjiOn=false;
+function toggleAjji(){
+  ajjiOn=!ajjiOn;
+  document.body.classList.toggle('ajji-mode', ajjiOn);
+  document.getElementById('ajjiSwitch').classList.toggle('on', ajjiOn);
+  speak(ajjiOn ? 'Ajji mode on aayitu. Iga akshara illa. Kevala chitra mattu dhwani.' : 'Ajji mode off aayitu.', 'kn-IN');
 }
-
-function speak(text, lang){
-  lastSpoken = text;
-  try{ window.speechSynthesis.cancel(); }catch(e){}
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = lang || currentLang;
-  u.rate = 0.85; // slow for old people
-  u.pitch = 1;
-  // Try to find Kannada voice
-  const voices = window.speechSynthesis.getVoices();
-  const v = voices.find(v=>v.lang.includes(currentLang)) || voices.find(v=>v.lang.includes('kn')) || voices[0];
-  if(v) u.voice = v;
-  window.speechSynthesis.speak(u);
+function setLang(l){ currentLang=l; document.getElementById('btnKn').classList.toggle('active',l==='kn-IN'); document.getElementById('btnEn').classList.toggle('active',l==='en-IN'); speak(l==='kn-IN'?'Kannada aayke maadiddeeni':'English selected',l); }
+function speak(text,lang){ lastSpoken=text; try{window.speechSynthesis.cancel();}catch(e){} const u=new SpeechSynthesisUtterance(text); u.lang=lang||currentLang; u.rate=0.85; const vs=window.speechSynthesis.getVoices(); const v=vs.find(v=>v.lang.includes(currentLang))||vs.find(v=>v.lang.includes('kn'))||vs[0]; if(v) u.voice=v; window.speechSynthesis.speak(u); }
+function speakAgain(){ if(lastSpoken) speak(lastSpoken); }
+function showResult(icon,title,desc,speakText,showFamily){
+  const b=document.getElementById('resultBox'); b.style.display='block';
+  document.getElementById('resultIcon').innerText=icon;
+  document.getElementById('resultTitle').innerText=title;
+  document.getElementById('resultDesc').innerText=desc;
+  document.getElementById('statusText').innerText='✅ '+title;
+  document.getElementById('familyBox').style.display= showFamily ? 'block' : 'none';
+  speak(speakText); b.scrollIntoView({behavior:'smooth'});
 }
+function bookAppointment(){ showResult('👩‍⚕️','Appointment Booked!','Dr. Priya • PHC Raichur • Tomorrow 10:30 AM • Token 12','Nimage naale beligge hattu muppathu gantege Doctor Priya avara appointment aayitu. Token number hannendu.', false); }
+function explainMedicine(){ showResult('💊','Medicine - Simple','☀️ Morning: 1 after food • 🌙 Night: 1 after food • 3 days','Ee tablet beligge oota aada mele ondu tablet tagoli. Ratri oota aada mele ondu tablet tagoli. Mooru dina tagoli. Neeru jaasti kudiyiri.', true); }
+function setReminder(){ showResult('🔔','Reminder Set!','⏰ 8 AM + 8 PM Daily • App will SPEAK reminder','Reminder set aayitu. Naanu beligge entu gantege mattu ratri entu gantege tablet tagoloke heluttene.', true); }
 
-function speakAgain(){
-  if(lastSpoken) speak(lastSpoken);
-}
-
-function showResult(icon, title, desc, speakText){
-  const box = document.getElementById('resultBox');
-  box.style.display = 'block';
-  document.getElementById('resultIcon').innerText = icon;
-  document.getElementById('resultTitle').innerText = title;
-  document.getElementById('resultDesc').innerText = desc;
-  document.getElementById('statusText').innerText = '✅ ' + title;
-  speak(speakText);
-  box.scrollIntoView({behavior:'smooth'});
-}
-
-function bookAppointment(){
-  showResult('👩‍⚕️',
-    'Appointment Booked!',
-    'Dr. Priya • PHC Raichur • Tomorrow 10:30 AM • Token No. 12',
-    'Nimage naale beligge hattu muppathu gantege Doctor Priya avara appointment aayitu. Token number hannendu. Dayavittu samayakke banni.'
-  );
-}
-
-function explainMedicine(){
-  showResult('💊',
-    'Medicine - Simple',
-    '☀️ Morning: 1 tablet after food  •  🌙 Night: 1 tablet after food  •  3 days',
-    'Ee tablet beligge oota aada mele ondu tablet tagoli. Ratri oota aada mele ondu tablet tagoli. Mooru dina tagoli. Neeru jaasti kudiyiri.'
-  );
-}
-
-function setReminder(){
-  showResult('🔔',
-    'Reminder Set!',
-    '⏰ 8 AM + 8 PM Daily • App will speak and remind you',
-    'Reminder set aayitu. Naanu beligge entu gantege mattu ratri entu gantege tablet tagoloke neevu heluttene.'
-  );
-}
-
-// --- Voice Recognition ---
-const micBtn = document.getElementById('micBtn');
-let recognition = null;
-
-if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  recognition = new SR();
-  recognition.continuous = false;
-  recognition.interimResults = false;
-
-  recognition.onstart = () => {
-    micBtn.classList.add('listening');
-    document.getElementById('statusText').innerText = '🎧 Keluthiddeeni... Maathadi...';
+const micBtn=document.getElementById('micBtn'); let rec=null;
+if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition; rec=new SR(); rec.continuous=false; rec.interimResults=false;
+  rec.onstart=()=>{micBtn.classList.add('listening'); document.getElementById('statusText').innerText='🎧 Keluthiddeeni... Maathadi...';};
+  rec.onend=()=>micBtn.classList.remove('listening');
+  rec.onerror=()=>{micBtn.classList.remove('listening'); document.getElementById('statusText').innerText='MIC problem. Mete button otti.';};
+  rec.onresult=(e)=>{
+    const t=e.results[0][0].transcript.toLowerCase();
+    document.getElementById('heardText').innerText='You said: "'+e.results[0][0].transcript+'"';
+    document.getElementById('statusText').innerText='Neevu heliddu: '+e.results[0][0].transcript;
+    if(t.includes('jwara')||t.includes('fever')||t.includes('appointment')||t.includes('doctor')||t.includes('hospital')||t.includes('kaayile')) bookAppointment();
+    else if(t.includes('tablet')||t.includes('medicine')||t.includes('matre')||t.includes('dawa')||t.includes('hege')) explainMedicine();
+    else if(t.includes('remind')||t.includes('nenapu')||t.includes('bell')||t.includes('alarm')) setReminder();
+    else { speak('Kshamisi, arthavagilla. Jwara, Tablet, athava Reminder antha heli.','kn-IN'); document.getElementById('statusText').innerText='Arthavagilla. Mete heli: Jwara / Tablet / Reminder'; }
   };
-  recognition.onend = () => micBtn.classList.remove('listening');
-  recognition.onerror = () => {
-    micBtn.classList.remove('listening');
-    document.getElementById('statusText').innerText = 'MIC problem. Mete button otti.';
-  };
-  recognition.onresult = (e) => {
-    const text = e.results[0][0].transcript.toLowerCase();
-    document.getElementById('heardText').innerText = 'You said: "' + e.results[0][0].transcript + '"';
-    document.getElementById('statusText').innerText = 'Neevu heliddu: ' + e.results[0][0].transcript;
-
-    // Logic - Kannada + English + Hinglish
-    if (text.includes('jwara') || text.includes('fever') || text.includes('jwar') || text.includes('appointment') || text.includes('doctor') || text.includes('buk') || text.includes('kaayile') || text.includes('hospital')) {
-      bookAppointment();
-    } else if (text.includes('tablet') || text.includes('medicine') || text.includes('tablet') || text.includes('matre') || text.includes('dawa') || text.includes('hege') || text.includes('how')) {
-      explainMedicine();
-    } else if (text.includes('remind') || text.includes('reminder') || text.includes('nenapu') || text.includes('bell') || text.includes('alarm')) {
-      setReminder();
-    } else {
-      // Default: ask again in Kannada
-      speak('Kshamisi, arthavagilla. Jwara, Tablet, athava Reminder antha heli.', 'kn-IN');
-      document.getElementById('statusText').innerText = 'Arthavagilla. Mete heli: Jwara / Tablet / Reminder';
-    }
-  };
-} else {
-  document.getElementById('statusText').innerText = 'Your browser does not support voice. Use Chrome.';
 }
-
-micBtn.onclick = () => {
-  if(!recognition) return;
-  recognition.lang = currentLang;
-  try{ recognition.start(); }catch(e){}
-};
-
-// Welcome speak on load
-window.onload = () => {
-  setTimeout(()=>{
-    speak('Namaskara. Naanu AI Voicers. MIC otti, jwara, tablet, athava reminder antha heli.', 'kn-IN');
-  }, 800);
-};
+micBtn.onclick=()=>{ if(!rec) return; rec.lang=currentLang; try{rec.start();}catch(e){} };
+window.onload=()=>{ setTimeout(()=>speak('Namaskara. Naanu AI Voicers. MIC otti, jwara, tablet, athava reminder antha heli.','kn-IN'),900); };
 </script>
 </body>
 </html>
