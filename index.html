@@ -4,76 +4,52 @@
 <title>AI Voicers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;margin:0;background:#000000;text-align:center;padding-bottom:20px;color:white}
-.top{background:#1A1A1A;margin:15px;padding:22px;border-radius:28px;border:1px solid #333}
-.top h1{margin:0;font-size:34px;color:#C084FC}
-.top p{color:#D8B4FE}
-.lang button{padding:8px 16px;margin:4px;border:none;border-radius:20px;background:#2E2E2E;color:white;font-weight:bold}
-.voicebox{background:#1A1A1A;margin:15px;padding:25px;border-radius:28px;border:1px solid #C084FC}
-.mic{width:110px;height:110px;border-radius:50%;border:none;background:#C084FC;font-size:50px;box-shadow:0 0 25px #C084FC}
-.card{background:#1A1A1A;margin:15px;padding:20px;border-radius:25px;text-align:left;border:1px solid #333}
-.card h3{color:#C084FC;margin:0 0 8px 0}
-.result{font-size:18px;line-height:1.6;color:white}
+body{margin:0;background:black;color:white;font-family:Arial;text-align:center}
+.top{padding:25px}
+.top h1{font-size:34px;color:#C084FC;margin:0}
+.card{background:#1A1A1A;margin:15px;padding:20px;border-radius:20px;text-align:left;border:1px solid #444}
+.card h3{color:#C084FC}
+.mic{width:110px;height:110px;border-radius:50%;border:none;background:#C084FC;font-size:50px}
 </style>
 </head>
 <body>
 
 <div class="top">
-<h1>✨ AI Voicers ✨</h1>
-<p>ರಾಯಚೂರುಗಾಗಿ - ಮಾತನಾಡಿ ಸಾಕು, ಟೈಪ್ ಮಾಡಬೇಡಿ</p>
-<p>No Typing, No English - Only Speaking</p>
-<div class="lang"><button>English</button><button>ಕನ್ನಡ</button><button>हिन्दी</button></div>
-</div>
-
-<div class="voicebox">
-<h2 style="color:#C084FC">🎤 ಮಾತನಾಡಿ - Just Speak</h2>
-<p>ಹೇಳಿ: <b>"ಜ್ವರಕ್ಕೆ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಬುಕ್ ಮಾಡಿ"</b></p>
+<h1>🎙️ AI Voicers</h1>
+<p>No Typing, Only Speaking | Kannada or English</p>
+<p>Say: <b>"Book appointment for fever tomorrow"</b></p>
 <button class="mic" onclick="startVoice()">🎙️</button>
-<p id="heard" style="font-size:18px">ಮೈಕ್ ಒತ್ತಿ ಮಾತನಾಡಿ...</p>
-<p style="color:#999">No clicking anything else - Voice will generate all</p>
+<p id="heard">Tap mic and speak...</p>
 </div>
 
 <div class="card">
-<h3>✅ ಅಪಾಯಿಂಟ್ಮೆಂಟ್ - Appointment</h3>
-<p class="result" id="appt">ಮಾತನಾಡಿದರೆ ಇಲ್ಲಿ ಬರುತ್ತದೆ...</p>
+<h3>✅ Appointment</h3>
+<p id="appt">Speak to book...</p>
 </div>
 
 <div class="card">
-<h3>💊 ಔಷಧಿ - Medicine</h3>
-<p class="result" id="med">ಮಾತನಾಡಿದರೆ ಇಲ್ಲಿ ಬರುತ್ತದೆ...</p>
+<h3>💊 Medicine in Simple Kannada</h3>
+<p id="med">Speak to get medicine...</p>
 </div>
 
 <div class="card">
-<h3>⏰ ರಿಮೈಂಡರ್ - Reminder</h3>
-<p class="result" id="rem">ಮಾತನಾಡಿದರೆ ಇಲ್ಲಿ ಬರುತ್ತದೆ...</p>
+<h3>⏰ Reminder</h3>
+<p id="rem">Speak to set reminder...</p>
 </div>
 
 <script>
 function startVoice(){
-document.getElementById('heard').innerText="ಕೇಳುತ್ತಿದ್ದೇನೆ... ದಯವಿಟ್ಟು ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ";
-const rec = new (window.SpeechRecognition||window.webkitSpeechRecognition)();
-rec.lang='kn-IN';
+document.getElementById('heard').innerText="Listening...";
+const rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+rec.lang='en-IN';
 rec.onresult=(e)=>{
 let text=e.results[0][0].transcript;
-document.getElementById('heard').innerText="ನೀವು ಹೇಳಿದ್ದು: "+text;
-
-let disease="ಜ್ವರ";
-let medicine="ಪ್ಯಾರಸಿಟಮಾಲ್ - ಬೆಳಿಗ್ಗೆ 1 ಮಾತ್ರೆ ಊಟದ ನಂತರ, ಸಂಜೆ 1 ಮಾತ್ರೆ ಊಟದ ನಂತರ. ನೀರು ಜಾಸ್ತಿ ಕುಡಿಯಿರಿ.";
-if(text.includes("ಕೆಮ್ಮು")){disease="ಕೆಮ್ಮು / ಶೀತ"; medicine="ಅಜಿಥ್ರೋಮೈಸಿನ್ - ದಿನಕ್ಕೆ 1 ಮಾತ್ರೆ ಊಟಕ್ಕಿಂತ ಮುಂಚೆ. 3 ದಿನ ತೆಗೆದುಕೊಳ್ಳಿ.";}
-if(text.includes("ಹೊಟ್ಟೆ")){disease="ಹೊಟ್ಟೆ ನೋವು"; medicine="ಪ್ಯಾಂಟಾಪ್ - ಬೆಳಿಗ್ಗೆ 1 ಮಾತ್ರೆ ಖಾಲಿ ಹೊಟ್ಟೆಗೆ, ಊಟಕ್ಕಿಂತ ಮುಂಚೆ.";}
-if(text.includes("ತಲೆ")){disease="ತಲೆ ನೋವು"; medicine="ಪ್ಯಾರಸಿಟಮಾಲ್ - ತಲೆ ನೋವಿದ್ದರೆ 1 ಮಾತ್ರೆ ಊಟದ ನಂತರ. ಸ್ವಲ್ಪ ವಿಶ್ರಾಂತಿ ಮಾಡಿ.";}
-
-document.getElementById('appt').innerHTML="✅ <b>ಬುಕ್ ಆಯ್ತು!</b><br>"+disease+"<br>ನಾಳೆ, ಬೆಳಿಗ್ಗೆ 10 ಗಂಟೆ<br>ರಾಯಚೂರು ಜಿಲ್ಲಾ ಆಸ್ಪತ್ರೆ<br>ಟೋಕನ್ ನಂ: 12";
-document.getElementById('med').innerText="💊 "+medicine;
-document.getElementById('rem').innerHTML="⏰ <b>ರಿಮೈಂಡರ್ ಸೆಟ್ ಆಯ್ತು!</b><br>ಬೆಳಿಗ್ಗೆ 9 ಗಂಟೆ - 1 ಮಾತ್ರೆ<br>ಸಂಜೆ 9 ಗಂಟೆ - 1 ಮಾತ್ರೆ";
-
-let speakText="ಅಪಾಯಿಂಟ್ಮೆಂಟ್ ಬುಕ್ ಆಯ್ತು. ನಾಳೆ ಬೆಳಿಗ್ಗೆ ಹತ್ತು ಗಂಟೆಗೆ ರಾಯಚೂರು ಆಸ್ಪತ್ರೆ. "+medicine+" ರಿಮೈಂಡರ್ ಬೆಳಿಗ್ಗೆ ಒಂಬತ್ತು ಗಂಟೆ ಮತ್ತು ಸಂಜೆ ಒಂಬತ್ತು ಗಂಟೆಗೆ ಸೆಟ್ ಮಾಡಿದ್ದೇವೆ.";
-let msg=new SpeechSynthesisUtterance(speakText);
+document.getElementById('heard').innerText="You said: "+text;
+document.getElementById('appt').innerHTML="✅ Booked for Fever<br>Tomorrow, 10 AM<br>Raichur District Hospital<br>Token No: 12";
+document.getElementById('med').innerHTML="💊 Paracetamol<br>Beligge 1 tablet oota aadmele<br>Sanje 1 tablet oota aadmele<br>Neeru jasti kudiyiri";
+document.getElementById('rem').innerHTML="⏰ Reminder Set<br>Beligge 9 AM - 1 Tablet<br>Sanje 9 PM - 1 Tablet";
+let msg=new SpeechSynthesisUtterance("Appointment booked tomorrow 10 AM Raichur hospital. Paracetamol beligge ondu, sanje ondu, oota aadmele tagoli. Reminder set 9 AM and 9 PM");
 msg.lang='kn-IN';
-msg.rate=0.9;
-let voices=speechSynthesis.getVoices();
-let kannadaVoice=voices.find(v=>v.lang.includes('kn'));
-if(kannadaVoice) msg.voice=kannadaVoice;
 speechSynthesis.speak(msg);
 };
 rec.start();
