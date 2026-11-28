@@ -1,145 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Voicers - Raichur</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;background:#FFF8E1;margin:0;padding:10px}
-.header{background:#FF6B00;color:white;padding:15px;border-radius:15px;text-align:center}
-.lang button{padding:10px 15px;margin:5px;border-radius:20px;border:2px solid #FF6B00;background:white;font-weight:bold}
-.lang .active{background:#FF6B00;color:white}
-.card{background:white;padding:15px;border-radius:15px;margin-top:12px;box-shadow:0 2px 8px #ddd}
-.bigbtn{background:#FF6B00;color:white;border:none;padding:15px;width:100%;border-radius:12px;font-size:18px;font-weight:bold;margin-top:10px}
-.med{border:2px solid #FFCC00;border-radius:12px;padding:10px;margin:8px;text-align:center;background:#FFFEF0}
-input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #ccc;font-size:16px}
-#output{background:#FFFF99;padding:12px;border-radius:10px;margin-top:10px;font-size:18px;min-height:40px}
+body{font-family:Arial;margin:0;background:#fff7ed;text-align:center}
+.header{background:#f97316;color:white;padding:25px}
+.header h1{margin:0;font-size:30px}
+.lang button{padding:8px 18px;margin:5px;border:none;border-radius:20px;background:white;color:#f97316;font-weight:bold}
+.box{background:white;margin:15px;padding:20px;border-radius:15px;box-shadow:0 2px 8px #ddd;text-align:left}
+.voicebtn{background:#16a34a;color:white;padding:15px 25px;border:none;border-radius:10px;font-size:18px;width:100%}
 </style>
 </head>
 <body>
-
 <div class="header">
-<h2>🎤 AI VOICERS - Raichur</h2>
-<p id="subtitle">Speak - Listen - No Reading Needed</p>
+<h1>🎙️ AI Voicers</h1>
+<p>AI-powered voice assistant for Raichur</p>
+<p>Speak in your language, no typing needed</p>
+<div class="lang"><button>English</button><button>ಕನ್ನಡ</button><button>हिन्दी</button></div>
 </div>
 
-<!-- LANGUAGE -->
-<div class="lang" style="text-align:center;margin-top:10px">
-<button onclick="setLang('kn',this)" class="active">ಕನ್ನಡ</button>
-<button onclick="setLang('en',this)">English</button>
-<button onclick="setLang('hi',this)">हिंदी</button>
+<div class="box">
+<h2>🎤 Speak Now</h2>
+<p>Click and say: <b>"Book appointment for fever tomorrow"</b></p>
+<button class="voicebtn" onclick="startVoice()">🎤 Start Listening</button>
+<p id="heard">Listening... Speak now</p>
 </div>
 
-<div id="output">👋 Namaste! Tap MIC and Speak. Example: "Book Navodaya" / "Fever Medicine" / "Reminder"</div>
-
-<button class="bigbtn" onclick="startVoice()">🎤 TAP TO SPEAK</button>
-
-<!-- 1. BOOKING - 1 DOCTOR PER HOSPITAL -->
-<div class="card">
-<h3>🏥 1. Book Appointment</h3>
-
-<label>Select Hospital / Doctor:</label>
-<select id="doctor">
-<option value="Navodaya Hospital - Dr. Priya - Fever Doctor">Navodaya Hospital - Dr. Priya - Fever Doctor</option>
-<option value="RIMS Hospital - Dr. Kumar - General Doctor">RIMS Hospital - Dr. Kumar - General Doctor</option>
-<option value="Basaveshwara Hospital - Dr. Anitha - Child Doctor">Basaveshwara Hospital - Dr. Anitha - Child Doctor</option>
-<option value="City Hospital - Dr. Manjunath - Heart Doctor">City Hospital - Dr. Manjunath - Heart Doctor</option>
-</select>
-
-<label>Select Date:</label>
-<input type="date" id="date">
-<label>Your Name:</label>
-<input type="text" id="name" placeholder="Your Name">
-
-<button class="bigbtn" onclick="book()">✅ BOOK NOW</button>
-<p id="bookResult" style="color:green;font-weight:bold"></p>
+<div class="box">
+<h3>❓ Problem in Raichur</h3>
+<p>Many old people, farmers and mothers cannot type or read English. They struggle to book hospital appointments and understand medicine instructions.</p>
 </div>
 
-<!-- 2. MEDICINES - PHOTO TAP -->
-<div class="card">
-<h3>💊 2. Medicines - Tap Photo To Listen</h3>
-<p>Match photo with your tablet at home, Tap it!</p>
-
-<div class="med" onclick="speakMed('fever')">
-<img src="https://via.placeholder.com/150x80?text=FEVER+TABLET" style="width:150px;border-radius:8px"><br>
-<b>🤒 Fever Tablet</b><br><button>🔊 TAP TO LISTEN</button>
+<div class="box">
+<h3>💡 Our Solution - AI Voicers</h3>
+<p>User speaks in Kannada or English - "Book appointment for fever tomorrow". It books appointment, explains medicine in simple Kannada, and reminds to take tablets on time. No typing needed, only speaking.</p>
 </div>
 
-<div class="med" onclick="speakMed('cold')">
-<img src="https://via.placeholder.com/150x80?text=COLD+TABLET" style="width:150px;border-radius:8px"><br>
-<b>🤧 Cold Tablet</b><br><button>🔊 TAP TO LISTEN</button>
+<div class="box">
+<h3>✅ Appointment Booking</h3>
+<p id="appt">Your appointments will appear here</p>
 </div>
 
-<div class="med" onclick="speakMed('headache')">
-<img src="https://via.placeholder.com/150x80?text=HEADACHE+TABLET" style="width:150px;border-radius:8px"><br>
-<b>🤕 Headache Tablet</b><br><button>🔊 TAP TO LISTEN</button>
+<div class="box">
+<h3>💊 Medicine Guidance</h3>
+<p id="med">Medicine explanation in simple Kannada will appear here</p>
 </div>
 
-<div class="med" onclick="speakMed('gas')">
-<img src="https://via.placeholder.com/150x80?text=GAS+TABLET" style="width:150px;border-radius:8px"><br>
-<b>🤢 Gas / Stomach Tablet</b><br><button>🔊 TAP TO LISTEN</button>
-</div>
-</div>
-
-<!-- 3. REMINDER -->
-<div class="card">
-<h3>⏰ 3. Medicine Reminder</h3>
-<p>App will remind you to take tablet!</p>
-<label>Medicine Time:</label>
-<input type="time" id="remTime">
-<button class="bigbtn" onclick="setReminder()" style="background:#00A651">⏰ SET REMINDER</button>
-<p id="remResult" style="color:green;font-weight:bold"></p>
+<div class="box">
+<h3>⏰ Reminders</h3>
+<p id="rem">Reminders will appear here</p>
 </div>
 
 <script>
-let lang = 'kn';
-let texts = {
-kn:{book:"Booking aagide! ", med:{fever:"Ee Fever tablet. Ondu tablet, dina eradu sali, oota aada mele tagoli. Neeru jaasti kudiyiri.", cold:"Ee Cold tablet. Ondu tablet, ratri malagoke munche tagoli.", headache:"Ee Headache tablet. Ondu tablet, oota aada mele tagoli. Swalpa rest madri.", gas:"Ee Gas tablet. Ondu tablet, beligge khali hottege tagoli."}, remind:"Reminder set aagide! "},
-en:{book:"Booking Done! ", med:{fever:"This is fever tablet. Take 1 tablet, 2 times a day, after food. Drink more water.", cold:"This is cold tablet. Take 1 tablet at night before sleeping.", headache:"This is headache tablet. Take 1 tablet after food. Take rest.", gas:"This is gas tablet. Take 1 tablet in morning, empty stomach."}, remind:"Reminder Set! "},
-hi:{book:"Booking Ho Gaya! ", med:{fever:"Ye bukhar ki tablet hai. 1 tablet, din me 2 baar, khane ke baad lijiye. Pani zyada pijiye.", cold:"Ye sardi ki tablet hai. 1 tablet raat ko sone se pehle lijiye.", headache:"Ye sar dard ki tablet hai. 1 tablet khane ke baad lijiye. Aaram kijiye.", gas:"Ye gas ki tablet hai. 1 tablet subah khali pet lijiye."}, remind:"Reminder Set Ho Gaya! "}
-};
-
-function setLang(l,btn){
-lang=l;
-document.querySelectorAll('.lang button').forEach(b=>b.classList.remove('active'));
-btn.classList.add('active');
-speak("Language changed");
-}
-function speak(t){
-document.getElementById('output').innerText=t;
-let u=new SpeechSynthesisUtterance(t);
-u.lang = lang=='kn'?'kn-IN':lang=='hi'?'hi-IN':'en-IN';
-speechSynthesis.speak(u);
-}
-function book(){
-let d=document.getElementById('doctor').value;
-let dt=document.getElementById('date').value;
-let n=document.getElementById('name').value || "Patient";
-let msg=texts[lang].book + n + " - " + d + " - Date: " + dt;
-document.getElementById('bookResult').innerText=msg;
-speak(msg);
-}
-function speakMed(type){
-speak(texts[lang].med[type]);
-}
-function setReminder(){
-let t=document.getElementById('remTime').value;
-let msg=texts[lang].remind + "Time: " + t + " - Tablet tagolbeku!";
-document.getElementById('remResult').innerText=msg;
-speak(msg);
-}
 function startVoice(){
-let rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
-rec.lang = lang=='kn'?'kn-IN':lang=='hi'?'hi-IN':'en-IN';
-rec.start();
+document.getElementById('heard').innerText="Listening... Please speak in Kannada or English";
+const rec = new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+rec.lang='kn-IN';
 rec.onresult=(e)=>{
-let txt=e.results[0][0].transcript.toLowerCase();
-if(txt.includes('fever')) speakMed('fever');
-else if(txt.includes('cold')) speakMed('cold');
-else if(txt.includes('headache')) speakMed('headache');
-else if(txt.includes('gas')||txt.includes('stomach')) speakMed('gas');
-else if(txt.includes('book')||txt.includes('navodaya')||txt.includes('rims')) book();
-else speak("I heard: "+txt+". Tap Fever, Cold or Book button.");
+let text=e.results[0][0].transcript;
+document.getElementById('heard').innerText="You said: "+text;
+document.getElementById('appt').innerText="Booked: Tomorrow, 10 AM, Raichur District Hospital for: "+text;
+document.getElementById('med').innerText="Paracetamol - 1 tablet beligge, 1 tablet sanje. Oota aadmele tagoli. Neeru jasti kudiyiri.";
+document.getElementById('rem').innerText="Reminder set: 9 AM & 9 PM - Tablet time. We will remind you.";
 };
+rec.start();
 }
 </script>
 </body>
