@@ -10,7 +10,7 @@ body{background:#FDF4FF;padding:16px}
 .top{background:#FCE7F3;color:#831843;padding:18px;border-radius:18px;text-align:center;border:2px solid #FBCFE8}
 .top h1{font-size:24px;color:#9D174D}
 .top p{font-size:13px;margin-top:4px;color:#BE185D}
-.card{background:#FFFFFF;border:2px solid #FBCFE8;border-radius:18px;padding:16px;margin-top:14px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.card{background:#FFFFFF;border:2px solid #FBCFE8;border-radius:18px;padding:16px;margin-top:14px}
 .card h2{font-size:18px;color:#701A75}
 .card p{font-size:13px;color:#A21CAF;line-height:1.5}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
@@ -34,19 +34,19 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 
 <div class="top">
 <h1>🎙️ Voice Civic Rakshak</h1>
-<p>ರಾಯಚೂರು | Just Speak - Auto Select + Auto Submit</p>
+<p>ರಾಯಚೂರು | ಕರ್ನಾಟಕ ಕನ್ನಡದಲ್ಲಿ ಮಾತಾಡುತ್ತೆ</p>
 </div>
 
 <div class="card">
 <h2>1. ಸಮಸ್ಯೆ ಏನು?</h2>
-<p>Speak ಮಾಡಿದ್ರೆ ಸಾಕು - ತಾನಾಗೇ Select + Submit ಆಗುತ್ತೆ</p>
+<p>ಹೇಳಿದ್ರೆ ಸಾಕು - ತಾನಾಗೇ Select + Submit ಆಗುತ್ತೆ</p>
 <div class="grid">
-<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ','Raste Halla')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
-<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ','Kasa')">🗑️<br>ಕಸ<br>Garbage</div>
-<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ','Beedi Deepa')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
-<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು','Neeru')">💧<br>ನೀರು<br>Water</div>
-<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ','Charandi')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
-<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ','Bere Samasye')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
+<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
+<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ')">🗑️<br>ಕಸ<br>Garbage</div>
+<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
+<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು')">💧<br>ನೀರು<br>Water</div>
+<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
 </div>
 
 <textarea id="text" placeholder="ಉದಾ: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ..."></textarea>
@@ -69,22 +69,30 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 <h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
 <div id="list"><p style="color:#888">ಇನ್ನೂ ದೂರು ಇಲ್ಲ.</p></div>
 </div>
-<p class="small">New Colours - Pink + Lavender + Mint | Kannada Sound Fix</p>
+<p class="small">Karnataka Kannada Voice | Google Kannada TTS | Raichur</p>
+<audio id="ttsAudio" style="display:none"></audio>
 
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
-let selectedRoman = "Bere Samasye";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
 render();
 
-// *** MAIN FIX - Speak in ROMAN KANNADA so it SOUNDS Kannada even without Kannada voice ***
-function speakKannadaRoman(text){
-  speechSynthesis.cancel();
-  let u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-IN'; // Use Indian English voice to pronounce Roman Kannada correctly
-  u.rate = 0.9;
-  u.pitch = 1;
-  speechSynthesis.speak(u);
+// *** KARNATAKA KANNADA VOICE - Google Kannada TTS ***
+// This speaks pure Karnataka Kannada, not English accent
+function speakKarnatakaKannada(text){
+  // Stop old
+  let audio = document.getElementById('ttsAudio');
+  audio.pause();
+  // Google Translate TTS - tl=kn = Karnataka Kannada
+  let url = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + encodeURIComponent(text) + "&tl=kn&client=tw-ob";
+  audio.src = url;
+  audio.play().catch(()=>{
+    // Fallback if Google blocked - use phone Kannada voice
+    let u = new SpeechSynthesisUtterance(text);
+    u.lang = 'kn-IN'; u.rate = 0.85;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  });
 }
 
 function highlight(type){
@@ -97,21 +105,21 @@ function highlight(type){
   if(type==='ಬೇರೆ ಸಮಸ್ಯೆ') document.getElementById('opt-other').classList.add('active');
 }
 
-function manualSelect(kn, roman){
-  selectedKn = kn; selectedRoman = roman;
+function manualSelect(kn){
+  selectedKn = kn;
   highlight(kn);
   document.getElementById('text').value = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + kn + " ಸಮಸ್ಯೆ ಇದೆ.";
-  speakKannadaRoman("Neenu " + roman + " aayke maadidde. Eega heli athava submit maadi.");
+  speakKarnatakaKannada("ನೀವು " + kn + " ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ. ಈಗ ಹೇಳಿ ಅಥವಾ ಸಲ್ಲಿಸಿ.");
 }
 
 function autoDetect(text){
   let t = text.toLowerCase();
-  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return ['ಕಸ','Kasa'];
-  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('bulb')) return ['ಬೀದಿ ದೀಪ','Beedi Deepa illa'];
-  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return ['ರಸ್ತೆ ಹಳ್ಳ','Raste Halla'];
-  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return ['ನೀರು','Neeru illa'];
-  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಮೋರಿ')) return ['ಚರಂಡಿ','Charandi'];
-  return ['ಬೇರೆ ಸಮಸ್ಯೆ','Bere Samasye'];
+  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return 'ಕಸ';
+  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('bulb')) return 'ಬೀದಿ ದೀಪ';
+  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return 'ರಸ್ತೆ ಹಳ್ಳ';
+  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return 'ನೀರು';
+  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಮೋರಿ')) return 'ಚರಂಡಿ';
+  return 'ಬೇರೆ ಸಮಸ್ಯೆ';
 }
 
 function startVoice(){
@@ -121,42 +129,41 @@ function startVoice(){
   rec.onresult = e => {
     let txt = e.results[0][0].transcript;
     document.getElementById('text').value = txt;
-    let d = autoDetect(txt);
-    selectedKn = d[0]; selectedRoman = d[1];
+    selectedKn = autoDetect(txt);
     highlight(selectedKn);
-    speakKannadaRoman("Nimma maatu kelide. " + txt + ". Eega dooru sallisuttiddini.");
-    setTimeout(()=>{ submitComplaint(true); }, 1300);
+    speakKarnatakaKannada("ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. " + txt + ". ಈಗ ದೂರು ಸಲ್ಲಿಸುತ್ತಿದ್ದೇನೆ.");
+    setTimeout(()=>{ submitComplaint(true); }, 1800);
   };
   rec.start();
-  speakKannadaRoman("Heli, yaavaade samasye heli, naanu keluttiddini.");
+  speakKarnatakaKannada("ಹೇಳಿ, ಯಾವುದೇ ಸಮಸ್ಯೆ ಹೇಳಿ, ನಾನು ಕೇಳುತ್ತಿದ್ದೇನೆ.");
 }
 
 function speakText(){
-  let t = document.getElementById('text').value || "Namma beediyalli samasye ide";
-  // Convert to Roman for speaking - if Kannada script, speak generic
-  speakKannadaRoman("Nimma dooru: " + selectedRoman + ". Dayavittu sari maadi.");
+  let t = document.getElementById('text').value || "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಸಮಸ್ಯೆ ಇದೆ";
+  speakKarnatakaKannada(t);
 }
 
 function submitComplaint(auto=false){
   let txt = document.getElementById('text').value.trim();
-  if(!txt){ speakKannadaRoman("Modalu nimma samasye heli."); return; }
-  let d = autoDetect(txt);
-  selectedKn = d[0]; selectedRoman = d[1];
+  if(!txt){ speakKarnatakaKannada("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ."); return; }
+  selectedKn = autoDetect(txt);
   highlight(selectedKn);
   let id = "RCR" + Math.floor(1000 + Math.random()*9000);
-  let idSpoken = id.slice(3).split('').join(' ');
+  // Speak ID in Kannada numbers
+  let kannadaNums = {'0':'ಸೊನ್ನೆ','1':'ಒಂದು','2':'ಎರಡು','3':'ಮೂರು','4':'ನಾಲ್ಕು','5':'ಐದು','6':'ಆರು','7':'ಏಳು','8':'ಎಂಟು','9':'ಒಂಬತ್ತು'};
+  let idKannada = id.slice(3).split('').map(d=>kannadaNums[d]).join(' ');
   let obj = {id:id, type:selectedKn, text:txt, time:new Date().toLocaleString('en-IN'), status:"ಪುರಸಭೆಗೆ ಹೋಗಿದೆ"};
   complaints.unshift(obj);
   localStorage.setItem('civic', JSON.stringify(complaints));
   document.getElementById('result').style.display='block';
   document.getElementById('rText').innerText = txt;
   document.getElementById('rId').innerText = "ದೂರು ಸಂಖ್ಯೆ: " + id + " | " + selectedKn;
-  // 100% ROMAN KANNADA SPEAK BACK - Will sound like Kannada now
-  window._last = "Nimma dooru swikarisalagide. Nimma dooru sankhye, R C R " + idSpoken + ". Samasye, " + selectedRoman + ". Purasabhege kalisalagide. Eradu dina dalli sari maaduttare. Dhanyavadagalu.";
-  setTimeout(()=> speakKannadaRoman(window._last), 400);
+  // PURE KARNATAKA KANNADA - Raichur style
+  window._last = "ನಿಮ್ಮ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ " + idKannada + ". ಸಮಸ್ಯೆ " + selectedKn + ". " + txt + " ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ. ಧನ್ಯವಾದಗಳು.";
+  setTimeout(()=> speakKarnatakaKannada(window._last), 500);
   render();
 }
-function speakResult(){ if(window._last) speakKannadaRoman(window._last); }
+function speakResult(){ if(window._last) speakKarnatakaKannada(window._last); }
 function render(){
   let l = document.getElementById('list');
   if(!complaints.length) return;
