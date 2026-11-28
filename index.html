@@ -3,184 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Voicers - Raichur | No Reading Needed</title>
+<title>Voice Civic Rakshak - Raichur</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,sans-serif}
-  body{
-    min-height:100vh;padding:14px;padding-bottom:30px;color:#222;
-    /* UNIQUE RAICHUR SUNSET BACKGROUND */
-    background:
-      linear-gradient(180deg, rgba(255,183,77,0.15) 0%, rgba(255,138,101,0.25) 45%, rgba(255,224,178,0.9) 100%),
-      url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80') center/cover fixed;
-    background-blend-mode:overlay;
-  }
-  /* Glass card effect */
-  .glass{background:rgba(255,255,255,0.92);backdrop-filter:blur(10px);border:3px solid #222;border-radius:24px;box-shadow:0 10px 30px rgba(0,0,0,0.15)}
-  .top{text-align:center;padding:14px 10px}
-  .logo{font-size:42px}
-  .top h1{font-size:34px;line-height:1;letter-spacing:-1px}
-  .top h1 span{color:#E65100}
-  .top p{font-size:15px;margin-top:6px;color:#444;font-weight:600}
-  .badge{display:inline-block;background:#222;color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:800;margin-top:10px}
-  .badge b{color:#FFD54F}
-
-  /* AJJI MODE TOGGLE - YOUR UNIQUE FEATURE */
-  .ajji-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;margin:10px 0}
-  .ajji-bar h3{font-size:19px}
-  .ajji-bar p{font-size:13px;color:#666}
-  .switch{position:relative;width:68px;height:36px;background:#ccc;border-radius:30px;border:3px solid #222;cursor:pointer;flex-shrink:0}
-  .switch::after{content:'';position:absolute;left:4px;top:3px;width:24px;height:24px;background:#fff;border-radius:50%;transition:0.2s}
-  .switch.on{background:#00C853}
-  .switch.on::after{left:34px}
-
-  .status{padding:18px;text-align:center;min-height:105px;display:flex;flex-direction:column;justify-content:center;gap:5px}
-  .status .big-text{font-size:21px;font-weight:800;line-height:1.25}
-  .status small{font-size:13px;color:#666}
-  .mic-wrap{text-align:center;margin:16px 0 6px}
-  #micBtn{width:150px;height:150px;border-radius:50%;border:6px solid #222;background:linear-gradient(135deg,#FF5252,#FF1744);color:#fff;font-size:62px;cursor:pointer;box-shadow:0 10px 0 #222, 0 15px 30px rgba(0,0,0,0.3)}
-  #micBtn.listening{background:linear-gradient(135deg,#00E676,#00C853);animation:pulse 0.9s infinite}
-  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
-  .mic-label{font-size:20px;font-weight:900;margin-top:12px;background:#222;color:#fff;display:inline-block;padding:8px 18px;border-radius:20px}
-  .lang-row{display:flex;gap:10px;justify-content:center;margin-top:12px}
-  .lang-row button{padding:10px 18px;border-radius:20px;border:3px solid #222;background:#fff;font-size:15px;font-weight:800;cursor:pointer}
-  .lang-row button.active{background:#222;color:#fff}
-
-  .grid{display:grid;gap:14px;margin-top:16px}
-  .card{padding:18px;display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left;transition:0.15s}
-  .card:active{transform:scale(0.97)}
-  .card .icon{font-size:64px;line-height:1;min-width:82px;text-align:center;background:#fff;border:3px solid #222;border-radius:18px;padding:10px}
-  .card h2{font-size:24px;line-height:1.1}
-  .card p{font-size:15px;color:#333;margin-top:4px;line-height:1.3}
-  .green{background:linear-gradient(135deg,#C8E6C9,#A5D6A7)}
-  .blue{background:linear-gradient(135deg,#BBDEFB,#90CAF9)}
-  .yellow{background:linear-gradient(135deg,#FFE082,#FFCC80)}
-
-  .result{display:none;padding:20px;margin-top:16px;text-align:center}
-  .result .big{font-size:76px;line-height:1}
-  .result h3{font-size:27px;margin:10px 0 6px}
-  .result p{font-size:18px;line-height:1.4}
-  .speakBtn{margin-top:14px;background:#222;color:#fff;border:none;padding:15px 22px;border-radius:14px;font-size:19px;font-weight:900;cursor:pointer;width:100%}
-  .family{margin-top:14px;padding:16px;text-align:left}
-  .family h4{font-size:18px}
-  .family .row{display:flex;justify-content:space-between;margin-top:10px;font-size:16px;font-weight:700}
-  .tick{color:#00C853}
-  .footer{text-align:center;margin-top:16px;font-size:12px;color:#555;background:rgba(255,255,255,0.8);padding:10px;border-radius:12px}
-
-  /* AJJI MODE: Hide all text, only pictures + voice */
-  body.ajji-mode .hide-in-ajji{display:none !important}
-  body.ajji-mode .card h2, body.ajji-mode .card p{display:none}
-  body.ajji-mode .card{justify-content:center;padding:24px}
-  body.ajji-mode .card .icon{font-size:90px;min-width:120px;padding:18px}
-  body.ajji-mode .top p, body.ajji-mode .badge, body.ajji-mode .footer{display:none}
-  body.ajji-mode .status small{display:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#FFF7ED;padding:16px}
+.top{background:#EA580C;color:white;padding:18px;border-radius:16px;text-align:center}
+.top h1{font-size:24px}
+.top p{font-size:13px;margin-top:4px}
+.card{background:white;border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.card h2{font-size:18px}
+.card p{font-size:13px;color:#666;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.opt{border:2px solid #FED7AA;background:#FFFBEB;border-radius:12px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold}
+.opt.active{background:#EA580C;color:white;border-color:#EA580C}
+.opt span{font-size:26px;display:block}
+textarea{width:100%;height:80px;border:2px solid #FDBA74;border-radius:12px;padding:10px;margin-top:10px;font-size:14px}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
+.mic{background:#DC2626;color:white}
+.listen{background:#2563EB;color:white}
+.submit{background:#16A34A;color:white}
+.result{background:#DCFCE7;border:2px solid #16A34A;border-radius:16px;padding:16px;margin-top:14px;display:none}
+.result h3{color:#166534}
+.badge{display:inline-block;background:#16A34A;color:white;padding:4px 10px;border-radius:20px;font-size:12px;margin-top:6px}
+.item{background:#F9FAFB;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
+.small{font-size:12px;color:#888;margin-top:14px;text-align:center}
 </style>
 </head>
 <body>
 
-<div class="top glass">
-  <div class="logo">🎙️🌾</div>
-  <h1>AI <span>Voicers</span></h1>
-  <p class="hide-in-ajji">Raichur • No Typing • No Reading • Only Speaking</p>
-  <div class="badge">✨ Built for people who <b>cannot read</b> at all</div>
+<div class="top">
+<h1>🎙️ Voice Civic Rakshak</h1>
+<p>ರಾಯಚೂರು | ಯಾವುದೇ ದೂರು - Any Complaint | ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ</p>
 </div>
 
-<!-- UNIQUE FEATURE: AJJI MODE -->
-<div class="ajji-bar glass">
-  <div>
-    <h3>👵 Ajji Mode <span class="hide-in-ajji">(No Reading)</span></h3>
-    <p class="hide-in-ajji">Turn ON - All text disappears. Only pictures + voice.</p>
-  </div>
-  <div class="switch" id="ajjiSwitch" onclick="toggleAjji()"></div>
-</div>
-
-<div class="status glass" id="statusBox">
-  <div class="big-text" id="statusText">👋 Namaskara! MIC otti, maathadi</div>
-  <small id="heardText">Tap MIC and speak in Kannada / English</small>
-</div>
-
-<div class="mic-wrap">
-  <button id="micBtn">🎤</button>
-  <br><div class="mic-label">🎤 MIC OTTI • MAATHADI</div>
-  <div class="lang-row hide-in-ajji">
-    <button id="btnKn" class="active" onclick="setLang('kn-IN')">ಕನ್ನಡ Kannada</button>
-    <button id="btnEn" onclick="setLang('en-IN')">English</button>
-  </div>
-</div>
-
+<div class="card">
+<h2>1. ಸಮಸ್ಯೆ ಏನು? / What is problem?</h2>
+<p>Tap one OR just Speak anything - ಯಾವುದಾದರೂ ಹೇಳಿ</p>
 <div class="grid">
-  <div class="card green glass" onclick="bookAppointment()">
-    <div class="icon">👩‍⚕️</div>
-    <div class="hide-in-ajji"><h2>Doctor Appointment</h2><p>Say: "Jwara ide, appointment"</p></div>
-  </div>
-  <div class="card blue glass" onclick="explainMedicine()">
-    <div class="icon">💊</div>
-    <div class="hide-in-ajji"><h2>Medicine</h2><p>Say: "Tablet hege tagobeku?"</p></div>
-  </div>
-  <div class="card yellow glass" onclick="setReminder()">
-    <div class="icon">🔔</div>
-    <div class="hide-in-ajji"><h2>Tablet Reminder</h2><p>Say: "Remind maadi"</p></div>
-  </div>
+<div class="opt" onclick="selectType(this,'ರಸ್ತೆ ಹಳ್ಳ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road Hole</div>
+<div class="opt" onclick="selectType(this,'ಕಸ')">🗑️<br>ಕಸ<br>Garbage</div>
+<div class="opt" onclick="selectType(this,'ಬೀದಿ ದೀಪ')">💡<br>ಬೀದಿ ದೀಪ<br>Street Light</div>
+<div class="opt" onclick="selectType(this,'ನೀರು')">💧<br>ನೀರು<br>Water</div>
+<div class="opt" onclick="selectType(this,'ಚರಂಡಿ / ಡ್ರೈನೇಜ್')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+<div class="opt" onclick="selectType(this,'ಬೇರೆ ಸಮಸ್ಯೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other / Anything</div>
 </div>
 
-<div class="result glass" id="resultBox">
-  <div class="big" id="resultIcon">✅</div>
-  <h3 id="resultTitle">Done</h3>
-  <p id="resultDesc"></p>
-  <button class="speakBtn" onclick="speakAgain()">🔊 MATE KELI - LISTEN AGAIN</button>
+<textarea id="text" placeholder="ಏನಾದರೂ ಹೇಳಿ... Example: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ, ನಾಯಿ ಜಾಸ್ತಿ ಇದೆ, ಬಸ್ ನಿಲ್ದಾಣದಲ್ಲಿ ಲೈಟ್ ಇಲ್ಲ..."></textarea>
 
-  <!-- UNIQUE: FAMILY CHECK -->
-  <div class="family glass" id="familyBox" style="display:none">
-    <h4>👨‍👩‍👧 Family Check (for Daughter)</h4>
-    <div class="row"><span>🟢 Morning Tablet</span><span class="tick">✓ Taken</span></div>
-    <div class="row"><span>🟡 Night Tablet</span><span>⏳ Pending - 8 PM</span></div>
-    <div class="row"><span>📅 Appointment</span><span>Tomorrow 10:30 AM</span></div>
-  </div>
+<button class="btn mic" onclick="startVoice()">🎤 ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ - Speak ANY Complaint</button>
+<button class="btn listen" onclick="speakText()">🔊 ಕೇಳಿ - Listen</button>
+<button class="btn submit" onclick="submitComplaint()">✅ ದೂರು ಸಲ್ಲಿಸಿ - Submit</button>
 </div>
 
-<div class="footer">India Runs on Voice • Scaler x Wispr Flow • Team AI Voicers - Raichur, Karnataka</div>
+<div class="result" id="result">
+<h3>✅ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ!</h3>
+<p id="rText" style="margin-top:8px"></p>
+<span class="badge" id="rId"></span>
+<p style="font-size:13px;margin-top:8px;color:#166534">ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. 2 ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ.</p>
+<button class="btn listen" onclick="speakResult()">🔊 ಮತ್ತೆ ಕೇಳಿ</button>
+</div>
+
+<div class="card">
+<h2>📋 ನನ್ನ ದೂರುಗಳು / My Complaints</h2>
+<div id="list"><p style="color:#888">ಇನ್ನೂ ದೂರು ಇಲ್ಲ.</p></div>
+</div>
+<p class="small">ರಾಯಚೂರಿಗಾಗಿ | Any Complaint - Road, Garbage, Light, Water, Drainage, Dogs, Anything</p>
 
 <script>
-let currentLang='kn-IN', lastSpoken='', ajjiOn=false;
-function toggleAjji(){
-  ajjiOn=!ajjiOn;
-  document.body.classList.toggle('ajji-mode', ajjiOn);
-  document.getElementById('ajjiSwitch').classList.toggle('on', ajjiOn);
-  speak(ajjiOn ? 'Ajji mode on aayitu. Iga akshara illa. Kevala chitra mattu dhwani.' : 'Ajji mode off aayitu.', 'kn-IN');
-}
-function setLang(l){ currentLang=l; document.getElementById('btnKn').classList.toggle('active',l==='kn-IN'); document.getElementById('btnEn').classList.toggle('active',l==='en-IN'); speak(l==='kn-IN'?'Kannada aayke maadiddeeni':'English selected',l); }
-function speak(text,lang){ lastSpoken=text; try{window.speechSynthesis.cancel();}catch(e){} const u=new SpeechSynthesisUtterance(text); u.lang=lang||currentLang; u.rate=0.85; const vs=window.speechSynthesis.getVoices(); const v=vs.find(v=>v.lang.includes(currentLang))||vs.find(v=>v.lang.includes('kn'))||vs[0]; if(v) u.voice=v; window.speechSynthesis.speak(u); }
-function speakAgain(){ if(lastSpoken) speak(lastSpoken); }
-function showResult(icon,title,desc,speakText,showFamily){
-  const b=document.getElementById('resultBox'); b.style.display='block';
-  document.getElementById('resultIcon').innerText=icon;
-  document.getElementById('resultTitle').innerText=title;
-  document.getElementById('resultDesc').innerText=desc;
-  document.getElementById('statusText').innerText='✅ '+title;
-  document.getElementById('familyBox').style.display= showFamily ? 'block' : 'none';
-  speak(speakText); b.scrollIntoView({behavior:'smooth'});
-}
-function bookAppointment(){ showResult('👩‍⚕️','Appointment Booked!','Dr. Priya • PHC Raichur • Tomorrow 10:30 AM • Token 12','Nimage naale beligge hattu muppathu gantege Doctor Priya avara appointment aayitu. Token number hannendu.', false); }
-function explainMedicine(){ showResult('💊','Medicine - Simple','☀️ Morning: 1 after food • 🌙 Night: 1 after food • 3 days','Ee tablet beligge oota aada mele ondu tablet tagoli. Ratri oota aada mele ondu tablet tagoli. Mooru dina tagoli. Neeru jaasti kudiyiri.', true); }
-function setReminder(){ showResult('🔔','Reminder Set!','⏰ 8 AM + 8 PM Daily • App will SPEAK reminder','Reminder set aayitu. Naanu beligge entu gantege mattu ratri entu gantege tablet tagoloke heluttene.', true); }
+let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
+let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
+render();
 
-const micBtn=document.getElementById('micBtn'); let rec=null;
-if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition; rec=new SR(); rec.continuous=false; rec.interimResults=false;
-  rec.onstart=()=>{micBtn.classList.add('listening'); document.getElementById('statusText').innerText='🎧 Keluthiddeeni... Maathadi...';};
-  rec.onend=()=>micBtn.classList.remove('listening');
-  rec.onerror=()=>{micBtn.classList.remove('listening'); document.getElementById('statusText').innerText='MIC problem. Mete button otti.';};
-  rec.onresult=(e)=>{
-    const t=e.results[0][0].transcript.toLowerCase();
-    document.getElementById('heardText').innerText='You said: "'+e.results[0][0].transcript+'"';
-    document.getElementById('statusText').innerText='Neevu heliddu: '+e.results[0][0].transcript;
-    if(t.includes('jwara')||t.includes('fever')||t.includes('appointment')||t.includes('doctor')||t.includes('hospital')||t.includes('kaayile')) bookAppointment();
-    else if(t.includes('tablet')||t.includes('medicine')||t.includes('matre')||t.includes('dawa')||t.includes('hege')) explainMedicine();
-    else if(t.includes('remind')||t.includes('nenapu')||t.includes('bell')||t.includes('alarm')) setReminder();
-    else { speak('Kshamisi, arthavagilla. Jwara, Tablet, athava Reminder antha heli.','kn-IN'); document.getElementById('statusText').innerText='Arthavagilla. Mete heli: Jwara / Tablet / Reminder'; }
-  };
+function speakKannada(text){
+  speechSynthesis.cancel();
+  let u = new SpeechSynthesisUtterance(text);
+  u.lang = 'kn-IN'; u.rate = 0.85;
+  let voices = speechSynthesis.getVoices();
+  let knVoice = voices.find(v => v.lang.includes('kn'));
+  if(knVoice) u.voice = knVoice;
+  speechSynthesis.speak(u);
 }
-micBtn.onclick=()=>{ if(!rec) return; rec.lang=currentLang; try{rec.start();}catch(e){} };
-window.onload=()=>{ setTimeout(()=>speak('Namaskara. Naanu AI Voicers. MIC otti, jwara, tablet, athava reminder antha heli.','kn-IN'),900); };
+
+function selectType(el, kn){
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  selectedKn = kn;
+  if(kn !== 'ಬೇರೆ ಸಮಸ್ಯೆ'){
+    document.getElementById('text').value = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + kn + " ಸಮಸ್ಯೆ ಇದೆ. ದಯವಿಟ್ಟು ಸರಿ ಮಾಡಿ.";
+  } else {
+    document.getElementById('text').value = "";
+    document.getElementById('text').placeholder = "ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು? ಏನಾದರೂ ಬರೆಯಿರಿ ಅಥವಾ ಹೇಳಿ...";
+  }
+  speakKannada("ನೀವು " + kn + " ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ.");
+}
+
+// AUTO-DETECT from voice/text - Any complaint
+function autoDetect(text){
+  let t = text.toLowerCase();
+  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')||t.includes('ಕಸ')) return 'ಕಸ';
+  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')) return 'ಬೀದಿ ದೀಪ';
+  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')) return 'ರಸ್ತೆ ಹಳ್ಳ';
+  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return 'ನೀರು';
+  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಚರಂಡಿ')) return 'ಚರಂಡಿ / ಡ್ರೈನೇಜ್';
+  if(t.includes('ನಾಯಿ')||t.includes('dog')) return 'ಬೇರೆ ಸಮಸ್ಯೆ - ನಾಯಿ';
+  return selectedKn;
+}
+
+function startVoice(){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert("Please open in Chrome"); return; }
+  const rec = new SR(); rec.lang = 'kn-IN';
+  rec.onresult = e => {
+    let txt = e.results[0][0].transcript;
+    document.getElementById('text').value = txt;
+    selectedKn = autoDetect(txt);
+    speakKannada("ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. " + txt + ". ಈಗ ದೂರು ಸಲ್ಲಿಸಿ ಬಟನ್ ಒತ್ತಿ.");
+  };
+  rec.start();
+  speakKannada("ಹೇಳಿ, ಯಾವುದೇ ಸಮಸ್ಯೆ ಹೇಳಿ, ನಾನು ಕೇಳುತ್ತಿದ್ದೇನೆ.");
+}
+function speakText(){
+  let t = document.getElementById('text').value || "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಸಮಸ್ಯೆ ಇದೆ";
+  speakKannada(t);
+}
+function submitComplaint(){
+  let txt = document.getElementById('text').value.trim();
+  if(!txt) txt = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + selectedKn + " ಸಮಸ್ಯೆ ಇದೆ.";
+  selectedKn = autoDetect(txt);
+  let id = "RCR" + Math.floor(1000 + Math.random()*9000);
+  let idSpoken = id.split('').join(' ');
+  let obj = {id:id, type:selectedKn, text:txt, time:new Date().toLocaleString('en-IN'), status:"ಪುರಸಭೆಗೆ ಹೋಗಿದೆ"};
+  complaints.unshift(obj);
+  localStorage.setItem('civic', JSON.stringify(complaints));
+  document.getElementById('result').style.display='block';
+  document.getElementById('rText').innerText = txt;
+  document.getElementById('rId').innerText = "ದೂರು ಸಂಖ್ಯೆ: " + id + " | " + selectedKn;
+  window._last = "ನಿಮ್ಮ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ " + idSpoken + ". " + txt + " ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ. ಧನ್ಯವಾದಗಳು.";
+  speakKannada(window._last);
+  render();
+}
+function speakResult(){ if(window._last) speakKannada(window._last); }
+function render(){
+  let l = document.getElementById('list');
+  if(!complaints.length) return;
+  l.innerHTML = complaints.map(c=>`<div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#16A34A">${c.status}</span><br><small>${c.time}</small></div>`).join('');
+}
 </script>
 </body>
 </html>
