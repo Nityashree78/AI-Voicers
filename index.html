@@ -15,7 +15,7 @@ body{background:#FDF4FF;padding:16px}
 .card p{font-size:13px;color:#A21CAF;line-height:1.5}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .opt{border:2px solid #E9D5FF;background:#FAF5FF;border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold;color:#6B21A8}
-.opt.active{background:#D8B4FE;color:#3B0764;border-color:#A855F7;transform:scale(1.04)}
+.opt.active{background:#D8B4FE;color:#3B0764;border-color:#A855F7}
 .opt span{font-size:26px;display:block}
 textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padding:10px;margin-top:10px;font-size:14px;background:#FFFBEB}
 .btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
@@ -27,7 +27,6 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 .badge{display:inline-block;background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:6px}
 .item{background:#FDF4FF;border:1px solid #FBCFE8;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
 .small{font-size:12px;color:#C084FC;margin-top:14px;text-align:center}
-.hint{background:#FEF9C3;border:1px solid #FDE68A;padding:10px;border-radius:10px;margin-top:10px;font-size:12px;color:#92400E;text-align:center}
 </style>
 </head>
 <body>
@@ -52,7 +51,6 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 <textarea id="text" placeholder="Ex: Namma beediyalli kasa togondilla..."></textarea>
 
 <button class="btn mic" onclick="startVoice()">🎤 Heli - Speak</button>
-<div class="hint">👆 Speak maadid 1 sec nalli thanaage Submit aagutte</div>
 <button class="btn listen" onclick="speakText()">🔊 Keli - Listen</button>
 <button class="btn submit" onclick="submitComplaint()">✅ Complaint Submit Maadi</button>
 </div>
@@ -69,7 +67,8 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 <h2>📋 Nanna Complaints</h2>
 <div id="list"><p style="color:#888">Innu complaint illa.</p></div>
 </div>
-<p class="small">Normal Talk | Raichur Style | Auto Select + Auto Submit</p>
+<p class="small">Normal Talk | Raichur</p>
+<audio id="voicePlayer" controls style="width:100%;margin-top:10px"></audio>
 
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
@@ -77,14 +76,13 @@ let selectedTalk = "Bere problem";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
 render();
 
-// NORMAL TALK - Like how Raichur people speak
+// VOICE BACK FIX - Direct Audio, no speechSynthesis
 function speakNormal(text){
-  speechSynthesis.cancel();
-  let u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-IN';
-  u.rate = 0.95;
-  u.pitch = 1;
-  speechSynthesis.speak(u);
+  let audio = document.getElementById('voicePlayer');
+  // Google voice - tl=en for normal talk
+  audio.src = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + encodeURIComponent(text) + "&tl=en&client=tw-ob";
+  audio.volume = 1;
+  audio.play();
 }
 
 function highlight(type){
@@ -101,38 +99,38 @@ function manualSelect(kn, talk){
   selectedKn = kn; selectedTalk = talk;
   highlight(kn);
   document.getElementById('text').value = "Namma beediyalli " + talk + " ide.";
-  speakNormal("Neenu " + talk + " select maadide. Eega heli, athava submit maadi.");
+  speakNormal("Neenu " + talk + " select maadide.");
 }
 
 function autoDetect(text){
   let t = text.toLowerCase();
   if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return ['ಕಸ','Kasa problem'];
-  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('bulb')) return ['ಬೀದಿ ದೀಪ','Light illa'];
-  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return ['ರಸ್ತೆ ಹಳ್ಳ','Road problem'];
+  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')) return ['ಬೀದಿ ದೀಪ','Light illa'];
+  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')) return ['ರಸ್ತೆ ಹಳ್ಳ','Road problem'];
   if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return ['ನೀರು','Neeru illa'];
-  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಮೋರಿ')) return ['ಚರಂಡಿ','Drainage problem'];
+  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')) return ['ಚರಂಡಿ','Drainage problem'];
   return ['ಬೇರೆ ಸಮಸ್ಯೆ','Bere problem'];
 }
 
 function startVoice(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){ alert("Please open in Chrome"); return; }
-  const rec = new SR(); rec.lang = 'kn-IN'; rec.interimResults = false;
+  const rec = new SR(); rec.lang = 'kn-IN';
   rec.onresult = e => {
     let txt = e.results[0][0].transcript;
     document.getElementById('text').value = txt;
     let d = autoDetect(txt);
     selectedKn = d[0]; selectedTalk = d[1];
     highlight(selectedKn);
-    speakNormal("Ok, kelide. " + txt + ". Eega complaint submit maadtaiddini.");
-    setTimeout(()=>{ submitComplaint(true); }, 1300);
+    speakNormal("Ok kelide. " + txt + ". Eega complaint submit maadtaiddini.");
+    setTimeout(()=>{ submitComplaint(true); }, 2000);
   };
   rec.start();
   speakNormal("Heli, yen samasye? Naanu keltaiddini.");
 }
 
 function speakText(){
-  speakNormal("Nimma complaint: " + selectedTalk + ". Dayavittu sari maadi.");
+  speakNormal("Nimma complaint: " + selectedTalk);
 }
 
 function submitComplaint(auto=false){
@@ -149,9 +147,8 @@ function submitComplaint(auto=false){
   document.getElementById('result').style.display='block';
   document.getElementById('rText').innerText = txt;
   document.getElementById('rId').innerText = "Complaint Number: " + id + " | " + selectedKn;
-  // NORMAL TALK LIKE PEOPLE SPEAK
   window._last = "Super! Nimma complaint submit aagide. Number, R C R " + idSpoken + ". Problem, " + selectedTalk + ". Purasabhege hogide. Eradu dina dalli sari maadtaare. Thank you.";
-  setTimeout(()=> speakNormal(window._last), 400);
+  setTimeout(()=> speakNormal(window._last), 500);
   render();
 }
 function speakResult(){ if(window._last) speakNormal(window._last); }
@@ -163,3 +160,10 @@ function render(){
 </script>
 </body>
 </html>
+
+
+
+
+
+  
+
