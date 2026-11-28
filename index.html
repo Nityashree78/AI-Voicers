@@ -1,68 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>AI Voicers - Raichur</title>
+<title>AI Voicers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body{font-family:Arial;margin:0;background:#fff7ed;text-align:center}
-.header{background:#f97316;color:white;padding:25px}
+body{font-family:Arial;margin:0;background:#F3E8FF;text-align:center}
+.header{background:#C084FC;color:white;padding:25px}
 .header h1{margin:0;font-size:30px}
-.lang button{padding:8px 18px;margin:5px;border:none;border-radius:20px;background:white;color:#f97316;font-weight:bold}
-.box{background:white;margin:15px;padding:20px;border-radius:15px;box-shadow:0 2px 8px #ddd;text-align:left}
-.voicebtn{background:#16a34a;color:white;padding:15px 25px;border:none;border-radius:10px;font-size:18px;width:100%}
+.header p{margin:5px;font-size:16px}
+.lang button{padding:8px 18px;margin:5px;border:none;border-radius:20px;background:white;color:#9333EA;font-weight:bold}
+.box{background:white;margin:15px;padding:20px;border-radius:15px;text-align:left;box-shadow:0 2px 8px #D8B4FE}
+.voicebtn{background:#9333EA;color:white;padding:16px;border:none;border-radius:12px;font-size:19px;width:100%;font-weight:bold}
+h2,h3{color:#6B21A8}
+.big{font-size:18px}
 </style>
 </head>
 <body>
+
 <div class="header">
 <h1>🎙️ AI Voicers</h1>
-<p>AI-powered voice assistant for Raichur</p>
-<p>Speak in your language, no typing needed</p>
+<p>For Old People, Farmers & Mothers in Raichur</p>
+<p>No typing, No English reading - Only Speaking</p>
 <div class="lang"><button>English</button><button>ಕನ್ನಡ</button><button>हिन्दी</button></div>
 </div>
 
-<div class="box">
+<div class="box" style="text-align:center">
 <h2>🎤 Speak Now</h2>
-<p>Click and say: <b>"Book appointment for fever tomorrow"</b></p>
+<p class="big">Click and say:<br><b>"Fever ge appointment book maadi"</b></p>
 <button class="voicebtn" onclick="startVoice()">🎤 Start Listening</button>
-<p id="heard">Listening... Speak now</p>
+<p id="heard" class="big">Listening... Speak now</p>
 </div>
 
 <div class="box">
-<h3>❓ Problem in Raichur</h3>
-<p>Many old people, farmers and mothers cannot type or read English. They struggle to book hospital appointments and understand medicine instructions.</p>
+<h3>✅ Appointment Booked</h3>
+<p id="appt" class="big">Your appointment will come here after you speak</p>
 </div>
 
 <div class="box">
-<h3>💡 Our Solution - AI Voicers</h3>
-<p>User speaks in Kannada or English - "Book appointment for fever tomorrow". It books appointment, explains medicine in simple Kannada, and reminds to take tablets on time. No typing needed, only speaking.</p>
+<h3>💊 Medicine - How To Take</h3>
+<p id="med" class="big">Medicine in simple Kannada will come here</p>
 </div>
 
 <div class="box">
-<h3>✅ Appointment Booking</h3>
-<p id="appt">Your appointments will appear here</p>
+<h3>⏰ Reminder For Old People</h3>
+<p id="rem" class="big">Reminder time will come here</p>
 </div>
 
 <div class="box">
-<h3>💊 Medicine Guidance</h3>
-<p id="med">Medicine explanation in simple Kannada will appear here</p>
-</div>
-
-<div class="box">
-<h3>⏰ Reminders</h3>
-<p id="rem">Reminders will appear here</p>
+<h3>❤️ Why We Chose This Project?</h3>
+<p class="big">In Raichur, many old people cannot type or read English. They struggle to book hospital appointment and understand medicine. So we made AI Voicers - just speak in Kannada, it will book, explain medicine, and remind tablet time.</p>
 </div>
 
 <script>
 function startVoice(){
-document.getElementById('heard').innerText="Listening... Please speak in Kannada or English";
+document.getElementById('heard').innerText="Listening... Please speak in Kannada";
 const rec = new (window.SpeechRecognition||window.webkitSpeechRecognition)();
 rec.lang='kn-IN';
 rec.onresult=(e)=>{
 let text=e.results[0][0].transcript;
 document.getElementById('heard').innerText="You said: "+text;
-document.getElementById('appt').innerText="Booked: Tomorrow, 10 AM, Raichur District Hospital for: "+text;
-document.getElementById('med').innerText="Paracetamol - 1 tablet beligge, 1 tablet sanje. Oota aadmele tagoli. Neeru jasti kudiyiri.";
-document.getElementById('rem').innerText="Reminder set: 9 AM & 9 PM - Tablet time. We will remind you.";
+document.getElementById('appt').innerText="✅ Booked! Tomorrow, 10 AM, Raichur District Hospital. For: "+text+". Doctor will see you.";
+document.getElementById('med').innerText="💊 Paracetamol - Beligge 1 tablet oota aadmele, Sanje 1 tablet oota aadmele. Neeru jasti kudiyiri. 3 dina tagoli.";
+document.getElementById('rem').innerText="⏰ Reminder Set! Beligge 9 AM - 1 tablet. Sanje 9 PM - 1 tablet. We will remind you on time, don't worry.";
+let msg = new SpeechSynthesisUtterance("Appointment booked tomorrow 10 AM Raichur hospital. Paracetamol beligge ondu, sanje ondu, oota aadmele tagoli. Reminder set 9 AM and 9 PM");
+msg.lang='kn-IN';
+speechSynthesis.speak(msg);
 };
 rec.start();
 }
