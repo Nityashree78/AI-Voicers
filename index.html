@@ -1,59 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="kn">
 <head>
-<title>AI Voicers</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Voicers - Raichur</title>
 <style>
-body{margin:0;background:black;color:white;font-family:Arial;text-align:center}
-.top{padding:25px}
-.top h1{font-size:34px;color:#C084FC;margin:0}
-.card{background:#1A1A1A;margin:15px;padding:20px;border-radius:20px;text-align:left;border:1px solid #444}
-.card h3{color:#C084FC}
-.mic{width:110px;height:110px;border-radius:50%;border:none;background:#C084FC;font-size:50px}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, sans-serif}
+  body{background:#FFF8E1;min-height:100vh;padding:16px;padding-bottom:30px}
+  .top{text-align:center;margin-bottom:12px}
+  .top h1{font-size:32px;color:#1a1a1a}
+  .top p{font-size:16px;color:#555;margin-top:4px}
+  .status{
+    background:#fff;border:3px solid #222;border-radius:20px;
+    padding:18px;text-align:center;min-height:110px;
+    display:flex;flex-direction:column;justify-content:center;gap:6px;
+    font-size:20px;font-weight:700;line-height:1.3
+  }
+  .status small{font-size:14px;color:#666;font-weight:500}
+  .mic-wrap{text-align:center;margin:18px 0 10px}
+  #micBtn{
+    width:140px;height:140px;border-radius:50%;border:6px solid #222;
+    background:#FF5252;color:#fff;font-size:55px;cursor:pointer;
+    box-shadow:0 8px 0 #222;transition:0.1s
+  }
+  #micBtn.listening{background:#00C853;animation:pulse 1s infinite}
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+  .mic-label{font-size:19px;font-weight:800;margin-top:10px}
+  .grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
+  .card{
+    border:4px solid #222;border-radius:22px;padding:18px;
+    display:flex;align-items:center;gap:16px;cursor:pointer;text-align:left
+  }
+  .card .icon{font-size:60px;line-height:1;min-width:80px;text-align:center}
+  .card h2{font-size:24px;line-height:1.2}
+  .card p{font-size:16px;color:#333;margin-top:4px;line-height:1.3}
+  .green{background:#C8E6C9}
+  .blue{background:#BBDEFB}
+  .yellow{background:#FFE082}
+  .result{
+    display:none;background:#fff;border:4px solid #222;border-radius:22px;
+    padding:20px;margin-top:16px;text-align:center
+  }
+  .result .big{font-size:72px;line-height:1}
+  .result h3{font-size:26px;margin:10px 0 6px}
+  .result p{font-size:18px;line-height:1.4}
+  .speakBtn{
+    margin-top:14px;background:#222;color:#fff;border:none;
+    padding:14px 22px;border-radius:14px;font-size:19px;font-weight:800;cursor:pointer;width:100%
+  }
+  .lang-row{display:flex;gap:10px;justify-content:center;margin-top:12px}
+  .lang-row button{padding:10px 16px;border-radius:20px;border:3px solid #222;background:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  .lang-row button.active{background:#222;color:#fff}
+  .footer{text-align:center;margin-top:18px;font-size:13px;color:#777}
 </style>
 </head>
 <body>
 
 <div class="top">
-<h1>🎙️ AI Voicers</h1>
-<p>No Typing, Only Speaking | Kannada or English</p>
-<p>Say: <b>"Book appointment for fever tomorrow"</b></p>
-<button class="mic" onclick="startVoice()">🎙️</button>
-<p id="heard">Tap mic and speak...</p>
+  <h1>🎙️ AI Voicers</h1>
+  <p>Raichur • No typing • No reading • Only speaking</p>
 </div>
 
-<div class="card">
-<h3>✅ Appointment</h3>
-<p id="appt">Speak to book...</p>
+<div class="status" id="statusBox">
+  <div id="statusText">👋 Namaskara! MIC otti, maathadi</div>
+  <small id="heardText">Tap MIC and speak in Kannada / English</small>
 </div>
 
-<div class="card">
-<h3>💊 Medicine in Simple Kannada</h3>
-<p id="med">Speak to get medicine...</p>
+<div class="mic-wrap">
+  <button id="micBtn">🎤</button>
+  <div class="mic-label">MIC OTTI - MAATHADI</div>
+  <div class="lang-row">
+    <button id="btnKn" class="active" onclick="setLang('kn-IN')">ಕನ್ನಡ</button>
+    <button id="btnEn" onclick="setLang('en-IN')">English</button>
+  </div>
 </div>
 
-<div class="card">
-<h3>⏰ Reminder</h3>
-<p id="rem">Speak to set reminder...</p>
+<div class="grid">
+  <div class="card green" onclick="bookAppointment()">
+    <div class="icon">👩‍⚕️</div>
+    <div><h2>Doctor Appointment</h2><p>Tap photo or say: "Jwara ide, appointment"</p></div>
+  </div>
+  <div class="card blue" onclick="explainMedicine()">
+    <div class="icon">💊</div>
+    <div><h2>Medicine</h2><p>Tap photo or say: "Tablet hege?"</p></div>
+  </div>
+  <div class="card yellow" onclick="setReminder()">
+    <div class="icon">🔔</div>
+    <div><h2>Tablet Reminder</h2><p>Tap photo or say: "Remind maadi"</p></div>
+  </div>
 </div>
+
+<div class="result" id="resultBox">
+  <div class="big" id="resultIcon">✅</div>
+  <h3 id="resultTitle">Done</h3>
+  <p id="resultDesc"></p>
+  <button class="speakBtn" onclick="speakAgain()">🔊 MATE KELI - LISTEN AGAIN</button>
+</div>
+
+<div class="footer">Built for India Runs on Voice • Scaler x Wispr Flow • Team AI Voicers</div>
 
 <script>
-function startVoice(){
-document.getElementById('heard').innerText="Listening...";
-const rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
-rec.lang='en-IN';
-rec.onresult=(e)=>{
-let text=e.results[0][0].transcript;
-document.getElementById('heard').innerText="You said: "+text;
-document.getElementById('appt').innerHTML="✅ Booked for Fever<br>Tomorrow, 10 AM<br>Raichur District Hospital<br>Token No: 12";
-document.getElementById('med').innerHTML="💊 Paracetamol<br>Beligge 1 tablet oota aadmele<br>Sanje 1 tablet oota aadmele<br>Neeru jasti kudiyiri";
-document.getElementById('rem').innerHTML="⏰ Reminder Set<br>Beligge 9 AM - 1 Tablet<br>Sanje 9 PM - 1 Tablet";
-let msg=new SpeechSynthesisUtterance("Appointment booked tomorrow 10 AM Raichur hospital. Paracetamol beligge ondu, sanje ondu, oota aadmele tagoli. Reminder set 9 AM and 9 PM");
-msg.lang='kn-IN';
-speechSynthesis.speak(msg);
-};
-rec.start();
+let currentLang = 'kn-IN';
+let lastSpoken = '';
+
+function setLang(lang){
+  currentLang = lang;
+  document.getElementById('btnKn').classList.toggle('active', lang==='kn-IN');
+  document.getElementById('btnEn').classList.toggle('active', lang==='en-IN');
+  speak(lang==='kn-IN' ? 'Kannada aayke maadiddeeni' : 'English selected', lang);
 }
+
+function speak(text, lang){
+  lastSpoken = text;
+  try{ window.speechSynthesis.cancel(); }catch(e){}
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || currentLang;
+  u.rate = 0.85; // slow for old people
+  u.pitch = 1;
+  // Try to find Kannada voice
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(v=>v.lang.includes(currentLang)) || voices.find(v=>v.lang.includes('kn')) || voices[0];
+  if(v) u.voice = v;
+  window.speechSynthesis.speak(u);
+}
+
+function speakAgain(){
+  if(lastSpoken) speak(lastSpoken);
+}
+
+function showResult(icon, title, desc, speakText){
+  const box = document.getElementById('resultBox');
+  box.style.display = 'block';
+  document.getElementById('resultIcon').innerText = icon;
+  document.getElementById('resultTitle').innerText = title;
+  document.getElementById('resultDesc').innerText = desc;
+  document.getElementById('statusText').innerText = '✅ ' + title;
+  speak(speakText);
+  box.scrollIntoView({behavior:'smooth'});
+}
+
+function bookAppointment(){
+  showResult('👩‍⚕️',
+    'Appointment Booked!',
+    'Dr. Priya • PHC Raichur • Tomorrow 10:30 AM • Token No. 12',
+    'Nimage naale beligge hattu muppathu gantege Doctor Priya avara appointment aayitu. Token number hannendu. Dayavittu samayakke banni.'
+  );
+}
+
+function explainMedicine(){
+  showResult('💊',
+    'Medicine - Simple',
+    '☀️ Morning: 1 tablet after food  •  🌙 Night: 1 tablet after food  •  3 days',
+    'Ee tablet beligge oota aada mele ondu tablet tagoli. Ratri oota aada mele ondu tablet tagoli. Mooru dina tagoli. Neeru jaasti kudiyiri.'
+  );
+}
+
+function setReminder(){
+  showResult('🔔',
+    'Reminder Set!',
+    '⏰ 8 AM + 8 PM Daily • App will speak and remind you',
+    'Reminder set aayitu. Naanu beligge entu gantege mattu ratri entu gantege tablet tagoloke neevu heluttene.'
+  );
+}
+
+// --- Voice Recognition ---
+const micBtn = document.getElementById('micBtn');
+let recognition = null;
+
+if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+
+  recognition.onstart = () => {
+    micBtn.classList.add('listening');
+    document.getElementById('statusText').innerText = '🎧 Keluthiddeeni... Maathadi...';
+  };
+  recognition.onend = () => micBtn.classList.remove('listening');
+  recognition.onerror = () => {
+    micBtn.classList.remove('listening');
+    document.getElementById('statusText').innerText = 'MIC problem. Mete button otti.';
+  };
+  recognition.onresult = (e) => {
+    const text = e.results[0][0].transcript.toLowerCase();
+    document.getElementById('heardText').innerText = 'You said: "' + e.results[0][0].transcript + '"';
+    document.getElementById('statusText').innerText = 'Neevu heliddu: ' + e.results[0][0].transcript;
+
+    // Logic - Kannada + English + Hinglish
+    if (text.includes('jwara') || text.includes('fever') || text.includes('jwar') || text.includes('appointment') || text.includes('doctor') || text.includes('buk') || text.includes('kaayile') || text.includes('hospital')) {
+      bookAppointment();
+    } else if (text.includes('tablet') || text.includes('medicine') || text.includes('tablet') || text.includes('matre') || text.includes('dawa') || text.includes('hege') || text.includes('how')) {
+      explainMedicine();
+    } else if (text.includes('remind') || text.includes('reminder') || text.includes('nenapu') || text.includes('bell') || text.includes('alarm')) {
+      setReminder();
+    } else {
+      // Default: ask again in Kannada
+      speak('Kshamisi, arthavagilla. Jwara, Tablet, athava Reminder antha heli.', 'kn-IN');
+      document.getElementById('statusText').innerText = 'Arthavagilla. Mete heli: Jwara / Tablet / Reminder';
+    }
+  };
+} else {
+  document.getElementById('statusText').innerText = 'Your browser does not support voice. Use Chrome.';
+}
+
+micBtn.onclick = () => {
+  if(!recognition) return;
+  recognition.lang = currentLang;
+  try{ recognition.start(); }catch(e){}
+};
+
+// Welcome speak on load
+window.onload = () => {
+  setTimeout(()=>{
+    speak('Namaskara. Naanu AI Voicers. MIC otti, jwara, tablet, athava reminder antha heli.', 'kn-IN');
+  }, 800);
+};
 </script>
 </body>
 </html>
