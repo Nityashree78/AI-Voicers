@@ -6,51 +6,53 @@
 <title>Voice Civic Rakshak - Raichur</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#FFF7ED;padding:16px}
-.top{background:#EA580C;color:white;padding:18px;border-radius:16px;text-align:center}
-.top h1{font-size:24px}
-.top p{font-size:13px;margin-top:4px}
-.card{background:white;border-radius:16px;padding:16px;margin-top:14px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
-.card h2{font-size:18px}
-.card p{font-size:13px;color:#666;line-height:1.5}
+body{background:#F0F9FF;padding:16px}
+.top{background:#FEF9C3;color:#854D0E;padding:18px;border-radius:16px;text-align:center;border:2px solid #FDE68A}
+.top h1{font-size:24px;color:#854D0E}
+.top p{font-size:13px;margin-top:4px;color:#A16207}
+.card{background:#FFFFFF;border:2px solid #E0F2FE;border-radius:16px;padding:16px;margin-top:14px}
+.card h2{font-size:18px;color:#0C4A6E}
+.card p{font-size:13px;color:#64748B;line-height:1.5}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.opt{border:2px solid #FED7AA;background:#FFFBEB;border-radius:12px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold}
-.opt.active{background:#EA580C;color:white;border-color:#EA580C}
+.opt{border:2px solid #E0E7FF;background:#EEF2FF;border-radius:12px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold;color:#3730A3}
+.opt.active{background:#C7D2FE;color:#1E1B4B;border-color:#6366F1;transform:scale(1.03)}
 .opt span{font-size:26px;display:block}
-textarea{width:100%;height:80px;border:2px solid #FDBA74;border-radius:12px;padding:10px;margin-top:10px;font-size:14px}
+textarea{width:100%;height:80px;border:2px solid #BAE6FD;border-radius:12px;padding:10px;margin-top:10px;font-size:14px;background:#F8FAFC}
 .btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
-.mic{background:#DC2626;color:white}
-.listen{background:#2563EB;color:white}
-.submit{background:#16A34A;color:white}
-.result{background:#DCFCE7;border:2px solid #16A34A;border-radius:16px;padding:16px;margin-top:14px;display:none}
+.mic{background:#FDE68A;color:#92400E;border:2px solid #F59E0B}
+.listen{background:#DBEAFE;color:#1E40AF;border:2px solid #93C5FD}
+.submit{background:#DCFCE7;color:#166534;border:2px solid #86EFAC}
+.result{background:#F0FDF4;border:2px solid #BBF7D0;border-radius:16px;padding:16px;margin-top:14px;display:none}
 .result h3{color:#166534}
-.badge{display:inline-block;background:#16A34A;color:white;padding:4px 10px;border-radius:20px;font-size:12px;margin-top:6px}
-.item{background:#F9FAFB;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
-.small{font-size:12px;color:#888;margin-top:14px;text-align:center}
+.badge{display:inline-block;background:#DCFCE7;color:#166534;border:1px solid #86EFAC;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:6px}
+.item{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
+.small{font-size:12px;color:#94A3B8;margin-top:14px;text-align:center}
+.hint{background:#FFFBEB;border:1px solid #FDE68A;padding:10px;border-radius:10px;margin-top:10px;font-size:12px;color:#92400E;text-align:center}
 </style>
 </head>
 <body>
 
 <div class="top">
 <h1>🎙️ Voice Civic Rakshak</h1>
-<p>ರಾಯಚೂರು | ಯಾವುದೇ ದೂರು - Any Complaint | ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ</p>
+<p>ರಾಯಚೂರು | ಯಾವುದೇ ದೂರು - Just Speak, Auto Submit</p>
 </div>
 
 <div class="card">
-<h2>1. ಸಮಸ್ಯೆ ಏನು? / What is problem?</h2>
-<p>Tap one OR just Speak anything - ಯಾವುದಾದರೂ ಹೇಳಿ</p>
+<h2>1. ಸಮಸ್ಯೆ ಏನು?</h2>
+<p>Just Speak - ಮಾತಾಡಿದ್ರೆ ಸಾಕು, ತಾನಾಗೇ Select ಆಗಿ Submit ಆಗುತ್ತೆ</p>
 <div class="grid">
-<div class="opt" onclick="selectType(this,'ರಸ್ತೆ ಹಳ್ಳ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road Hole</div>
-<div class="opt" onclick="selectType(this,'ಕಸ')">🗑️<br>ಕಸ<br>Garbage</div>
-<div class="opt" onclick="selectType(this,'ಬೀದಿ ದೀಪ')">💡<br>ಬೀದಿ ದೀಪ<br>Street Light</div>
-<div class="opt" onclick="selectType(this,'ನೀರು')">💧<br>ನೀರು<br>Water</div>
-<div class="opt" onclick="selectType(this,'ಚರಂಡಿ / ಡ್ರೈನೇಜ್')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
-<div class="opt" onclick="selectType(this,'ಬೇರೆ ಸಮಸ್ಯೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other / Anything</div>
+<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road Hole</div>
+<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ')">🗑️<br>ಕಸ<br>Garbage</div>
+<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ')">💡<br>ಬೀದಿ ದೀಪ<br>Street Light</div>
+<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು')">💧<br>ನೀರು<br>Water</div>
+<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
 </div>
 
-<textarea id="text" placeholder="ಏನಾದರೂ ಹೇಳಿ... Example: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ, ನಾಯಿ ಜಾಸ್ತಿ ಇದೆ, ಬಸ್ ನಿಲ್ದಾಣದಲ್ಲಿ ಲೈಟ್ ಇಲ್ಲ..."></textarea>
+<textarea id="text" placeholder="ಉದಾ: ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಕಸ ತೆಗೆದಿಲ್ಲ..."></textarea>
 
-<button class="btn mic" onclick="startVoice()">🎤 ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ - Speak ANY Complaint</button>
+<button class="btn mic" onclick="startVoice()">🎤 ಕನ್ನಡದಲ್ಲಿ ಹೇಳಿ - Speak & Auto Submit</button>
+<div class="hint">👆 Speak ಮಾಡಿದ 1 ಸೆಕೆಂಡ್ ನಲ್ಲಿ ತಾನಾಗೇ Complaint Submit ಆಗುತ್ತೆ</div>
 <button class="btn listen" onclick="speakText()">🔊 ಕೇಳಿ - Listen</button>
 <button class="btn submit" onclick="submitComplaint()">✅ ದೂರು ಸಲ್ಲಿಸಿ - Submit</button>
 </div>
@@ -64,90 +66,123 @@ textarea{width:100%;height:80px;border:2px solid #FDBA74;border-radius:12px;padd
 </div>
 
 <div class="card">
-<h2>📋 ನನ್ನ ದೂರುಗಳು / My Complaints</h2>
+<h2>📋 ನನ್ನ ದೂರುಗಳು</h2>
 <div id="list"><p style="color:#888">ಇನ್ನೂ ದೂರು ಇಲ್ಲ.</p></div>
 </div>
-<p class="small">ರಾಯಚೂರಿಗಾಗಿ | Any Complaint - Road, Garbage, Light, Water, Drainage, Dogs, Anything</p>
+<p class="small">Light Theme | Auto Select + Auto Submit | Pure Kannada Voice</p>
 
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
+let knVoice = null;
 render();
+
+// LOAD KANNADA VOICE FIRST - Fixes English speaking problem
+function loadVoices(){
+  let voices = speechSynthesis.getVoices();
+  // Find Kannada voice - try all variations
+  knVoice = voices.find(v => v.lang === 'kn-IN') ||
+            voices.find(v => v.lang.startsWith('kn')) ||
+            voices.find(v => v.name.toLowerCase().includes('kannada')) ||
+            voices.find(v => v.lang === 'kn_IN') || null;
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+loadVoices();
+setTimeout(loadVoices, 500);
 
 function speakKannada(text){
   speechSynthesis.cancel();
+  // Force Kannada - use only Kannada script, no English words
   let u = new SpeechSynthesisUtterance(text);
-  u.lang = 'kn-IN'; u.rate = 0.85;
-  let voices = speechSynthesis.getVoices();
-  let knVoice = voices.find(v => v.lang.includes('kn'));
+  u.lang = 'kn-IN';
+  u.rate = 0.8;
+  u.pitch = 1;
+  u.volume = 1;
+  loadVoices();
   if(knVoice) u.voice = knVoice;
+  // If no Kannada voice, still force kn-IN - Chrome will use Kannada
   speechSynthesis.speak(u);
 }
 
-function selectType(el, kn){
+function highlight(type){
   document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
-  el.classList.add('active');
+  if(type==='ರಸ್ತೆ ಹಳ್ಳ') document.getElementById('opt-road').classList.add('active');
+  if(type==='ಕಸ') document.getElementById('opt-garbage').classList.add('active');
+  if(type==='ಬೀದಿ ದೀಪ') document.getElementById('opt-light').classList.add('active');
+  if(type==='ನೀರು') document.getElementById('opt-water').classList.add('active');
+  if(type==='ಚರಂಡಿ') document.getElementById('opt-drain').classList.add('active');
+  if(type==='ಬೇರೆ ಸಮಸ್ಯೆ') document.getElementById('opt-other').classList.add('active');
+}
+
+function manualSelect(kn){
   selectedKn = kn;
-  if(kn !== 'ಬೇರೆ ಸಮಸ್ಯೆ'){
-    document.getElementById('text').value = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + kn + " ಸಮಸ್ಯೆ ಇದೆ. ದಯವಿಟ್ಟು ಸರಿ ಮಾಡಿ.";
-  } else {
-    document.getElementById('text').value = "";
-    document.getElementById('text').placeholder = "ನಿಮ್ಮ ಸಮಸ್ಯೆ ಏನು? ಏನಾದರೂ ಬರೆಯಿರಿ ಅಥವಾ ಹೇಳಿ...";
-  }
+  highlight(kn);
+  document.getElementById('text').value = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + kn + " ಸಮಸ್ಯೆ ಇದೆ. ದಯವಿಟ್ಟು ಸರಿ ಮಾಡಿ.";
   speakKannada("ನೀವು " + kn + " ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ.");
 }
 
-// AUTO-DETECT from voice/text - Any complaint
+// AUTO DETECT - Kannada + English both
 function autoDetect(text){
   let t = text.toLowerCase();
-  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')||t.includes('ಕಸ')) return 'ಕಸ';
-  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')) return 'ಬೀದಿ ದೀಪ';
-  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')) return 'ರಸ್ತೆ ಹಳ್ಳ';
-  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return 'ನೀರು';
-  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಚರಂಡಿ')) return 'ಚರಂಡಿ / ಡ್ರೈನೇಜ್';
-  if(t.includes('ನಾಯಿ')||t.includes('dog')) return 'ಬೇರೆ ಸಮಸ್ಯೆ - ನಾಯಿ';
-  return selectedKn;
+  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')||t.includes('ಕಸದ')) return 'ಕಸ';
+  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('ಬೀದಿ ದೀಪ')||t.includes('bulb')) return 'ಬೀದಿ ದೀಪ';
+  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return 'ರಸ್ತೆ ಹಳ್ಳ';
+  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')||t.includes('ನೀರ')) return 'ನೀರು';
+  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಚರಂಡ')||t.includes('ಮೋರಿ')) return 'ಚರಂಡಿ';
+  return 'ಬೇರೆ ಸಮಸ್ಯೆ';
 }
 
 function startVoice(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){ alert("Please open in Chrome"); return; }
-  const rec = new SR(); rec.lang = 'kn-IN';
+  const rec = new SR(); rec.lang = 'kn-IN'; rec.interimResults = false;
   rec.onresult = e => {
     let txt = e.results[0][0].transcript;
     document.getElementById('text').value = txt;
+    // 1. AUTO SELECT that particular problem
     selectedKn = autoDetect(txt);
-    speakKannada("ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. " + txt + ". ಈಗ ದೂರು ಸಲ್ಲಿಸಿ ಬಟನ್ ಒತ್ತಿ.");
+    highlight(selectedKn);
+    // 2. AUTO SUBMIT after 1 sec - no need to press submit
+    speakKannada("ನಿಮ್ಮ ಮಾತು ಕೇಳಿದೆ. " + txt + ". ಈಗ ದೂರು ಸಲ್ಲಿಸುತ್ತಿದ್ದೇನೆ.");
+    setTimeout(()=>{ submitComplaint(true); }, 1200);
   };
+  rec.onerror = ()=> speakKannada("ಮತ್ತೆ ಒಮ್ಮೆ ಹೇಳಿ.");
   rec.start();
-  speakKannada("ಹೇಳಿ, ಯಾವುದೇ ಸಮಸ್ಯೆ ಹೇಳಿ, ನಾನು ಕೇಳುತ್ತಿದ್ದೇನೆ.");
+  speakKannada("ಹೇಳಿ, ಯಾವುದೇ ಸಮಸ್ಯೆ ಹೇಳಿ.");
 }
+
 function speakText(){
   let t = document.getElementById('text').value || "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ ಸಮಸ್ಯೆ ಇದೆ";
   speakKannada(t);
 }
-function submitComplaint(){
+
+function submitComplaint(auto=false){
   let txt = document.getElementById('text').value.trim();
-  if(!txt) txt = "ನಮ್ಮ ಬೀದಿಯಲ್ಲಿ " + selectedKn + " ಸಮಸ್ಯೆ ಇದೆ.";
+  if(!txt){ speakKannada("ಮೊದಲು ನಿಮ್ಮ ಸಮಸ್ಯೆ ಹೇಳಿ."); return; }
   selectedKn = autoDetect(txt);
+  highlight(selectedKn);
   let id = "RCR" + Math.floor(1000 + Math.random()*9000);
-  let idSpoken = id.split('').join(' ');
+  // Speak number in Kannada digits style - R C R + numbers spelled
+  let idSpoken = id.replace('RCR','ಆರ್ ಸಿ ಆರ್ ') + " " + id.slice(3).split('').join(' ');
   let obj = {id:id, type:selectedKn, text:txt, time:new Date().toLocaleString('en-IN'), status:"ಪುರಸಭೆಗೆ ಹೋಗಿದೆ"};
   complaints.unshift(obj);
   localStorage.setItem('civic', JSON.stringify(complaints));
   document.getElementById('result').style.display='block';
   document.getElementById('rText').innerText = txt;
   document.getElementById('rId').innerText = "ದೂರು ಸಂಖ್ಯೆ: " + id + " | " + selectedKn;
-  window._last = "ನಿಮ್ಮ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ " + idSpoken + ". " + txt + " ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ. ಧನ್ಯವಾದಗಳು.";
-  speakKannada(window._last);
+  // PURE KANNADA SPEAK BACK - No English words at all
+  window._last = "ನಿಮ್ಮ ದೂರು ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ " + idSpoken + ". ಸಮಸ್ಯೆ " + selectedKn + ". " + txt + " ಪುರಸಭೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡುತ್ತೇವೆ. ಧನ್ಯವಾದಗಳು.";
+  // Small delay so previous speak finishes
+  setTimeout(()=> speakKannada(window._last), 300);
   render();
 }
 function speakResult(){ if(window._last) speakKannada(window._last); }
 function render(){
   let l = document.getElementById('list');
   if(!complaints.length) return;
-  l.innerHTML = complaints.map(c=>`<div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#16A34A">${c.status}</span><br><small>${c.time}</small></div>`).join('');
+  l.innerHTML = complaints.map(c=>`<div class="item"><b>${c.id}</b> - ${c.type}<br>${c.text}<br><span style="color:#166534">${c.status}</span><br><small>${c.time}</small></div>`).join('');
 }
 </script>
 </body>
 </html>
+  
