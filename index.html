@@ -15,75 +15,70 @@ body{background:#FDF4FF;padding:16px}
 .card p{font-size:13px;color:#A21CAF;line-height:1.5}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 .opt{border:2px solid #E9D5FF;background:#FAF5FF;border-radius:14px;padding:14px 6px;text-align:center;cursor:pointer;font-size:13px;font-weight:bold;color:#6B21A8}
-.opt.active{background:#D8B4FE;color:#3B0764;border-color:#A855F7}
-.opt span{font-size:26px;display:block}
+.opt.active{background:#D8B4FE;color:#3B0764;border-color:#A855F7;transform:scale(1.04)}
 textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padding:10px;margin-top:10px;font-size:14px;background:#FFFBEB}
-.btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}
+.btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:17px;font-weight:bold;cursor:pointer;margin-top:10px}
 .mic{background:#FEF3C7;color:#92400E;border:2px solid #FDE68A}
 .listen{background:#E0E7FF;color:#3730A3;border:2px solid #C7D2FE}
 .submit{background:#D1FAE5;color:#065F46;border:2px solid #A7F3D0}
-.result{background:#ECFDF5;border:2px solid #A7F3D0;border-radius:16px;padding:16px;margin-top:14px;display:none}
-.result h3{color:#065F46}
-.badge{display:inline-block;background:#D1FAE5;color:#065F46;border:1px solid #6EE7B7;padding:6px 12px;border-radius:20px;font-size:13px;font-weight:bold;margin-top:6px}
+.hear{background:#FCE7F3;color:#9D174D;border:2px solid #F9A8D4;font-size:18px}
+.result{background:#ECFDF5;border:3px solid #10B981;border-radius:16px;padding:20px;margin-top:14px;display:none;text-align:center}
+.result h3{color:#065F46;font-size:22px}
+.badge{display:inline-block;background:#065F46;color:#fff;padding:10px 18px;border-radius:20px;font-size:16px;font-weight:bold;margin-top:10px}
 .item{background:#FDF4FF;border:1px solid #FBCFE8;border-radius:10px;padding:10px;margin-top:8px;font-size:13px;line-height:1.5}
 .small{font-size:12px;color:#C084FC;margin-top:14px;text-align:center}
+.hint{background:#FEF9C3;border:1px solid #FDE68A;padding:10px;border-radius:10px;margin-top:10px;font-size:12px;color:#92400E;text-align:center}
+.listening{background:#FEE2E2!important;color:#991B1B!important;border-color:#FCA5A5!important}
 </style>
 </head>
 <body>
 
 <div class="top">
 <h1>🎙️ Voice Civic Rakshak</h1>
-<p>Raichur | Just Speak - Normal Talk</p>
+<p>Raichur | Kannada Voice Back</p>
 </div>
 
 <div class="card">
 <h2>1. Yen Samasye?</h2>
 <p>Speak maadidre saaku - Thanagaage Select + Submit aagutte</p>
 <div class="grid">
-<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ','Road problem')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
-<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ','Kasa problem')">🗑️<br>ಕಸ<br>Garbage</div>
-<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ','Light illa')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
-<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು','Neeru illa')">💧<br>ನೀರು<br>Water</div>
-<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ','Drainage problem')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
-<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ','Bere problem')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
+<div class="opt" id="opt-road" onclick="manualSelect('ರಸ್ತೆ ಹಳ್ಳ')">🕳️<br>ರಸ್ತೆ ಹಳ್ಳ<br>Road</div>
+<div class="opt" id="opt-garbage" onclick="manualSelect('ಕಸ')">🗑️<br>ಕಸ<br>Garbage</div>
+<div class="opt" id="opt-light" onclick="manualSelect('ಬೀದಿ ದೀಪ')">💡<br>ಬೀದಿ ದೀಪ<br>Light</div>
+<div class="opt" id="opt-water" onclick="manualSelect('ನೀರು')">💧<br>ನೀರು<br>Water</div>
+<div class="opt" id="opt-drain" onclick="manualSelect('ಚರಂಡಿ')">🚽<br>ಚರಂಡಿ<br>Drainage</div>
+<div class="opt" id="opt-other" onclick="manualSelect('ಬೇರೆ ಸಮಸ್ಯೆ')">✍️<br>ಬೇರೆ ಸಮಸ್ಯೆ<br>Other</div>
 </div>
 
 <textarea id="text" placeholder="Ex: Namma beediyalli kasa togondilla..."></textarea>
 
-<button class="btn mic" onclick="startVoice()">🎤 Heli - Speak</button>
-<button class="btn listen" onclick="speakText()">🔊 Keli - Listen</button>
+<button class="btn mic" id="micBtn" onclick="startVoice()">🎤 Heli - Speak</button>
+<div class="hint">👆 Speak maadid 1 sec nalli thanaage Submit aagutte</div>
 <button class="btn submit" onclick="submitComplaint()">✅ Complaint Submit Maadi</button>
 </div>
 
 <div class="result" id="result">
-<h3>✅ Complaint Ready Aaytu!</h3>
-<p id="rText" style="margin-top:8px"></p>
-<span class="badge" id="rId"></span>
-<p style="font-size:13px;margin-top:8px;color:#065F46">Purasabhege hogide. 2 dina dalli sari maadtaare.</p>
-<button class="btn listen" onclick="speakResult()">🔊 Matte Keli</button>
+<h3>✅ Complaint Book Aaytu!</h3>
+<p id="rText" style="margin-top:10px;font-size:15px"></p>
+<div class="badge" id="rId"></div>
+<p style="font-size:14px;margin-top:12px;color:#065F46;font-weight:bold" id="kannadaText">ನಿಮ್ಮ ದೂರು ಬುಕ್ ಆಗಿದೆ. ಪುರಸಭೆಗೆ ಹೋಗಿದೆ. 2 ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡ್ತಾರೆ.</p>
+<button class="btn hear" onclick="speakResult()">🔊 Keli - Kannada Voice Keli</button>
+<audio id="voicePlayer" controls style="width:100%;margin-top:10px"></audio>
+<p style="font-size:12px;color:#888;margin-top:6px">Voice kelilla andre Player lo ▶️ Play press maadi</p>
 </div>
 
 <div class="card">
 <h2>📋 Nanna Complaints</h2>
 <div id="list"><p style="color:#888">Innu complaint illa.</p></div>
 </div>
-<p class="small">Normal Talk | Raichur</p>
-<audio id="voicePlayer" controls style="width:100%;margin-top:10px"></audio>
+<p class="small">Kannada Voice Back | Raichur</p>
 
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
-let selectedTalk = "Bere problem";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
+let lastKannada = "";
+let lastId = "";
 render();
-
-// VOICE BACK FIX - Direct Audio, no speechSynthesis
-function speakNormal(text){
-  let audio = document.getElementById('voicePlayer');
-  // Google voice - tl=en for normal talk
-  audio.src = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + encodeURIComponent(text) + "&tl=en&client=tw-ob";
-  audio.volume = 1;
-  audio.play();
-}
 
 function highlight(type){
   document.querySelectorAll('.opt').forEach(o=>o.classList.remove('active'));
@@ -95,63 +90,86 @@ function highlight(type){
   if(type==='ಬೇರೆ ಸಮಸ್ಯೆ') document.getElementById('opt-other').classList.add('active');
 }
 
-function manualSelect(kn, talk){
-  selectedKn = kn; selectedTalk = talk;
+function manualSelect(kn){
+  selectedKn = kn;
   highlight(kn);
-  document.getElementById('text').value = "Namma beediyalli " + talk + " ide.";
-  speakNormal("Neenu " + talk + " select maadide.");
+  document.getElementById('text').value = "Namma beediyalli " + kn + " samasye ide.";
+  if(navigator.vibrate) navigator.vibrate(50);
 }
 
 function autoDetect(text){
   let t = text.toLowerCase();
-  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return ['ಕಸ','Kasa problem'];
-  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')) return ['ಬೀದಿ ದೀಪ','Light illa'];
-  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')) return ['ರಸ್ತೆ ಹಳ್ಳ','Road problem'];
-  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return ['ನೀರು','Neeru illa'];
-  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')) return ['ಚರಂಡಿ','Drainage problem'];
-  return ['ಬೇರೆ ಸಮಸ್ಯೆ','Bere problem'];
+  if(t.includes('ಕಸ')||t.includes('kasa')||t.includes('garbage')) return 'ಕಸ';
+  if(t.includes('ಲೈಟ್')||t.includes('light')||t.includes('ದೀಪ')||t.includes('bulb')) return 'ಬೀದಿ ದೀಪ';
+  if(t.includes('ರಸ್ತೆ')||t.includes('rasta')||t.includes('ಹಳ್ಳ')||t.includes('road')||t.includes('ಗುಂಡಿ')) return 'ರಸ್ತೆ ಹಳ್ಳ';
+  if(t.includes('ನೀರು')||t.includes('neeru')||t.includes('water')) return 'ನೀರು';
+  if(t.includes('ಚರಂಡಿ')||t.includes('drainage')||t.includes('ಮೋರಿ')) return 'ಚರಂಡಿ';
+  return 'ಬೇರೆ ಸಮಸ್ಯೆ';
+}
+
+// KANNADA VOICE BACK - Using Google Kannada TTS MP3
+function speakKannada(text){
+  let audio = document.getElementById('voicePlayer');
+  // tl=kn = Kannada voice
+  audio.src = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + encodeURIComponent(text) + "&tl=kn&client=tw-ob";
+  audio.volume = 1;
+  audio.play().catch(()=>{
+    alert("Player lo ▶️ Play button press maadi - Voice bartta");
+  });
+  if(navigator.vibrate) navigator.vibrate([100,50,100]);
 }
 
 function startVoice(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){ alert("Please open in Chrome"); return; }
+  let btn = document.getElementById('micBtn');
+  btn.innerText = "🔴 Keltaiddini... Heli";
+  btn.classList.add('listening');
+  // First voice: Heli, yen samasye?
+  speakKannada("ಹೇಳಿ, ಏನ್ ಸಮಸ್ಯೆ?");
   const rec = new SR(); rec.lang = 'kn-IN';
   rec.onresult = e => {
     let txt = e.results[0][0].transcript;
     document.getElementById('text').value = txt;
-    let d = autoDetect(txt);
-    selectedKn = d[0]; selectedTalk = d[1];
+    selectedKn = autoDetect(txt);
     highlight(selectedKn);
-    speakNormal("Ok kelide. " + txt + ". Eega complaint submit maadtaiddini.");
-    setTimeout(()=>{ submitComplaint(true); }, 2000);
+    btn.innerText = "🎤 Heli - Speak";
+    btn.classList.remove('listening');
+    setTimeout(()=>{ submitComplaint(true); }, 800);
   };
+  rec.onerror = ()=>{ btn.innerText = "🎤 Heli - Speak"; btn.classList.remove('listening'); };
+  rec.onend = ()=>{ btn.innerText = "🎤 Heli - Speak"; btn.classList.remove('listening'); };
   rec.start();
-  speakNormal("Heli, yen samasye? Naanu keltaiddini.");
-}
-
-function speakText(){
-  speakNormal("Nimma complaint: " + selectedTalk);
 }
 
 function submitComplaint(auto=false){
   let txt = document.getElementById('text').value.trim();
-  if(!txt){ speakNormal("Modalu nimma samasye heli."); return; }
-  let d = autoDetect(txt);
-  selectedKn = d[0]; selectedTalk = d[1];
+  if(!txt){ alert("Modalu nimma samasye heli / type maadi"); return; }
+  selectedKn = autoDetect(txt);
   highlight(selectedKn);
   let id = "RCR" + Math.floor(1000 + Math.random()*9000);
-  let idSpoken = id.slice(3).split('').join(' ');
+  lastId = id;
   let obj = {id:id, type:selectedKn, text:txt, time:new Date().toLocaleString('en-IN'), status:"Purasabhege hogide"};
   complaints.unshift(obj);
   localStorage.setItem('civic', JSON.stringify(complaints));
   document.getElementById('result').style.display='block';
   document.getElementById('rText').innerText = txt;
   document.getElementById('rId').innerText = "Complaint Number: " + id + " | " + selectedKn;
-  window._last = "Super! Nimma complaint submit aagide. Number, R C R " + idSpoken + ". Problem, " + selectedTalk + ". Purasabhege hogide. Eradu dina dalli sari maadtaare. Thank you.";
-  setTimeout(()=> speakNormal(window._last), 500);
+  // KANNADA VOICE TEXT - Your complaint is booked
+  lastKannada = "ನಿಮ್ಮ ದೂರು ಬುಕ್ ಆಗಿದೆ. ನಿಮ್ಮ ದೂರು ಸಂಖ್ಯೆ " + id.split('').join(' ') + ". ಸಮಸ್ಯೆ " + selectedKn + ". ಪುರಸಭೆಗೆ ಹೋಗಿದೆ. ಎರಡು ದಿನದಲ್ಲಿ ಸರಿ ಮಾಡ್ತಾರೆ. ಧನ್ಯವಾದ.";
+  document.getElementById('kannadaText').innerText = lastKannada;
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+  if(navigator.vibrate) navigator.vibrate([200,100,200]);
+  // Try auto play, if blocked user will press Keli button
+  speakKannada(lastKannada);
   render();
 }
-function speakResult(){ if(window._last) speakNormal(window._last); }
+
+function speakResult(){
+  if(lastKannada) speakKannada(lastKannada);
+  else speakKannada("ನಿಮ್ಮ ದೂರು ಬುಕ್ ಆಗಿದೆ. ಪುರಸಭೆಗೆ ಹೋಗಿದೆ.");
+}
+
 function render(){
   let l = document.getElementById('list');
   if(!complaints.length) return;
