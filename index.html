@@ -71,28 +71,20 @@ textarea{width:100%;height:80px;border:2px solid #E9D5FF;border-radius:12px;padd
 </div>
 <p class="small">Normal Talk | Raichur Style | Auto Select + Auto Submit</p>
 
-<!-- VOICE FIX - ResponsiveVoice, works like YouTube audio -->
-<script src="https://code.responsivevoice.org/responsivevoice.js?key=1n0wD2J9"></script>
 <script>
 let selectedKn = "ಬೇರೆ ಸಮಸ್ಯೆ";
 let selectedTalk = "Bere problem";
 let complaints = JSON.parse(localStorage.getItem('civic')||'[]');
 render();
 
-// NORMAL TALK - Raichur Mix - NOW WITH WORKING VOICE
+// NORMAL TALK - Like how Raichur people speak
 function speakNormal(text){
-  // Stop old voice
-  if(window.responsiveVoice) responsiveVoice.cancel();
-  if(window.speechSynthesis) speechSynthesis.cancel();
-  // Use Internet Voice - plays like YouTube, not Chrome TTS
-  if(window.responsiveVoice){
-    responsiveVoice.speak(text, "Hindi Female", {rate: 0.9});
-  } else {
-    // Fallback if internet slow
-    let u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-IN'; u.rate = 0.95;
-    speechSynthesis.speak(u);
-  }
+  speechSynthesis.cancel();
+  let u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-IN';
+  u.rate = 0.95;
+  u.pitch = 1;
+  speechSynthesis.speak(u);
 }
 
 function highlight(type){
@@ -125,7 +117,6 @@ function autoDetect(text){
 function startVoice(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if(!SR){ alert("Please open in Chrome"); return; }
-  speakNormal("Heli, yen samasye? Naanu keltaiddini.");
   const rec = new SR(); rec.lang = 'kn-IN'; rec.interimResults = false;
   rec.onresult = e => {
     let txt = e.results[0][0].transcript;
@@ -137,6 +128,7 @@ function startVoice(){
     setTimeout(()=>{ submitComplaint(true); }, 1300);
   };
   rec.start();
+  speakNormal("Heli, yen samasye? Naanu keltaiddini.");
 }
 
 function speakText(){
@@ -159,7 +151,7 @@ function submitComplaint(auto=false){
   document.getElementById('rId').innerText = "Complaint Number: " + id + " | " + selectedKn;
   // NORMAL TALK LIKE PEOPLE SPEAK
   window._last = "Super! Nimma complaint submit aagide. Number, R C R " + idSpoken + ". Problem, " + selectedTalk + ". Purasabhege hogide. Eradu dina dalli sari maadtaare. Thank you.";
-  setTimeout(()=> speakNormal(window._last), 500);
+  setTimeout(()=> speakNormal(window._last), 400);
   render();
 }
 function speakResult(){ if(window._last) speakNormal(window._last); }
@@ -171,7 +163,6 @@ function render(){
 </script>
 </body>
 </html>
-
 
 
 
